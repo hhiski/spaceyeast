@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 814010e25af72e74d81c5ea7c8da394f
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - GalaxySkybox: {fileID: 2100000, guid: 2ff7bd1ac3ad0304084b46d65ee68aca, type: 2}
+  - ClusterSkybox: {fileID: 2100000, guid: 499eaf39f65f5cc45923227c1218191a, type: 2}
+  - SystemSkybox: {fileID: 2100000, guid: 0a0797ace6de8d54abaeae15c8518b28, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

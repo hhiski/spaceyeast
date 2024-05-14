@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 1babc8c09ba1b934b83c5e0b77dd9e38
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - PlanetaryFeatureLocation: {fileID: 6283343257432920624, guid: 8cac111a0b0fc0c47abb071aa3c03734,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2782629492048473304
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2360472445875957049}
+  - component: {fileID: -3963878439282212711}
+  m_Layer: 0
+  m_Name: SystemAsteroidBelt
+  m_TagString: System
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2360472445875957049
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2782629492048473304}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-3963878439282212711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2782629492048473304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aeb125237ba4f9a498b24ada88463392, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Type: 0
+  Distance: 0
+  RockAsteroidBelt: {fileID: 3343612608109876846, guid: 8bc392652ed99c54cb3176ddb1305662,
+    type: 3}
+  IceAsteroidBelt: {fileID: 4200993120455301150, guid: 92f86ee6be2be3448ae5f71afdc06807,
+    type: 3}
+  GasAsteroidBelt: {fileID: 1424032893021049129, guid: 18f9951a4093a93449a93749b6a25e34,
+    type: 3}
+  AsteroidBeltPrefab: {fileID: 0}

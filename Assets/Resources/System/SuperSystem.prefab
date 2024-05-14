@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5827572977874039907
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5193493902410918823}
+  - component: {fileID: 3583502841352268129}
+  m_Layer: 0
+  m_Name: SuperSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 3443629218296621865, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &5193493902410918823
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5827572977874039907}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &3583502841352268129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5827572977874039907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b7439890b733e243aac68b730ad7897, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UI: {fileID: 0}
+  SkyboxController: {fileID: 0}
+  MoonSystemPrefab: {fileID: 3900071462651037469, guid: 04032f26a20522a42906227cbfb5ff38,
+    type: 3}
+  PlanetSystemPrefab: {fileID: 3900071462651037469, guid: b90ca3cbb61a5854eb68947c7b4cf64f,
+    type: 3}
+  BeltPrefab: {fileID: 2782629492048473304, guid: 164f71d9f705dad4ba214ffd93cb6a6d,
+    type: 3}
+  CometPrefab: {fileID: 6583332820237873777, guid: ae3e70a236fc32d4ea9e6f6c8ed3f1fe,
+    type: 3}
+  SystemStarPrefab: {fileID: 2280484232235203401, guid: 2678c4b3c8c309942b7035ddfda26649,
+    type: 3}

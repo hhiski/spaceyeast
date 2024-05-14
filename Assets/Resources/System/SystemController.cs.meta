@@ -1,0 +1,25 @@
+fileFormatVersion: 2
+guid: 4b7439890b733e243aac68b730ad7897
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - PlanetSystemPrefab: {instanceID: 0}
+  - BeltPrefab: {instanceID: 0}
+  - CometPrefab: {instanceID: 0}
+  - SystemStarPrefab: {instanceID: 0}
+  - WaterPlanet: {instanceID: 0}
+  - RockyPlanet: {instanceID: 0}
+  - DustPlanet: {instanceID: 0}
+  - IcePlanet: {instanceID: 0}
+  - SnowPlanet: {instanceID: 0}
+  - MudPlanet: {instanceID: 0}
+  - GreenhousePlanet: {instanceID: 0}
+  - GasPlanet: {instanceID: 0}
+  - MinorPlanet: {instanceID: 0}
+  - Ring: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

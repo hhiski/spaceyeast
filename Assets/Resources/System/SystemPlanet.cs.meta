@@ -1,0 +1,20 @@
+fileFormatVersion: 2
+guid: a694a15055cad6648873eb06c967cd18
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - WaterPlanet: {instanceID: 0}
+  - RockyPlanet: {instanceID: 0}
+  - DustPlanet: {instanceID: 0}
+  - IcePlanet: {instanceID: 0}
+  - SnowPlanet: {instanceID: 0}
+  - MudPlanet: {instanceID: 0}
+  - GreenhousePlanet: {instanceID: 0}
+  - GasPlanet: {instanceID: 0}
+  - Ring: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
