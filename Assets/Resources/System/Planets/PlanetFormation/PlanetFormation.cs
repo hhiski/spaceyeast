@@ -41,6 +41,7 @@ public class PlanetType
         SurfaceVariation = type.SurfaceVariation;
         LifeProbability = type.LifeProbability;
         SurfaceType = type.SurfaceType;
+        UseAtmosphericClouds = type.UseAtmosphericClouds;
     }
 
     public PlanetType() { }
@@ -605,8 +606,23 @@ public class PlanetType
             WaterLevelRange = new int[] { 0, 2 },
             SurfaceType = SurfaceType.Silicate
         };
-
         EveryPlanetTypeList.Add(Sulfur);
+
+        PlanetType Glass = new PlanetType
+        {
+            Name = "Glass",
+            Albedo = 0.25f,
+            GasList = AtmosphereGasFormation.CommonMix,
+            SurfaceType = SurfaceType.Silicate,
+            TemperatureRange = new float[] { 1000, 999999 },
+            GreenhouseEffectRange = new float[] { 0, 5 },
+            PressureRange = new float[] { 0f, 0.000f },
+            EnvRadioactivityRange = new float[] { 0.02f, 0.2f },
+            WaterLevelRange = new int[] { 0, 0 },
+            UsePolarCaps = false,
+        };
+        EveryPlanetTypeList.Add(Glass);
+
         return EveryPlanetTypeList;
     }
 }

@@ -64,7 +64,7 @@ Shader "Custom/CloudSurface" {
 			o.Albedo = saturate(c.rgb*IN.vertexAlpha* c.a* + _AlphaOffset);
 			o.Metallic = _Metallic;
 			o.Smoothness = _Glossiness;
-			o.Alpha = finalAlpha;
+			o.Alpha = saturate(finalAlpha);
 		}
 		ENDCG
 		}

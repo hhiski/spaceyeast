@@ -26,12 +26,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5508691716099744337}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 7, y: 7, z: 7}
-  m_Children: []
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1756684351917592708}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1399543112978826175
 MeshFilter:
@@ -52,6 +54,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -169,6 +172,30 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  cellularCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 1
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   negativePeakClip: 0
   positivePeakClip: 2
   seaLevel: 0.998
@@ -178,14 +205,16 @@ MonoBehaviour:
   cellAmount: 0
   cellPattern: 1
   cellPower: 0
+  selectedCellPattern: 0
   Flatness: 1
   fluidicity: 0
   wierd: 0
   modulo: 0
-  correolis: 0
   equatorial: 0
   desertification: 0
+  pebbles: 0
   warpForce: 0
+  warpVector: {x: 0, y: 0, z: 0}
   colorHigh: {r: 0, g: 0.35949564, b: 1, a: 1}
   colorMid: {r: 0, g: 0.30482137, b: 0.9056604, a: 1}
   colorLow: {r: 0, g: 0.18128464, b: 0.7176471, a: 1}
@@ -210,3 +239,65 @@ MonoBehaviour:
   mass: 1.6
   rotationSpeed: 2
   seed: 4319
+--- !u!1001 &7048912161539251686
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 6137156453467480949}
+    m_Modifications:
+    - target: {fileID: 1303372173421380198, guid: 9c674b85b53a66744b168464601e6d8d, type: 3}
+      propertyPath: m_Name
+      value: PlanetAtmosphere
+      objectReference: {fileID: 0}
+    - target: {fileID: 8769136707878735202, guid: 9c674b85b53a66744b168464601e6d8d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8769136707878735202, guid: 9c674b85b53a66744b168464601e6d8d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8769136707878735202, guid: 9c674b85b53a66744b168464601e6d8d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8769136707878735202, guid: 9c674b85b53a66744b168464601e6d8d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8769136707878735202, guid: 9c674b85b53a66744b168464601e6d8d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8769136707878735202, guid: 9c674b85b53a66744b168464601e6d8d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8769136707878735202, guid: 9c674b85b53a66744b168464601e6d8d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8769136707878735202, guid: 9c674b85b53a66744b168464601e6d8d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8769136707878735202, guid: 9c674b85b53a66744b168464601e6d8d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8769136707878735202, guid: 9c674b85b53a66744b168464601e6d8d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9c674b85b53a66744b168464601e6d8d, type: 3}
+--- !u!4 &1756684351917592708 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8769136707878735202, guid: 9c674b85b53a66744b168464601e6d8d, type: 3}
+  m_PrefabInstance: {fileID: 7048912161539251686}
+  m_PrefabAsset: {fileID: 0}

@@ -5,6 +5,10 @@ using LineSpace;
 using MathSpace;
 
 using static CelestialBody;
+using System.Security.Claims;
+using Unity.VisualScripting;
+using System.Net;
+using System;
 public class SystemPlanet : MonoBehaviour
 {
 
@@ -12,15 +16,26 @@ public class SystemPlanet : MonoBehaviour
 
     public GameObject PlanetaryFeatureLocation;
 
+    public bool selectedPlanet = false;
+
     List<GameObject> FeatureLocations = new List<GameObject>();
+    List<GameObject> InterplanetaryLines = new List<GameObject>();
+    List<GameObject> BrachistochroneTrejectoryLines = new List<GameObject>();
+
+    private Vector3 oldPosition;
+
     [SerializeField] Vector3 Pos;
     [SerializeField] float Omega; //longitude of the ascending node
     [SerializeField] float Inclination;
+    [SerializeField] Vector3 OrbitAxis;
 
     public GameObject RingPrefab;
 
     public Material LineMaterial;
-    
+    Vector3 OrbitVector = new Vector3(0, 0, 0);
+    public Vector3 InitialPosition = new Vector3(0, 0, 0);
+
+
 
     System.Random Random = new System.Random();
     MathFunctions MathFunctions = new MathFunctions();
@@ -30,11 +45,24 @@ public class SystemPlanet : MonoBehaviour
     {
         int seed = Planet.Seed;
         Random = new System.Random(Planet.Seed);
-
-
-
+        oldPosition = transform.position;
+        InitialPosition = oldPosition;
     }
 
+
+
+    public Vector3 GetOrbitVector()
+    {
+        return OrbitVector;
+    }
+    public Vector3 GetOrbitAxis()
+    {
+        return OrbitAxis;
+    }
+    public float GetOrbitPhase()
+    {
+        return Planet.OrbitPhase;
+    }
 
     public void Visualize()
     {
@@ -52,10 +80,65 @@ public class SystemPlanet : MonoBehaviour
 
     }
 
+    public void ClearPlanetLinesSystemWide()
+    {
+        List<GameObject> otherPlanets = SystemController.GetInstance().GetPlanetObjects();
+
+        foreach (GameObject planet in otherPlanets)
+        {
+            planet.GetComponent<SystemPlanet>().ClearPlanetLines();
+        }
+
+    }
+
+    public void ClearPlanetLines()
+    {
+        InterplanetaryLines.Clear();
+        BrachistochroneTrejectoryLines.Clear();
+        foreach (Transform child in transform)
+        {
+            if (child.gameObject.name == "Interplanetary Line" || child.gameObject.name == "Interplanetary Line(Clone)")
+            {
+                Destroy(child.gameObject);
+            }
+            else if (child.gameObject.name == "Brachistochrone Trejectory" || child.gameObject.name == "Brachistochrone Trejectory(Clone)")
+            {
+                Destroy(child.gameObject);
+            }
+        }
+    }
+    void CreatePlanetDistanceLines()
+    {
+        ClearPlanetLinesSystemWide();
+
+        List<GameObject> otherPlanets = SystemController.GetInstance().GetPlanetObjects();
+        if (selectedPlanet)
+            otherPlanets.Remove(this.transform.gameObject);
+
+
+        int index = 0;
+        Vector3[] linePoints = new Vector3[] { new Vector3(0, 0, 0), new Vector3(0, 0, 0) };
+        foreach (GameObject child in otherPlanets)
+        {
+
+                GameObject interplanetaryLine = LineFunctions.CreateLineObject(this.transform, new Vector3(0, 0, 0), "Interplanetary Line", linePoints, LineMaterial, 0.5f, true);
+                InterplanetaryLines.Add(interplanetaryLine);
+
+            /*  GameObject brachistochroneTrejectoryLine = LineFunctions.CreateLineObject(this.transform, new Vector3(0, 0, 0), "Brachistochrone Trejectory", linePoints, LineMaterial, 1f, true);
+              brachistochroneTrejectoryLine.GetComponent<LineRenderer>().positionCount = 100;
+              BrachistochroneTrejectoryLines.Add(brachistochroneTrejectoryLine);*/
+            index++;
+        }
+        Debug.Log("num: " + index);
+    }
+
     void InclinatePlanet()
     {
-        transform.RotateAround(transform.parent.position, new Vector3(1, 0, 0), Planet.OrbitInclination);
-        transform.RotateAround(transform.parent.position, new Vector3(0, 1, 0), Planet.OrbitOmega);
+        transform.RotateAround(transform.parent.position, new Vector3(1, 0, 0), Planet.OrbitInclination * 360f);
+       transform.RotateAround(transform.parent.position, new Vector3(0, 1, 0), Planet.OrbitOmega * 360f);
+
+        OrbitAxis = new Vector3(Planet.OrbitInclination, Planet.OrbitOmega, 0);
+        Debug.Log("OrbitAxis: " + OrbitAxis);
     }
 
 
@@ -112,23 +195,34 @@ public class SystemPlanet : MonoBehaviour
 
     void OnMouseDown()
     {
+
+
+        TrajectoryManager.GetInstance().CreateTrajectories(this.gameObject);
+     //   SystemController.GetInstance().GetPlanetObjects();
+
         UiCanvas.GetInstance().PlanetDataView(transform, Planet);
+
         Globals.spaceAddress[2] = Planet.Id;
 
+
+      //  CreatePlanetDistanceLines();
+
     }
 
-    float GetPlanetOrbitalDistance(Vector3 pos, Vector3 parentPos)
-    {
-        float distance;
 
-        distance = Vector3.Distance(pos, parentPos);
-        return distance;
-    }
-
+  
 
     void Update()
     {
-        transform.RotateAround(transform.parent.position, transform.up, Planet.OrbitSpeed * Time.deltaTime);
+        Vector3 currentPosition = transform.position;
+
+        transform.RotateAround(transform.parent.position, transform.up, Planet.OrbitSpeed * 360f * Time.deltaTime);
+        Planet.SetOrbitPhase(Planet.OrbitSpeed * 360f * Time.deltaTime);
+
+        OrbitVector = (transform.position - currentPosition).normalized;
+        oldPosition = transform.position;
+
+
     }
 
 

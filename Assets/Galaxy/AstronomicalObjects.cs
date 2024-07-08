@@ -56,7 +56,7 @@ static public class CelestialBody {
             RotationSpeed = Random.Range(0.5f, 8);
             OrbitSpeed = Random.Range(3, 6);
             OrbitPhase = Random.Range(0, 100) / 100f;
-            OrbitOmega = Random.Range(0, 180);
+            OrbitOmega = Random.Range(0, 180) / 180f;
             Type = new PlanetType(parentsOrbitalDistance, solarTemperature);
             Name = "Moon";
             RingType = 0;
@@ -79,7 +79,7 @@ static public class CelestialBody {
             RotationSpeed = Random.Range(0.5f, 8);
             OrbitSpeed = Random.Range(3, 6);
             OrbitPhase = Random.Range(0, 100) / 100f;
-            OrbitOmega = Random.Range(0, 180);
+            OrbitOmega = Random.Range(0, 180) / 180f;
             Type = new PlanetType("Minor");
             Name = "Moon";
             RingType = 0;
@@ -137,10 +137,10 @@ static public class CelestialBody {
             Seed = Random.Range(1, 9999);
             Mass = MassProbability(Type.Name);
             OrbitDistance = orbitalDistance;
-            OrbitPhase = Random.Range(0, 100)/100f;
+            OrbitPhase = Random.Range(0,1f)/100f;
             Pos = MathFunctions.PositionOnCircle(orbitalDistance, OrbitPhase, new Vector3(0, 0, 0));
             OrbitSpeed = MathFunctions.GetOrbitSpeed(orbitalDistance);
-            OrbitOmega = Random.Range(0, 180);
+            OrbitOmega = Random.Range(0,180f) / 360f;
             OrbitInclination = MathFunctions.GetRandomOrbitInclination(Seed);
             RotationSpeed = Random.Range(0.5f, 8);
             PolarCoverage = 0;
@@ -197,6 +197,13 @@ static public class CelestialBody {
         }
 
 
+        
+        public void SetOrbitPhase(float change)
+        {
+
+            OrbitPhase += change;
+            OrbitPhase = OrbitPhase % 1;
+        }
 
         float MassProbability(string type)
         {

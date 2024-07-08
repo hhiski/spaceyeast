@@ -8,6 +8,9 @@ Shader "Custom/3dUIEffect"
 		_NoiseOffset("Noise Opacity", Range(-1,1)) = 0.5
 		_NoiseOpacity("Color Opacity", Range(0,2)) = 0.9
 		_NoiseSpeed("Noise Speed", Range(0,100)) = 1
+		_NoiseSpeed2("Noise Speed 2 ", Range(-5,100)) = 1
+
+		
 	}
 
 		SubShader{
@@ -59,7 +62,10 @@ Shader "Custom/3dUIEffect"
 				float _NoiseOffset;
 				float _NoiseOpacity;
 				float _NoiseSpeed;
+				float _NoiseSpeed2;
 				float Time_based_random;
+				float _ZPosition;
+
 
 				v2f vert(appdata_t v)
 				{
@@ -81,15 +87,15 @@ Shader "Custom/3dUIEffect"
 					
 				    float4 pixelWorldSpacePosition = i.worldSpacePosition;
 
-				   // Time_based_random = rand(floor( acos(dot(normalize(float3(0.99,0,0.01)),normalize(i.worldSpacePosition))) * _Res),frac(_Time.y * _NoiseSpeed ));
-					//Time_based_random = rand(floor( acos(dot(normalize(float3(0.99,0,0.01)),normalize(i.worldSpacePosition))) * _Res),frac(_Time.y * _NoiseSpeed ));
-					
-					Time_based_random = rand(floor(i.worldSpacePosition * _Res+1888),frac(_Time[0] * _NoiseSpeed ));
-					Time_based_random = Time_based_random % 1; 
+				   Time_based_random = rand(floor( acos( dot((float3(0.99,0,0.01)),normalize(i.worldSpacePosition))) * _Res),frac(_Time.x * _NoiseSpeed2) + frac(i.worldSpacePosition.x * _NoiseSpeed) );
+				 //  Time_based_random = rand(floor( acos(dot(normalize(float3(0.99,0,0.01)),normalize(i.worldSpacePosition))) * _Res),frac(_CosTime.w; * _NoiseSpeed ));
+
+					//Time_based_random = rand(floor(i.worldSpacePosition * _Res+1888),frac(_Time[0] * _NoiseSpeed ));
+					//Time_based_random = Time_based_random % 1; 
 
 					Time_based_random *= _NoiseOpacity;
 
-					fixed4 col = float4(_Color.r, _Color.g, _Color.b, saturate(Time_based_random + _NoiseOffset));
+					fixed4 col = float4(_Color.r, _Color.g, _Color.b, saturate(Time_based_random + _ZPosition + _NoiseOffset));
 					col.a *= (tex2D(_MainTex, i.texcoord).a);
 					return col;
 				}

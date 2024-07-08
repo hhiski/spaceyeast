@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: GameConfig
   m_EditorClassIdentifier: 
   AvgStarNumPeCluster: 7
-  AvgPlanetNumPerStar: 4
+  AvgPlanetNumPerStar: 8

@@ -112,11 +112,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TextureNebulae:
-        m_Texture: {fileID: 8900000, guid: 96c1ff7fe8a98bf46ab718ea70ac9311, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TextureStars:
-        m_Texture: {fileID: 8900000, guid: 714ea73c238c8164d83f70fe60282959, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _UpTex:
@@ -173,7 +173,7 @@ Material:
     - _Parallax: 0.02
     - _Res: 84.15
     - _RimPower: 1
-    - _Rotation: 274
+    - _Rotation: 300
     - _Shininess: 0.01
     - _SkyExponent1: 476
     - _SkyIntensity: 1.75
@@ -182,9 +182,11 @@ Material:
     - _SoftParticlesEnabled: 0
     - _SoftParticlesFarFadeDistance: 1
     - _SoftParticlesNearFadeDistance: 0
+    - _SpaceExposure: 0.78
     - _SpecularHighlights: 1
     - _Speed: 1
     - _SrcBlend: 1
+    - _StarExposure: 0.31
     - _StarMulti: 6.35
     - _Stencil: 0
     - _StencilComp: 8
@@ -219,6 +221,7 @@ Material:
     - _SkyColor2: {r: 0.10829474, g: 0.11145295, b: 0.11320752, a: 0}
     - _SkyTint: {r: 1, g: 0.8806951, b: 0, a: 1}
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
+    - _SpaceColor: {r: 0, g: 0.36477977, b: 0.0377164, a: 0.5}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
     - _Specular: {r: 0, g: 0, b: 0, a: 0}
     - _SunColor: {r: 0, g: 0, b: 0, a: 1}

@@ -190,11 +190,16 @@ public class PlanetSurface : MonoBehaviour
         NoiseLayer = new Noise(seed);
 
         PlanetClouds clouds = GetComponentInChildren<PlanetClouds>();
+
+        float planetCloudPressure = Planet.Atm.Pressure;
+        bool planetTypeUsesClouds = Planet.Type.GetAtmosphericCloudUsage();
+
+
         if (clouds != null)
         {
             clouds.Seed = seed;
             clouds.SetHueShift(hueShift);
-            clouds.SetCloudPressureThickness(Planet.Atm.Pressure, Planet.Type.GetAtmosphericCloudUsage());
+            clouds.SetCloudPressureThickness(planetCloudPressure, planetTypeUsesClouds);
         }
 
     }

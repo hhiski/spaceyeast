@@ -53,7 +53,7 @@ public class PlanetClouds : MonoBehaviour
             else if(pressure < 1.2) { Amplitude = 1f; }
             else if (pressure < 1.7) { Amplitude = 1.2f; }
             else  { Amplitude = 1.5f; }
-        }
+        };
     }
 
 

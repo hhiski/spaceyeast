@@ -85,6 +85,7 @@ Shader "Custom/MenuTextEffect"
 
 					fixed4 col = float4(_Color.r, _Color.g, _Color.b, Rand1 + _NoiseOffset);
 					col.a *= tex2D(_MainTex, i.texcoord).a;
+					col.a = saturate(col.a);
 					return col;
 				}
 				ENDCG

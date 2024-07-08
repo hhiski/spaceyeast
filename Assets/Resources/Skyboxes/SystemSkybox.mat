@@ -15,7 +15,6 @@ Material:
   m_InvalidKeywords:
   - _EMISSION
   - _MAPPING_LATITUDE_LONGITUDE_LAYOUT
-  - _MIRRORONBACK_ON
   - _SUNDISK_HIGH_QUALITY
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
@@ -84,7 +83,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 7038b47c9c23c9242a7b75892ef5cf16, type: 3}
+        m_Texture: {fileID: 2800000, guid: 65475e0f4e083f04a99ffc366b4cea8f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -120,7 +119,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Tex:
-        m_Texture: {fileID: 8900000, guid: 714ea73c238c8164d83f70fe60282959, type: 3}
+        m_Texture: {fileID: 8900000, guid: 64e37d3840aea7c40b335346e391cedb, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Texture2:
@@ -128,11 +127,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TextureNebulae:
-        m_Texture: {fileID: 8900000, guid: 1c30b526ffc094745a9f1a5237acbcc6, type: 3}
+        m_Texture: {fileID: 8900000, guid: 64e37d3840aea7c40b335346e391cedb, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TextureStars:
-        m_Texture: {fileID: 8900000, guid: 64e37d3840aea7c40b335346e391cedb, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _UpTex:
@@ -182,7 +181,7 @@ Material:
     - _EMISSION_WEIGHT: 1
     - _EmissionEnabled: 0
     - _EnableExternalAlpha: 0
-    - _Exposure: 1.02
+    - _Exposure: 8
     - _ExtraEmission: 0.75
     - _Factor: 0.05
     - _FlipbookMode: 0
@@ -196,7 +195,7 @@ Material:
     - _METALNESS: 0
     - _Mapping: 1
     - _Metallic: 0
-    - _MirrorOnBack: 1
+    - _MirrorOnBack: 0
     - _Mode: 2
     - _NoiseOffset: 0.5
     - _NoiseOpacity: 0.9
@@ -210,7 +209,7 @@ Material:
     - _Randomness: 5
     - _Res: 128
     - _RimPower: 3
-    - _Rotation: 192
+    - _Rotation: 156
     - _Size: 1
     - _SkyExponent1: 7.67
     - _SkyIntensity: 1.75
@@ -218,10 +217,10 @@ Material:
     - _SoftParticlesEnabled: 0
     - _SoftParticlesFarFadeDistance: 1
     - _SoftParticlesNearFadeDistance: 0
-    - _SpaceExposure: 5.34
+    - _SpaceExposure: 1.16
     - _SpecularHighlights: 1
     - _SrcBlend: 5
-    - _StarExposure: 2.32
+    - _StarExposure: 0
     - _StarFade: 0
     - _StarMulti: 1.61
     - _StarsRatio: 0
@@ -260,7 +259,7 @@ Material:
     - _SkyColor2: {r: 0, g: 0, b: 0, a: 0}
     - _SkyTint: {r: 1, g: 0.07924521, b: 0.07924521, a: 1}
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
-    - _SpaceColor: {r: 0.0013448775, g: 0.017637493, b: 0.025157154, a: 0.5}
+    - _SpaceColor: {r: 1, g: 1, b: 1, a: 0.5}
     - _SunColor: {r: 1, g: 0.99, b: 0.87, a: 1}
-    - _Tint: {r: 0.4130814, g: 0.5568628, b: 0.19607842, a: 1}
+    - _Tint: {r: 0.36477977, g: 0.36477977, b: 0.36477977, a: 1}
   m_BuildTextureStacks: []

@@ -45,7 +45,7 @@ public class UIPopUp : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public void OnPointerExit(PointerEventData eventData)
     {
         popUpPanel.SetActive(false);
-       
+        Debug.Log("out of bounds");
     }
  
 

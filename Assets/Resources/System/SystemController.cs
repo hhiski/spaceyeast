@@ -16,7 +16,7 @@ public class SystemController : GalaxyCatalog
     GameObject PlanetVisual;
     GameObject StarVisual;
 
-
+    List<GameObject> PlanetObjects = new List<GameObject>() { };
 
     private static SystemController _instance;
     private static SystemController Instance
@@ -55,6 +55,11 @@ public class SystemController : GalaxyCatalog
         }
     }
 
+    public List<GameObject> GetPlanetObjects()
+    {
+        return PlanetObjects;
+    }
+
 
     //only for currently excisting gameObjects 
     public GameObject FindPlanetGameObject(int planetId)
@@ -82,21 +87,12 @@ public class SystemController : GalaxyCatalog
     {
 
         selectedVisibleSystem = visibleSystem;
+        PlanetObjects.Clear();
 
         //Creates a main star for the system
         GameObject StarSystem = Instantiate(SystemStarPrefab, new Vector3(0f, 0f, 0f), transform.rotation) as GameObject;
         StarSystem.GetComponent<SystemStar>().Star = selectedVisibleSystem;
-        /* string starPath = "System/Star/MainSequenceStar";
-         GameObject StarVisualPrefab = Resources.Load<GameObject>(starPath) as GameObject;
 
-         if (StarVisualPrefab == null)
-         {
-             Debug.Log("STAR:" + starPath + " NOT FOUND!");
-             StarVisualPrefab = Resources.Load<GameObject>("System/Planets/MinorPlanet/MinorPlanet") as GameObject;
-         }
-
-         StarVisual = Instantiate(StarVisualPrefab, StarSystem.transform, false) as GameObject;
-         */
 
         StarSystem.GetComponent<SystemStar>().Visualize();
         StarSystem.transform.parent = this.transform;
@@ -129,6 +125,7 @@ public class SystemController : GalaxyCatalog
             PlanetSystem.GetComponent<SystemPlanet>().Planet = planet;
             PlanetSystem.transform.localScale = new Vector3(planet.Mass, planet.Mass, planet.Mass);
             PlanetSystem.transform.parent = this.transform;
+            PlanetObjects.Add(PlanetSystem);
 
             foreach (Moon moon in planet.Moons)
             {

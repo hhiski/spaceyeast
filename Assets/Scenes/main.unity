@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.3
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.03951515, g: 0.04258182, b: 0.051131923, a: 0.3}
+  m_IndirectSpecularColor: {r: 0.0050674286, g: 0.009109519, b: 0.0051727346, a: 0.3}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7484,20 +7484,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6427386085263649836, guid: 8a4a1ea49211937418c28563e9553294, type: 3}
   m_PrefabInstance: {fileID: 691230976}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &530801553
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 530801551}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1eed1d9cbe64423499f1fefc0ce50417, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Resolution: 2
-  DefaultSpotCookie: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 3}
 --- !u!45 &530801555
 Skybox:
   m_ObjectHideFlags: 0
@@ -7525,7 +7511,34 @@ MonoBehaviour:
   blurIterations: 3
   blurType: 0
   fastBloomShader: {fileID: 4800000, guid: 68a00c837b82e4c6d92e7da765dc5f1d, type: 3}
---- !u!114 &530801557
+--- !u!114 &530801559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 530801551}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9191284b058eef549b7108b5f04e1117, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  intensityMultiplier: 0.39
+  generalIntensity: 0.12
+  blackIntensity: 0.086
+  whiteIntensity: 0.575
+  midGrey: 0.094
+  dx11Grain: 0
+  softness: 0
+  monochrome: 0
+  intensities: {x: 1, y: 1, z: 1}
+  tiling: {x: 64, y: 64, z: 64}
+  monochromeTiling: 64
+  filterMode: 1
+  noiseTexture: {fileID: 2800000, guid: a4b474cd484494a4aaa4bbf928219d09, type: 3}
+  noiseShader: {fileID: 4800000, guid: b0249d8c935344451aa4de6db76f0688, type: 3}
+  dx11NoiseShader: {fileID: 4800000, guid: 8b30686bb4322ab42ad5eb50a0210b58, type: 3}
+--- !u!114 &530801561
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7534,24 +7547,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 530801551}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 646b5bc27a658f447b1d929fd5ffbd70, type: 3}
+  m_Script: {fileID: 11500000, guid: 6f19108706fdce9469603d07980eb8ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mode: 1
-  showGeneratedNormals: 0
-  offsetScale: 0.2
-  blurRadius: 18
-  edgeThresholdMin: 0.05
-  edgeThreshold: 0.2
-  edgeSharpness: 4
-  dlaaSharp: 0
-  ssaaShader: {fileID: 4800000, guid: b3728d1488b02490cbd196c7941bf1f8, type: 3}
-  dlaaShader: {fileID: 4800000, guid: 017ca72b9e8a749058d13ebd527e98fa, type: 3}
-  nfaaShader: {fileID: 4800000, guid: ce0cb2621f6d84e21a87414e471a3cce, type: 3}
-  shaderFXAAPreset2: {fileID: 4800000, guid: 6f1418cffd12146f2a83be795f6fa5a7, type: 3}
-  shaderFXAAPreset3: {fileID: 4800000, guid: c182fa94a5a0a4c02870641efcd38cd5, type: 3}
-  shaderFXAAII: {fileID: 4800000, guid: cd5b323dcc592457790ff18b528f5e67, type: 3}
-  shaderFXAAIII: {fileID: 4800000, guid: c547503fff0e8482ea5793727057041c, type: 3}
+  blendMode: 0
+  intensity: 12.64
+  texture: {fileID: 2800000, guid: a4b474cd484494a4aaa4bbf928219d09, type: 3}
+  overlayShader: {fileID: 4800000, guid: e23eb812446cb6c45a66b19d32467ae2, type: 3}
 --- !u!1 &534173986 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -7998150341508493171, guid: d72b52c1fdd825b478e748dd7264ea85, type: 3}
@@ -10231,13 +10233,13 @@ PrefabInstance:
       addedObject: {fileID: 530801555}
     - targetCorrespondingSourceObject: {fileID: 6429321383771958832, guid: 8a4a1ea49211937418c28563e9553294, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 530801553}
-    - targetCorrespondingSourceObject: {fileID: 6429321383771958832, guid: 8a4a1ea49211937418c28563e9553294, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 530801556}
     - targetCorrespondingSourceObject: {fileID: 6429321383771958832, guid: 8a4a1ea49211937418c28563e9553294, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 530801557}
+      addedObject: {fileID: 530801559}
+    - targetCorrespondingSourceObject: {fileID: 6429321383771958832, guid: 8a4a1ea49211937418c28563e9553294, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 530801561}
   m_SourcePrefab: {fileID: 100100000, guid: 8a4a1ea49211937418c28563e9553294, type: 3}
 --- !u!1 &697806371
 GameObject:
@@ -11066,14 +11068,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6726dcbb511f7942a93bfbe2e606a36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GridLineNumber: 12
-  LineSpace: 50
-  LineThickness: 0.8
+  GridLineNumber: 24
+  LineSpace: 25
+  LineThickness: 0.5
   LineMaterial: {fileID: 2100000, guid: 3ab33d6784530854890ec194410aec1d, type: 2}
-  LineCircleNumber: 5
-  LineCircleSpace: 20
+  LineCircleNumber: 3
+  LineCircleSpace: 75
   drawGrid: 1
-  drawCircles: 0
+  drawCircles: 1
   lineColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &757217282
 GameObject:
@@ -27488,6 +27490,59 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1427163619}
   m_CullTransparentMesh: 1
+--- !u!1 &1428001194
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1428001195}
+  - component: {fileID: 1428001196}
+  m_Layer: 0
+  m_Name: TrajectoryManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1428001195
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1428001194}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 363511793}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1428001196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1428001194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f62f74035d38b84f9ee8142c6ee87ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LineMaterial: {fileID: 0}
+  DrawingTrajectories: 1
+  EngineForce: -0.314
+  StartingVelocity: 3
+  RotationSpeed: 0.314
 --- !u!1 &1432445429
 GameObject:
   m_ObjectHideFlags: 0
@@ -35261,15 +35316,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8315578976647158163, guid: 2b90abbbaee8e344989b913c92d2d467, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 8315578976647158163, guid: 2b90abbbaee8e344989b913c92d2d467, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 8315578976647158163, guid: 2b90abbbaee8e344989b913c92d2d467, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 8315578976647158163, guid: 2b90abbbaee8e344989b913c92d2d467, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -43724,6 +43779,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 285641453502836744, guid: 0b6ebda1da09ccb49bfe3cd3b7565cba, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 285641453502836744, guid: 0b6ebda1da09ccb49bfe3cd3b7565cba, type: 3}
       propertyPath: m_FontData.m_Alignment
       value: 6
       objectReference: {fileID: 0}
@@ -44259,10 +44318,10 @@ PrefabInstance:
     - target: {fileID: 4873302501338525511, guid: 3493c16164f6a574786d05a26d3255c6, type: 3}
       propertyPath: m_Material
       value: 
-      objectReference: {fileID: 2100000, guid: bd1371aa49ebd714b8c89663b94652ed, type: 2}
+      objectReference: {fileID: 2100000, guid: b0152ce9414a6ab41a24ea177c81126c, type: 2}
     - target: {fileID: 4873302501338525511, guid: 3493c16164f6a574786d05a26d3255c6, type: 3}
       propertyPath: m_FillCenter
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4873302501496358740, guid: 3493c16164f6a574786d05a26d3255c6, type: 3}
       propertyPath: m_FontData.m_Alignment
@@ -44627,10 +44686,10 @@ PrefabInstance:
     - target: {fileID: 5531853598156656150, guid: 3493c16164f6a574786d05a26d3255c6, type: 3}
       propertyPath: m_Material
       value: 
-      objectReference: {fileID: 2100000, guid: bd1371aa49ebd714b8c89663b94652ed, type: 2}
+      objectReference: {fileID: 2100000, guid: b0152ce9414a6ab41a24ea177c81126c, type: 2}
     - target: {fileID: 5531853598156656150, guid: 3493c16164f6a574786d05a26d3255c6, type: 3}
       propertyPath: m_FillCenter
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5612321906330634198, guid: 3493c16164f6a574786d05a26d3255c6, type: 3}
       propertyPath: m_IsActive
@@ -45431,6 +45490,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5193493902410918823, guid: 8d1c841992c8c2d499d856b5c44cb602, type: 3}
       insertIndex: -1
       addedObject: {fileID: 710471287}
+    - targetCorrespondingSourceObject: {fileID: 5193493902410918823, guid: 8d1c841992c8c2d499d856b5c44cb602, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1428001195}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 5827572977874039907, guid: 8d1c841992c8c2d499d856b5c44cb602, type: 3}
       insertIndex: -1
@@ -45441,9 +45503,9 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 144478217}
-  - {fileID: 1645252540}
   - {fileID: 1227389998}
   - {fileID: 2076518539}
+  - {fileID: 1645252540}
   - {fileID: 3714177073765807207}
   - {fileID: 630237575}
   - {fileID: 2046108375}

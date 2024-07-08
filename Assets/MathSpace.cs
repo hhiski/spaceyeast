@@ -9,8 +9,9 @@ namespace MathSpace
       
         public static float GetRandomOrbitInclination(int seed)
         {
-            float inclination = StandardDeviation(0, 10, seed + 500);
-
+            float maxInclination = 10; // deg
+            float inclination = StandardDeviation(0, maxInclination, seed + 500);
+            inclination /= 180f;
             return inclination;
         }
 
@@ -19,6 +20,7 @@ namespace MathSpace
         {
             float orbitSpeed = 0;
             orbitSpeed = (300f / ((1f / 15f) * orbitDistance * Mathf.PI * orbitDistance)) * Random.Range(2, 5);
+            orbitSpeed /= 360f;
             return orbitSpeed;
         }
 

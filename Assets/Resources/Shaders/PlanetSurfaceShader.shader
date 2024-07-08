@@ -14,7 +14,7 @@ Shader "Custom/PlanetSurfaceShader" {
 		_BaseMetallicity("Base Metallicity", Range(0,1)) = 0.0
 		_BaseSmoothness("Base Smoothness", Range(0,1)) = 0.0
 		_BaseOreCloseness("Base/Ore Closeness", Range(0,1)) = 0.0 
-
+		_NormalSmooth("Normal Smooth", Range(-5,5)) = 0.0 
 		_LiquidLevel("Liquid Level", Range(0,2)) = 1
 		_LiquidMaxDepth("Liquid Max Depth", Range(0, 1)) = 0.01
   [HDR] _LiquidEmission("Liquid Color", Color) = (0, 0, 0, 0)
@@ -59,6 +59,8 @@ Shader "Custom/PlanetSurfaceShader" {
 			half _OreSmoothness;
 			half _BaseOreCloseness;
 
+			float _NormalSmooth;
+
 			fixed4 _OreColor;
 
 			half _LiquidLevel;
@@ -90,12 +92,12 @@ Shader "Custom/PlanetSurfaceShader" {
 				half liquidLevel = _LiquidLevel;
 
 				if (o.vertexMagnitude < liquidLevel) {
-
+			
 					v.vertex.xyz = normalize(v.vertex.xyz);
 					o.pos = v.vertex* liquidLevel;
 					v.normal = normalize(v.vertex.xyz);
 
-				}
+				} 
 			}
 
 

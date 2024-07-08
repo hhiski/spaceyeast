@@ -149,7 +149,7 @@ Material:
     m_Floats:
     - PixelSnap: 0
     - _Alpha: 0.8
-    - _AlphaOffset: 0.719
+    - _AlphaOffset: 0.52
     - _BaseMetallicity: 0
     - _BaseOreCloseness: 0
     - _BaseSmoothness: 0
@@ -163,7 +163,7 @@ Material:
     - _ColorMask: 255
     - _ColorMode: 3
     - _Cull: 2
-    - _CutOff: 0.823
+    - _CutOff: -1
     - _Cutoff: 0.21
     - _Depth: 0
     - _DetailNormalMapScale: 1
@@ -183,7 +183,7 @@ Material:
     - _FlipbookMode: 0
     - _FlowStrength: 1
     - _GlossMapScale: 1
-    - _Glossiness: 0
+    - _Glossiness: 0.019
     - _GlossyReflections: 0
     - _ImageType: 0
     - _Intensity: 1

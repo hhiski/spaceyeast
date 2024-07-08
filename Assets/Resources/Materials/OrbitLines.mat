@@ -137,14 +137,15 @@ Material:
     - _Metallic: 0
     - _MirrorOnBack: 0
     - _Mode: 2
-    - _NoiseOffset: -0.032
-    - _NoiseOpacity: 0.231
+    - _NoiseOffset: -0.03
+    - _NoiseOpacity: 0.257
     - _NoiseSpeed: 0
+    - _NoiseSpeed2: 0
     - _OcclusionStrength: 1
     - _OreMetallicity: 1
     - _OreSmoothness: 0.5
     - _Parallax: 0.02
-    - _Res: 330.36
+    - _Res: 605.3
     - _RimOuterEdge: 0
     - _RimPower: 0.1
     - _Rotation: 0

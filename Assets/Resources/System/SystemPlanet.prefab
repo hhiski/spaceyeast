@@ -25,12 +25,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3900071462651037469}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2753563288555956771
 MonoBehaviour:
@@ -44,12 +45,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a694a15055cad6648873eb06c967cd18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlanetaryFeatureLocation: {fileID: 6283343257432920624, guid: 8cac111a0b0fc0c47abb071aa3c03734,
-    type: 3}
+  PlanetaryFeatureLocation: {fileID: 6283343257432920624, guid: 8cac111a0b0fc0c47abb071aa3c03734, type: 3}
+  selectedPlanet: 0
   Pos: {x: 0, y: 0, z: 0}
-  RingPrefab: {fileID: 6848583076240605450, guid: f2b7cae325caf0542a4b2e20d6774162,
-    type: 3}
+  Omega: 0
+  Inclination: 0
+  RingPrefab: {fileID: 6848583076240605450, guid: f2b7cae325caf0542a4b2e20d6774162, type: 3}
   LineMaterial: {fileID: 2100000, guid: 0501fbcd28c830340b80849b7c11bc6f, type: 2}
+  OrbitVector: {x: 0, y: 0, z: 0}
 --- !u!135 &5389319776005022172
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -58,8 +61,16 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3900071462651037469}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Radius: 6.7
   m_Center: {x: 0, y: 0, z: 0.5}
