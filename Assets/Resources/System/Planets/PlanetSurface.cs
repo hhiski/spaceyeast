@@ -2,12 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using MathSpace;
-using NoiseSpace;
+using Game.Math;
+using Game.Noise;
 using ColorSpace;
 using VoronoiSpace;
 using static CelestialBody;
 using System.Linq;
+using Unity.Collections;
+using Unity.Jobs;
+using Unity.VisualScripting;
+using TreeEditor;
+using System.Net;
+using Game.ID;
+using static UnityEditor.Searcher.SearcherWindow.Alignment;
 
 [System.Serializable]
 public class PlanetSurface : MonoBehaviour
@@ -28,8 +35,10 @@ public class PlanetSurface : MonoBehaviour
 
     Noise NoiseLayer = new Noise(8);
 
-    NoiseFunctions NoiseFunctions = new NoiseFunctions();
+
     ColorFunctions ColorFunctions = new ColorFunctions();
+
+
 
     System.Random Random = new System.Random();
 
@@ -43,20 +52,16 @@ public class PlanetSurface : MonoBehaviour
     public float Roughness = 0.5f;
     [Range(0f, 2f)]
     public float Persistence = 1;
-    [Range(0f, 1f)]
-    public float Randomness = 0;
 
 
-    // public AnimationCurve amplitudeLevelCurve = new AnimationCurve(new Keyframe(0, 0.25f), new Keyframe(0.5f, 1), new Keyframe(1f, 0.1f));
-    public AnimationCurve heightCurve = AnimationCurve.Linear(-1f, -1f, 1f, 1f);
-    //public AnimationCurve modifiedHeightCurve = AnimationCurve.Linear(-1f, -1f, 1f, 1f);
+    public AnimationCurve heightCurve = AnimationCurve.Linear(0, 0, 1f, 1f);
+
 
     [SerializeField] AnimationCurve cellularCurve = AnimationCurve.Linear(0f, 0f, 1f, 1f);
 
 
     public float negativePeakClip = 0f;
     public float positivePeakClip = 2f;
-    public float seaLevel = 1f;
     public float craterAmplitude = 0;
     public float craterSize = 0;
     public int craterAmount = 0;
@@ -80,40 +85,22 @@ public class PlanetSurface : MonoBehaviour
 
     public float Flatness = 0;
     public float fluidicity = 0;
-    public float wierd = 0;
+    public float weird = 0;
     [SerializeField] [Range(0f, 1f)]
     float modulo = 0;
-    [SerializeField] [Range(0f, 2f)]
-    float equatorial = 0;
-    [SerializeField]   [Range(0f, 10f)]
-    float desertification = 0;
-    [SerializeField] [Range(0f, 10f)]
-    float pebbles = 0;
 
-    
 
     public float warpForce = 0f;
     public Vector3 warpVector = new Vector3(0, 0, 0);
 
+    [SerializeField] Gradient colorGradient = new Gradient();
+    float highestHeight = 0;
+    float LowestHeight = 120;
 
-    public Color colorHigh = new Color(0, 0.5f, 1, 1);
-    public Color colorMid = new Color(0, 0.5f, 1, 1);
-    public Color colorLow = new Color(0.3f, 0, 0.5f, 1);
-    public Color colorDesert = new Color(0.3f, 0, 0.5f, 1);
-    public Color colorHighShifted = new Color(0, 0.5f, 1, 1);
-    public Color colorMidShifted = new Color(0, 0.5f, 1, 1);
-    public Color colorLowShifted = new Color(0.3f, 0, 0.5f, 1);
-    public Color colorDesertShifted = new Color(0.3f, 0, 0.5f, 1);
-    public Color colorSea = new Color(0.1f, 0.3f, 0.9f, 1);
-    public Color colorSeaShifted = new Color(0.1f, 0.3f, 0.9f, 1);
-
+    [SerializeField] Gradient colorSeaGradient = new Gradient();
+    [SerializeField] float seaLevel = 0.0f;
     public Color colorClouds = new Color(1f, 1f, 1f, 1);
-    public Color colorCloudsShifted = new Color(1f, 1f, 1f, 1);
 
-    public float colorHeightHigh = 1.6f;
-    public float colorHeightMid = 1.02f;
-    public float colorHeightLow = 1.00f;
-    public float colorHeightDeep = 0.95f;
     public float colorStripify = 1f;
     public float colorVariation = 0f;
     float hueShift = 0f;
@@ -129,6 +116,7 @@ public class PlanetSurface : MonoBehaviour
 
 
     Material surfaceMaterial;
+    Material shadowMaterial;
 
     public int seed = 1;
     string type = "empty";
@@ -141,17 +129,53 @@ public class PlanetSurface : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.B) == true)
         {
-            ShapePlanetSurface();
+           StartCoroutine(ShapePlanetSurface());
             planetMesh.RecalculateNormals();
+            planetMesh.RecalculateTangents();
+
         }
         if (Input.GetKeyDown(KeyCode.J) == true)
         {
             Debug.Log("Pressing J");
             UpdateClouds();
 
+ 
         }
-       
 
+        if (Input.GetKeyDown(KeyCode.K) == true)
+        {
+            StartCoroutine(ShapePlanetSurface());
+            planetMesh.RecalculateNormals();
+        }
+        
+
+
+
+    }
+
+
+   
+
+    public void UpdateRing()
+    {
+        PlanetRing ring = GetComponentInChildren<PlanetRing>(true);
+
+
+
+        if (ring != null)
+        {
+            ring.ColorRings(colorGradient);
+        }
+    }
+
+    public void UpdateAtmosphere()
+    {
+        PlanetAtmosphere atm = GetComponentInChildren<PlanetAtmosphere>();
+        Color atmosphereColor = colorGradient.Evaluate(0.5f);
+        if (atm != null)
+        {
+            atm.SetAtmosphereColor(atmosphereColor);
+        }
     }
 
     public void UpdateClouds()
@@ -160,22 +184,75 @@ public class PlanetSurface : MonoBehaviour
 
         if (clouds != null)
         {
-            clouds.ShapePlanetClouds();
+            Color gasCloudColor = Planet.Atm.PrimaryGas.GetGasColor();
+            float gasCloudPressure = Planet.Atm.Pressure;
+            bool useClouds = Planet.Type.UseAtmosphericClouds;
+
+            if (useClouds) {
+                clouds.SetCloudColor(gasCloudColor);
+                clouds.SetCloudCoverage(gasCloudPressure);
+            } else
+            {
+                clouds.SetCloudCoverage(0);
+            }
+
+     
         }
     }
 
     void UpdateSea()
     {
-        seaLevel = 1;
+
 
         if (surfaceMaterial != null)
         {
-            surfaceMaterial.SetColor("_LiquidEmission", colorSeaShifted);
+            surfaceMaterial.SetFloat("LiquidLevel", seaLevel);
+        }
+        else
+        {
+            Debug.Log(surfaceMaterial + "not set!");
+        }
 
-        };
+
+
+
+        Vector3[] vertices = planetVertices;
+
+        Vector3 point;
+
+
+        for (int i = 0; i < vertices.Length; i++)
+        {
+            point = vertices[i];
+
+
+            if (point.magnitude <= seaLevel)
+            {
+                point = point.normalized * seaLevel*0.998f;
+                vertices[i] = point;
+            }
+
+
+
+        }
+
+
     }
 
+    void UpdateShadow()
+    {
+        float distanceFromSun = Planet.Pos.magnitude;
 
+        if (shadowMaterial != null)
+        {
+            shadowMaterial.SetFloat("_PlanetDistance", distanceFromSun);
+        }
+        else
+        {
+            Debug.Log(shadowMaterial + "not set!");
+        }
+
+    }
 
     public void SetValues()
     {
@@ -210,7 +287,7 @@ public class PlanetSurface : MonoBehaviour
         Mesh planetSharedMesh = GetComponent<MeshFilter>().sharedMesh;
         planetMesh = Instantiate(planetSharedMesh);
         GetComponent<MeshFilter>().sharedMesh = planetMesh;
-       planetVertices = planetMesh.vertices;
+        planetVertices = planetMesh.vertices;
         planetVerticesBackup = planetMesh.vertices;
         voronoiVertices = planetMesh.vertices;
 
@@ -221,19 +298,30 @@ public class PlanetSurface : MonoBehaviour
         Renderer surfaceRenderer = this.transform.gameObject.GetComponent<Renderer>();
         if (surfaceRenderer != null)
         {
-            surfaceMaterial = new Material(surfaceRenderer.sharedMaterial);
-            surfaceRenderer.material = surfaceMaterial;
-        }
+            foreach (Material material in surfaceRenderer.sharedMaterials) // First harmonic
+            {
 
+                Debug.Log("shaders:" + material.shader.name);
+
+                if (material.shader.name == "Shader Graphs/PlanetSurfaceShader") 
+                    surfaceMaterial = new Material(material);
+
+                if (material.shader.name == "Shader Graphs/PlanetaryShadowSG")
+                    shadowMaterial = new Material(material);
+
+                //Replace with references and centralize shader management maybe 
+            }
+
+        }
 
 
 
     }
 
 
-    public void ShapePlanetSurface()
+    public IEnumerator ShapePlanetSurface()
     {
- 
+
         // vertices back to their orginal shape. 
         System.Array.Copy(planetVerticesBackup, planetVertices, planetVerticesBackup.Length);
         System.Array.Copy(planetVerticesBackup, voronoiVertices, planetVerticesBackup.Length);
@@ -243,18 +331,21 @@ public class PlanetSurface : MonoBehaviour
 
         Random = new System.Random(seed);
 
-        UpdateVoronoiPattern(); //modifies voronoiColor and voronoiVertices (Pass by reference!!)
-        UpdateSurface();        //modifies planetVertices
+        UpdateVoronoiPattern(); //modifies voronoiColor and voronoiVertices (Pass by reference)   
+        UpdateSurfaceNonParallel(); //modifies planetVertices
         UpdateSurfaceColors();  //modifies planetColors
         UpdateCraters();        //modifies planetVertices and planetColors, adds craters
-        UpdateSea();         
-        UpdateLatitudeColoring(); //modifies planetColors
-        UpdatePolarIceCaps();     //modifies planetVertices and planetColors,
+        UpdateSea();
+       // UpdateLatitudeColoring(); //modifies planetColors
+       // UpdatePolarIceCaps();     //modifies planetVertices and planetColors,
         UpdateFlatness();         //modifies planetVertice,
         UpdatePlanetVertices();   //planetVertices to the mesh shape
-        UpdateClouds();             
+        UpdateClouds();
+        UpdateAtmosphere();
+        UpdateRing();
+        UpdateShadow();
+        yield return null;
     }
-    
     void UpdateVoronoiPattern()
     {
         string patternType = "";
@@ -398,6 +489,7 @@ public class PlanetSurface : MonoBehaviour
 
     float SurfaceNoisePatterns(float noise, Vector3 point, Noise noiseFilter, int level)
     {
+
         float patternNoise = heightCurve.Evaluate(noise);
 
 
@@ -469,9 +561,18 @@ public class PlanetSurface : MonoBehaviour
 
                     float rDistance = distance / polarRadius;
                     point = vertices[vertexIndex];
-                    noise = NoiseFunctions.PerlinFilter(point, NoiseLayer, 1.5f, 0, 1, 45);
-                    noise = noise + NoiseFunctions.PerlinFilter(point, NoiseLayer, 2f, 1, 0.8f, 899.1f);
-                    noise = noise + NoiseFunctions.PerlinFilter(point, NoiseLayer, 3f, 1, 0.5f, 2.1f);
+                    /*  noise = NoiseFunctions.PerlinFilter(point, NoiseLayer, 1.5f, 0, 1, 45);
+                      noise += NoiseFunctions.PerlinFilter(point, NoiseLayer, 2f, 1, 0.8f, 899.1f);
+                      noise += NoiseFunctions.PerlinFilter(point, NoiseLayer, 3f, 1, 0.5f, 2.1f);*/
+
+           
+
+                    noise = NoiseManager.Instance.SimplePerlinFilter(point,  1.5f);
+                    noise += NoiseManager.Instance.SimplePerlinFilter(point, 2f);
+                    noise += NoiseManager.Instance.SimplePerlinFilter(point, 3f);
+
+
+
 
 
                     noise += 2f;
@@ -497,10 +598,55 @@ public class PlanetSurface : MonoBehaviour
     }
 
 
-    public void UpdateSurface()
+    struct FirstPerlinNoiseLevel : IJobParallelFor
     {
+        [ReadOnly] public float frequency;
+        [ReadOnly] public float offset;
+        [ReadOnly] public float seed;
+        [ReadOnly] public NativeArray<Vector3> point;
+
+        [ReadOnly] public float level;
+        public NativeArray<float> resultNoise;
+        Vector3 resultA;
+        float noise;
+        float perlin;
+        public void Execute(int i)
+        {
+            resultA = new Vector3(point[i].x * frequency + offset, point[i].y * frequency + offset, point[i].z * frequency + offset);
+            perlin = Mathf.PerlinNoise(resultA.x + 1.12f * seed, resultA.y - 4.3f * seed) * Mathf.PerlinNoise(resultA.y - 3.47f * seed, resultA.z + 1.77f * seed);
+            noise = (0.25f - perlin) * 4f;
+            resultNoise[i] = noise;
+        }
+    }
+
+    struct DeepPerlinNoiseLevel : IJobParallelFor
+    {
+        [ReadOnly] public float frequency;
+        [ReadOnly] public float offset;
+        [ReadOnly] public float seed;
+        [ReadOnly] public NativeArray<Vector3> point;
+
+        [ReadOnly] public float level;
+        public NativeArray<float> resultNoise;
+        Vector3 resultA;
+        float noise;
+        float perlin;
+        public void Execute(int i)
+        {
+            resultA = new Vector3(point[i].x * frequency + offset, point[i].y * frequency + offset, point[i].z * frequency + offset);
+            perlin = Mathf.PerlinNoise(resultA.x + 1.12f * seed, resultA.y - 4.3f * seed) * Mathf.PerlinNoise(resultA.y - 3.47f * seed, resultA.z + 1.77f * seed);
+            noise = (0.25f - perlin) * 4f;
+            resultNoise[i] = noise;
+        }
+    }
+
+    void UpdateSurface()
+    {
+        float startTime = Time.realtimeSinceStartup;
         Vector3[] vertices = planetVertices;
-     
+        float max = 0.1f;
+        float min = 0.5f;
+        float avg = 0f;
         NoiseLayer = new Noise(seed);
 
         float frequency = Frequency;
@@ -514,40 +660,69 @@ public class PlanetSurface : MonoBehaviour
         Vector3 point;
         Vector3 modPoint;
 
-        
+        NativeArray<Vector3> surfacePoint = new NativeArray<Vector3>(vertices.Length, Allocator.TempJob);
+        NativeArray<float> resultNoise = new NativeArray<float>(vertices.Length, Allocator.TempJob);
+
         for (int i = 0; i < vertices.Length; i++) // 1st 
         {
-            point = vertices[i];
-            modPoint = SurfacePointPatterns(point);
-
-            noise = NoiseFunctions.PerlinFilter(modPoint, NoiseLayer, frequency, 1, 1, 0);
-            noise = SurfaceNoisePatterns(noise, point, NoiseLayer, 1);
-            noise = 1 + (noise * subAmplitude);
-            point = point *= noise;
-            vertices[i] = point;
+            surfacePoint[i] = vertices[i];
         }
+
+        FirstPerlinNoiseLevel jobData = new FirstPerlinNoiseLevel();
+        jobData.point = surfacePoint;
+        jobData.frequency = frequency;
+        jobData.offset = 0f;
+        jobData.seed = 5.4f;
+        jobData.resultNoise = resultNoise;
+
+        // Schedule the job with one Execute per index in the results array and only 1 item per processing batch
+        JobHandle handle = jobData.Schedule(vertices.Length, 1);
+
+        // Wait for the job to complete
+        handle.Complete();
+
+        for (int i = 0; i < vertices.Length; i++) // 1st 
+        {
+            if (resultNoise[i] > max) { max = resultNoise[i]; };
+           if (resultNoise[i] < min) { min = resultNoise[i]; }
+            avg += resultNoise[i];
+
+
+            noise = SurfaceNoisePatterns(resultNoise[i], surfacePoint[i], NoiseLayer, 1);
+            noise = 1f + (noise * subAmplitude);
+            surfacePoint[i] = surfacePoint[i] * noise;
+
+        }
+
+        avg = avg / resultNoise.Length;
 
         for (int currentLevel = 2; currentLevel <= levels; currentLevel++) // Higher harmonics
         {
             subAmplitude = (subAmplitude - (subAmplitude * roughness)) + ((Mathf.Pow(1 - roughness, levels) * Amplitude) / levels);
             subFrequency = Frequency * Mathf.Pow(currentLevel, Persistence);
 
-            for (int i = 0; i < vertices.Length; i++)
+            DeepPerlinNoiseLevel deepHarmonic = new DeepPerlinNoiseLevel();
+            deepHarmonic.point = surfacePoint;
+            deepHarmonic.frequency = subFrequency;
+            deepHarmonic.level = currentLevel;
+            deepHarmonic.seed = 2.5f;
+            deepHarmonic.offset = 0f;
+            deepHarmonic.resultNoise = resultNoise;
+
+            JobHandle handle2 = deepHarmonic.Schedule(vertices.Length, 1);
+
+            // Wait for the job to complete
+            handle2.Complete();
+
+            for (int i = 0; i < vertices.Length; i++) // 1st 
             {
-                point = vertices[i];
-
-                modPoint = SurfacePointPatterns(point);
-                noise = NoiseFunctions.PerlinFilter(modPoint, NoiseLayer, subFrequency, currentLevel, 1, 0);
-                noise = SurfaceNoisePatterns(noise, modPoint, NoiseLayer, currentLevel);
+                point = surfacePoint[i];
+                noise = SurfaceNoisePatterns(noise, point, NoiseLayer, 1);
                 noise = 1 + (noise * subAmplitude);
-                point = point *= noise;
+                vertices[i] = point *  noise;
 
-
-                vertices[i] = point;
             }
         }
-
-
 
 
         for (int i = 0; i < vertices.Length; i++)
@@ -562,7 +737,8 @@ public class PlanetSurface : MonoBehaviour
             vertices[i] = point;
         }
 
-
+        surfacePoint.Dispose();
+        resultNoise.Dispose();
 
 
         for (int i = 0; i < vertices.Length; i++)
@@ -570,25 +746,133 @@ public class PlanetSurface : MonoBehaviour
             planetVertices[i] = vertices[i];
         }
 
+        float lastedTime = startTime - Time.realtimeSinceStartup;
+        Debug.Log(" parallel: " + lastedTime);
+
+
 
     }
 
-    void HueShiftColors()
+
+    Vector3 RandomVector()
     {
+        float randomX = ((float)Random.NextDouble() - 0.5f) * 2f;
+        float randomY = ((float)Random.NextDouble() - 0.5f) * 2f;
+        float randomZ = ((float)Random.NextDouble() - 0.5f)*2f;
+        return new Vector3(randomX, randomY, randomZ);
+    }
+    void UpdateSurfaceNonParallel()
+    {
+        float startTime = Time.realtimeSinceStartup;
+        Vector3[] vertices = planetVertices;
 
-        float stardardHueShift = hueShift;
+        NoiseLayer = new Noise(seed);
 
-        float lowColorHueVariation = stardardHueShift * (1 + ((float)Random.NextDouble() - 0.5f) * 0.1f);
-        float highColorHueVariation = stardardHueShift * (1 + ((float)Random.NextDouble() - 0.5f) * 0.1f);
+        float frequency = Frequency;
+        float roughness = Roughness;
+        float amplitude = Amplitude;
+        float persistance = Persistence;
+        float subAmplitude = Amplitude * Roughness;
+        float subFrequency = Frequency;
+        float noise = 0;
 
-        colorHighShifted = ColorFunctions.HueShiftColor(colorHigh, highColorHueVariation, 1);
-        colorMidShifted = ColorFunctions.HueShiftColor(colorMid, stardardHueShift, 1);
-        colorLowShifted = ColorFunctions.HueShiftColor(colorLow, lowColorHueVariation, 1);
-        colorDesertShifted = ColorFunctions.HueShiftColor(colorDesert, lowColorHueVariation, 1);
-        colorSeaShifted = ColorFunctions.HueShiftColor(colorSea, lowColorHueVariation, 1);
+        highestHeight = 0;
+        LowestHeight = 999;
+
+
+        Vector3 point;
+        Vector3 modPoint;
+
+        float max = 0.5f;
+        float min = 2.5f; ;
+        float avg = 0.0f; ;
+
+
+        Vector3 randomVector = RandomVector();
+        for (int i = 0; i < vertices.Length; i++) // 1st 
+        {
+        
+            point = vertices[i];
+           // modPoint = SurfacePointPatterns(point);
+   
+            noise = NoiseManager.Instance.SimplePerlinFilter(point + randomVector, frequency);
+
+            if (noise > max) { max = noise; };
+            if (noise < min) { min = noise; }
+            avg += noise;
+
+            //  noise = noise * SurfaceNoisePatterns(noise, point, NoiseLayer, 1);
+            //  noise =  ((noise-0.5f)) * subAmplitude;
+            noise = noise * amplitude;
+            point *= (1 + noise);
+            vertices[i] = point;
+        }
+
+
+        avg = avg / vertices.Length;
+        Debug.Log("Average: " + avg);
+        for (int currentLevel = 2; currentLevel <= levels; currentLevel++) // Higher harmonics
+        {
+            randomVector = RandomVector();
+            //subAmplitude = (subAmplitude - (subAmplitude * roughness)) + ((Mathf.Pow(1 - roughness, levels) * Amplitude) / levels);
+            subAmplitude = (subAmplitude - (subAmplitude * roughness)) + ((Mathf.Pow(1 - roughness, levels) * Amplitude) / levels);
+            subFrequency = Frequency * Mathf.Pow(currentLevel, Persistence);
+
+            for (int i = 0; i < vertices.Length; i++)
+            {
+                point = vertices[i];
+
+                modPoint = SurfacePointPatterns(point);
+
+                noise = NoiseManager.Instance.SimplePerlinFilter(modPoint + randomVector, subFrequency);
+
+                noise = SurfaceNoisePatterns(noise, modPoint + randomVector, NoiseLayer, currentLevel);
+                noise = ((noise - 0.5f) * subAmplitude);
+                point *= 1 + noise;
+
+
+                vertices[i] = point;
+            }
+        }
+
+
+
+        
+
+        float surfaceHeight = 0;
+
+        for (int i = 0; i < vertices.Length; i++)
+        {
+            point = vertices[i];
+            surfaceHeight = point.magnitude;
+            if (highestHeight < surfaceHeight)
+            {
+                highestHeight = surfaceHeight;
+            }
+            if (LowestHeight > surfaceHeight)
+            {
+                LowestHeight = surfaceHeight;
+            }
+
+            if (surfaceHeight < negativePeakClip)
+            {
+                point = planetVerticesBackup[i];
+            }
+
+            vertices[i] = point;
+        }
+
+
+
+
+        for (int i = 0; i < vertices.Length; i++)
+        {
+            //planetVertices[i] = vertices[i];
+        }
+
+
 
     }
-
 
     void UpdateFlatness()
     {
@@ -614,6 +898,46 @@ public class PlanetSurface : MonoBehaviour
         Vector3[] vertices = planetVertices;
 
         Vector3 point;
+
+
+        float lowestDryLandLevel = 000f;
+        for (int i = 0; i < vertices.Length; i++)
+        {
+            point = vertices[i];
+
+            lowestDryLandLevel = Mathf.Max(LowestHeight, seaLevel);
+
+            float relativeDryLandHeight = Mathf.InverseLerp(lowestDryLandLevel, highestHeight, point.magnitude);
+
+            float relativeSeaDepth = Mathf.InverseLerp(LowestHeight, seaLevel, point.magnitude);
+
+            planetColors[i] = colorGradient.Evaluate(relativeDryLandHeight);
+
+            if (point.magnitude <= seaLevel) {
+                planetColors[i].a = relativeSeaDepth;
+            }
+            
+
+         
+
+        }
+
+
+        planetMesh.colors = planetColors;
+
+    }
+
+    public Gradient GetColorGradient()
+    {
+        return colorGradient;
+    }
+
+    /*
+    void UpdateSurfaceColors()
+    {
+        Vector3[] vertices = planetVertices;
+
+        Vector3 point;
         float colorNoise = 0;
 
         Noise noiseLayer = new Noise(seed + 4512);
@@ -624,7 +948,7 @@ public class PlanetSurface : MonoBehaviour
         Color middleGround = colorMidShifted;
         Color lowGround = colorLowShifted;
         Color equatorialColor;
-        Color wierdColor;
+        Color weirdColor;
 
         for (int i = 0; i < vertices.Length; i++)
         {
@@ -664,24 +988,24 @@ public class PlanetSurface : MonoBehaviour
             }
 
 
-            if (wierd != 0 )
+            if (weird != 0 )
             {
-                float wierdHue = NoiseFunctions.PerlinFilter(point, NoiseLayer, 0.4f, 1, 0.4f* wierd, 4 * seed);
-                wierdHue = wierdHue + NoiseFunctions.PerlinFilter(point, NoiseLayer, 0.8f, 1, 0.22f * wierd, 55 * seed);
+                float wierdHue = NoiseFunctions.PerlinFilter(point, NoiseLayer, 0.4f, 1, 0.4f* weird, 4 * seed);
+                wierdHue = wierdHue + NoiseFunctions.PerlinFilter(point, NoiseLayer, 0.8f, 1, 0.22f * weird, 55 * seed);
 
 
-                float wierdSaturation =(NoiseFunctions.PerlinFilter(point, NoiseLayer, 0.5f, 1, 0.15f * wierd, 4.1f * seed));
-                wierdSaturation = wierdSaturation + (NoiseFunctions.PerlinFilter(point, NoiseLayer, 1f, 1, 0.15f * wierd, 55.2f * seed));
+                float wierdSaturation =(NoiseFunctions.PerlinFilter(point, NoiseLayer, 0.5f, 1, 0.15f * weird, 4.1f * seed));
+                wierdSaturation = wierdSaturation + (NoiseFunctions.PerlinFilter(point, NoiseLayer, 1f, 1, 0.15f * weird, 55.2f * seed));
 
-                float wierdValue = (NoiseFunctions.PerlinFilter(point, NoiseLayer, 0.5f, 1, 0.15f * wierd, 4.3f * seed));
-                wierdValue = wierdValue + (NoiseFunctions.PerlinFilter(point, NoiseLayer, 1f, 1, 0.05f * wierd, 55.3f * seed));
+                float wierdValue = (NoiseFunctions.PerlinFilter(point, NoiseLayer, 0.5f, 1, 0.15f * weird, 4.3f * seed));
+                wierdValue = wierdValue + (NoiseFunctions.PerlinFilter(point, NoiseLayer, 1f, 1, 0.05f * weird, 55.3f * seed));
                 wierdValue = Mathf.Clamp01(wierdValue);
 
 
-                wierdColor = ColorFunctions.HueShiftColor(planetColors[i], wierdHue, 1);
-                wierdColor = ColorFunctions.SaturationShiftColor(wierdColor, wierdSaturation, 1);
-                wierdColor = ColorFunctions.SaturationShiftColor(wierdColor, wierdValue, 1);
-                planetColors[i] = wierdColor;
+                weirdColor = ColorFunctions.HueShiftColor(planetColors[i], wierdHue, 1);
+                weirdColor = ColorFunctions.SaturationShiftColor(weirdColor, wierdSaturation, 1);
+                weirdColor = ColorFunctions.SaturationShiftColor(weirdColor, wierdValue, 1);
+                planetColors[i] = weirdColor;
 
             };
 
@@ -736,7 +1060,7 @@ public class PlanetSurface : MonoBehaviour
 
         planetMesh.colors = planetColors;
 
-    }
+    }*/
 
     void UpdateLatitudeColoring()
     {
@@ -771,9 +1095,16 @@ public class PlanetSurface : MonoBehaviour
                     point = vertices[vertexIndex];
  
                     noise = 0.5f;
-                    noise += Mathf.Abs(NoiseFunctions.PerlinFilter(point, NoiseLayer, 1.5f, 0, 0.2f, 45 + seed));
-                    noise -= Mathf.Abs(NoiseFunctions.PerlinFilter(point, NoiseLayer, 1.5f, 0, 0.2f, 85 + seed));
-                    noise += NoiseFunctions.PerlinFilter(point, NoiseLayer, 2.5f, 0, 0.3f, 899.1f + seed);
+
+                    /* noise += Mathf.Abs(NoiseFunctions.SimplePerlinFilter(point,  1.5f));
+                     noise -= Mathf.Abs(NoiseFunctions.PerlinFilter(point, 1.5f));
+                     noise += NoiseFunctions.PerlinFilter(point, 2.5f);*/
+
+
+                     noise += Mathf.Abs(NoiseManager.Instance.SimplePerlinFilter(point,  1.5f));
+                     noise -= Mathf.Abs(NoiseManager.Instance.SimplePerlinFilter(point, 1.5f));
+                     noise += NoiseManager.Instance.SimplePerlinFilter(point, 2.5f);
+
 
                     noise -= 1 * (rDistance * rDistance * rDistance);
 
@@ -801,9 +1132,62 @@ public class PlanetSurface : MonoBehaviour
     }
 
 
-
-
     void UpdateCraters()
+    {
+        Random = new System.Random(seed);
+        Vector3[] vertices = planetVertices;
+        Vector3[] backupVertices = planetVerticesBackup;
+
+        int craterNumber = 0;
+
+        craterNumber = (int)(MathFunctions.StandardDeviation(craterAmount, 0.8f * craterAmount, seed));
+        craterNumber = Mathf.Clamp(craterAmount, 0, craterAmount * 5);
+
+
+        for (int i = 0; i < craterNumber; i++)
+        {
+            int craterId = Random.Next(0, vertices.Length);
+            Vector3 craterPos = vertices[craterId];
+            Vector3 smoothedVertex;
+
+
+            List<Vector3> craterVertices = new List<Vector3>();
+
+
+            float randomCraterSize = Mathf.Clamp(Mathf.Abs(MathFunctions.StandardDeviation(craterSize, 0.6f * craterSize, seed + i)), 0.3f * craterSize, 3f * craterSize);
+
+            float rDistance = 0; //a relative distance from the crater midpoint
+            float rDepth = 0;  //a relative depth of the crater midpoint
+            for (int j = 0; j < vertices.Length; j++)
+            {
+                float distance = Vector3.Distance(vertices[j], craterPos); //a point distance from the crater midpoint
+
+                if (distance <= randomCraterSize)
+                {
+
+                    rDistance = distance / randomCraterSize;
+
+                    rDepth = -0.5f * Mathf.Pow(-Mathf.Pow(rDistance, 2) + 1.4f, 0.5f) + 0.32f;
+                    rDepth *= randomCraterSize;
+                    planetColors[j] = colorGradient.Evaluate(0.3f * rDepth);
+
+                    smoothedVertex = Vector3.Lerp(backupVertices[j], vertices[j], rDistance);
+
+                    vertices[j] = smoothedVertex * (1 + (rDepth * craterAmplitude));
+                }
+            }
+
+
+        }
+
+
+        planetVertices = vertices;
+        planetMesh.colors = planetColors;
+
+    }
+
+    /*void UpdateCraters()
+
     {
         Random = new System.Random(seed);
         Vector3[] vertices = planetVertices;
@@ -851,7 +1235,7 @@ public class PlanetSurface : MonoBehaviour
         planetMesh.colors = planetColors;
 
     }
-
+    */
 
 
 

@@ -8,15 +8,12 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: SystemSkybox
-  m_Shader: {fileID: 4800000, guid: cbc03cb67b7ec0546850e01ffd933930, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 8bb86be7dfd458f439cb74ea6ac1955e, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
-  m_InvalidKeywords:
-  - _EMISSION
-  - _MAPPING_LATITUDE_LONGITUDE_LAYOUT
-  - _SUNDISK_HIGH_QUALITY
-  m_LightmapFlags: 0
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -26,118 +23,6 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _AlphaTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _BASE_COLOR_MAP:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _BUMP_MAP:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _BackTex:
-        m_Texture: {fileID: 2800000, guid: 7038b47c9c23c9242a7b75892ef5cf16, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _BumpMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _DetailAlbedoMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _DetailMask:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _DetailNormalMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _DownTex:
-        m_Texture: {fileID: 2800000, guid: abe497f8ce6b20e49ab1907499a358e6, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _EMISSION_COLOR_MAP:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _EmissionMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 0.16, y: 0.2}
-        m_Offset: {x: -0.01, y: 4.04}
-    - _FrontTex:
-        m_Texture: {fileID: 2800000, guid: 88bec335fde38634b803c0fa559503e4, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _LeftTex:
-        m_Texture: {fileID: 2800000, guid: c72134012925c5746a6b3c9a1fedc72a, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _METALNESS_MAP:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 65475e0f4e083f04a99ffc366b4cea8f, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MetallicGlossMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _OcclusionMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _ParallaxMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _REFLECTIONS_COLOR_MAP:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _REFLECTIONS_IOR_MAP:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _REFLECTIONS_ROUGHNESS_MAP:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _RightTex:
-        m_Texture: {fileID: 2800000, guid: 8a1b02ebb5853fb41b35c414c810382e, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _TRANSPARENCY_MAP:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _Tex:
-        m_Texture: {fileID: 8900000, guid: 64e37d3840aea7c40b335346e391cedb, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _Texture2:
-        m_Texture: {fileID: 2800000, guid: 00cf6e40a82f21e458ec98796b9feb67, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _TextureNebulae:
-        m_Texture: {fileID: 8900000, guid: 64e37d3840aea7c40b335346e391cedb, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _TextureStars:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _UpTex:
-        m_Texture: {fileID: 2800000, guid: 8acbabf9dbf201d4389d7d915a9751c4, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -152,114 +37,26 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - PixelSnap: 0
-    - _AtmosphereThickness: 1.97
-    - _BASE_COLOR_WEIGHT: 1
-    - _BUMP_MAP_STRENGTH: 0.3
-    - _Blend: 0.679
-    - _BlendOp: 0
-    - _Brightness: 0.68
-    - _BrightnessPower: 1
-    - _BrightnessVariationScale: 0.05
-    - _BumpScale: 1
-    - _CameraFadingEnabled: 0
-    - _CameraFarFadeDistance: 2
-    - _CameraNearFadeDistance: 1
-    - _CenterFade: 0.75
-    - _ColorMask: 15
-    - _ColorMode: 0
-    - _Cull: 0
-    - _Cutoff: 0.5
-    - _Density: 0.5
-    - _Depth: 0
-    - _DetailNormalMapScale: 1
-    - _DistortionBlend: 0.5
-    - _DistortionEnabled: 0
-    - _DistortionStrength: 1
-    - _DistortionStrengthScaled: 0
-    - _DstBlend: 10
-    - _EMISSION_WEIGHT: 1
-    - _EmissionEnabled: 0
-    - _EnableExternalAlpha: 0
-    - _Exposure: 8
-    - _ExtraEmission: 0.75
-    - _Factor: 0.05
-    - _FlipbookMode: 0
-    - _GlossMapScale: 1
-    - _Glossiness: 0.5
-    - _GlossyReflections: 1
-    - _Glow: 1
-    - _ImageType: 0
-    - _Layout: 0
-    - _LightingEnabled: 0
-    - _METALNESS: 0
-    - _Mapping: 1
-    - _Metallic: 0
-    - _MirrorOnBack: 0
-    - _Mode: 2
-    - _NoiseOffset: 0.5
-    - _NoiseOpacity: 0.9
-    - _NoiseSpeed: 1
-    - _OcclusionStrength: 1
-    - _OverallScale: 5
-    - _Parallax: 0.02
-    - _REFLECTIONS_IOR: 1.52
-    - _REFLECTIONS_ROUGHNESS: 1
-    - _REFLECTIONS_WEIGHT: 1
-    - _Randomness: 5
-    - _Res: 128
-    - _RimPower: 3
-    - _Rotation: 156
-    - _Size: 1
-    - _SkyExponent1: 7.67
-    - _SkyIntensity: 1.75
-    - _SmoothnessTextureChannel: 0
-    - _SoftParticlesEnabled: 0
-    - _SoftParticlesFarFadeDistance: 1
-    - _SoftParticlesNearFadeDistance: 0
-    - _SpaceExposure: 1.16
-    - _SpecularHighlights: 1
-    - _SrcBlend: 5
-    - _StarExposure: 0
-    - _StarFade: 0
-    - _StarMulti: 1.61
-    - _StarsRatio: 0
-    - _StarsScale: 20
-    - _Stencil: 0
-    - _StencilComp: 8
-    - _StencilOp: 0
-    - _StencilReadMask: 255
-    - _StencilWriteMask: 255
-    - _SunDisk: 2
-    - _SunIntensity: 7.1
-    - _SunSize: 0.564
-    - _SunSizeConvergence: 6.12
-    - _TRANSPARENCY: 0
-    - _Threshold: 0.9178
-    - _UVSec: 0
-    - _UseUIAlphaClip: 0
-    - _ZTest: 0
-    - _ZWrite: 0
+    - _Brightness: 128.3
+    - _Density: 0.022
+    - _QuadDistortion: 0.16
+    - _QuadEdge: 0.2
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    - _Scale: 97.5
     m_Colors:
-    - _BASE_COLOR: {r: 1, g: 1, b: 1, a: 1}
-    - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
-    - _Color: {r: 1, g: 0, b: 0, a: 1}
-    - _ColorAddSubDiff: {r: 0, g: 0, b: 0, a: 0}
-    - _EMISSION_COLOR: {r: 0, g: 0, b: 0, a: 0}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _Flip: {r: 1, g: 1, b: 1, a: 1}
-    - _GroundColor: {r: 0.369, g: 0.349, b: 0.341, a: 1}
-    - _LightColor: {r: 1, g: 1, b: 1, a: 1}
-    - _MoonVector: {r: 0.269, g: 0.615, b: 1.93, a: 0}
-    - _Offset: {r: 0, g: 0, b: 0, a: 0}
-    - _REFLECTIONS_COLOR: {r: 1, g: 1, b: 1, a: 1}
-    - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
-    - _RimColor: {r: 1, g: 1, b: 1, a: 0}
-    - _SkyColor1: {r: 0.8301887, g: 0, b: 0, a: 0}
-    - _SkyColor2: {r: 0, g: 0, b: 0, a: 0}
-    - _SkyTint: {r: 1, g: 0.07924521, b: 0.07924521, a: 1}
-    - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
-    - _SpaceColor: {r: 1, g: 1, b: 1, a: 0.5}
-    - _SunColor: {r: 1, g: 0.99, b: 0.87, a: 1}
-    - _Tint: {r: 0.36477977, g: 0.36477977, b: 0.36477977, a: 1}
+    - _BackgroundColor: {r: 0, g: 0.10424521, b: 0.24528301, a: 0}
   m_BuildTextureStacks: []
+--- !u!114 &5557327089086776632
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 7

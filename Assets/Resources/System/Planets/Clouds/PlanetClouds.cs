@@ -14,9 +14,8 @@ public class PlanetClouds : MonoBehaviour
     Vector3[] verticesBackup;
     Noise NoiseLayer;
 
-    ColorFunctions ColorFunctions = new ColorFunctions();
+  
 
-    [SerializeField] Color CloudColor = new Color(1, 1, 1, 1);
     [SerializeField] float HueShift = 0;
     [SerializeField] float CloudPower = 1.00f;
     [SerializeField] float CloudSwirl = 0.4f;
@@ -30,11 +29,7 @@ public class PlanetClouds : MonoBehaviour
 
     System.Random Random = new System.Random();
 
-    void Start()
-    {
 
-
-    }
 
     void InstantiateCloudscape()
     {
@@ -106,7 +101,6 @@ public class PlanetClouds : MonoBehaviour
         List<float> alphaList = new List<float>();
         vertices = cloudSharedMesh.vertices;
         Color[] colors = new Color[vertices.Length];
-        Color cloudColorShifted = ColorFunctions.HueShiftColor(CloudColor, HueShift, 1); 
 
         float alphaNoise = 1;
 
@@ -118,7 +112,6 @@ public class PlanetClouds : MonoBehaviour
             alphaNoise = PerlinFilter(point, NoiseLayer, Frequency, Amplitude);
             alphaNoise += PerlinFilter(point, NoiseLayer, 2*Frequency, 0.5f*Amplitude);
             alphaNoise = alphaNoise - 0.2f;
-            colors[i] = cloudColorShifted;
             colors[i].a = alphaNoise;
             }
             else
@@ -129,8 +122,46 @@ public class PlanetClouds : MonoBehaviour
 
         cloudMesh.colors = colors;
     }
+    public void SetCloudCoverage(float pressure)
+    {
+        float cloudCoverage = 0;
+
+        if (pressure < 0.2f) { cloudCoverage = 0; }
+        else if (pressure < 0.6f) { cloudCoverage = 0.1f; }
+        else if (pressure < 1.2) { cloudCoverage = 0.24f; }
+        else if (pressure < 1.7) { cloudCoverage = 0.5f; }
+        else { cloudCoverage = 0.9f; }
+
+        if (this.transform.gameObject.TryGetComponent<Renderer>(out Renderer renderer))
+        {
+            Material cloudMaterial = new Material(renderer.sharedMaterial);
+            renderer.material = cloudMaterial;
+            cloudMaterial.SetFloat("_Density", cloudCoverage);
+        }
+        else
+        {
+            Debug.LogWarning("PlanetCloud renderer not found");
+        }
+
+    }
+
+    public void SetCloudColor(Color cloudColor)
+    {
+        Color color = cloudColor;
 
 
+        if (this.transform.gameObject.TryGetComponent<Renderer>(out Renderer renderer))
+        {
+            Material cloudMaterial = new Material(renderer.sharedMaterial);
+            renderer.material = cloudMaterial;
+            cloudMaterial.SetColor("_Color", color);
+        }
+        else
+        {
+            Debug.LogWarning("PlanetCloud renderer not found");
+        }
+
+    }
 
     public void ShapePlanetClouds()
     {

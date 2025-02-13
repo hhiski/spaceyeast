@@ -11,7 +11,7 @@ public class Controls : GalaxyCatalog
     GameObject Galaxy;
     CameraOrbit CameraOrbit;
 
-    void Start()
+    void OnEnable()
     {
 
         Galaxy = GameObject.Find("/Galaxy");
@@ -19,8 +19,6 @@ public class Controls : GalaxyCatalog
         CameraOrbit = CameraOrbit.GetInstance();
     }
 
-
-        
     void ReadyTimeControl()
     {
         if (Input.GetKeyDown(KeyCode.KeypadPlus) == false)
@@ -33,7 +31,7 @@ public class Controls : GalaxyCatalog
         }
         else
         {
-            Invoke("ReadyTimeControl", 0.11f);
+            Invoke(nameof(ReadyTimeControl), 0.11f);
         }
 
     }
@@ -68,28 +66,12 @@ public class Controls : GalaxyCatalog
         {
             GalaxyCatalog.CreateCluster(clusterId);
         }
-
         else if (scaleLevel == "society")
-        {/*
-            GameObject systemScope =  GalaxyCatalog.CreateSystem(clusterId, systemId);
-
-            if (systemScope.GetComponent<SystemController>() != null)
-            {
-                GameObject selectedPlanet = systemScope.GetComponent<SystemController>().FindPlanetGameObject(planetId);
-                
-                if (selectedPlanet  != null)
-                {
-                    if (selectedPlanet.GetComponent<SystemPlanet>() != null)
-                    {
-                        Planet planet = selectedPlanet.GetComponent<SystemPlanet>().Planet;
-                        UI.PlanetDataView(selectedPlanet.transform, planet);
-                    }
-                }
-
-            }
-
-            **/
+        {
+            GalaxyCatalog.CreateSystem(clusterId, systemId);
         }
+
+
         else
         {
             GalaxyCatalog.CreateGalaxy();
@@ -144,7 +126,7 @@ public class Controls : GalaxyCatalog
         {
 
             ZoomOut();
-            Invoke("ReadyTimeControl", 0.11f);
+            Invoke("ReadyTimeControl", 0.16f);
         }
 
 
@@ -152,7 +134,7 @@ public class Controls : GalaxyCatalog
         {
             GalaxyCatalog.ShowPlanetNumbers();
         }
-        
+            
         if (TimeControlReady && Input.GetKeyDown(KeyCode.KeypadPlus) == true)
         {
             Time.timeScale = Time.timeScale * 2;

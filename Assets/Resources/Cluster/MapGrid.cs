@@ -1,26 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using LineSpace;
+using Game.Lines;
 
 public class MapGrid : MonoBehaviour
 {
-
+    [SerializeField] LineType LineType = LineType.Galactic;
     public int GridLineNumber = 40;
     public int LineSpace = 10;
-    public float LineThickness = 0.8f;
-    public Material LineMaterial;
     public int LineCircleNumber = 0;
     public float LineCircleSpace = 5;
     public bool drawGrid = true;
     public bool drawCircles = false;
 
-    public Color lineColor = new Color(1, 1, 1, 1);
     void Start()
     {
 
-        Vector3 startPos;
-        Vector3 endPos;
+        Vector3 horizontalLineStartPos,verticalLineStartPos, horizontalLineEndPos, verticalLineEndPos;
 
         int lineNum = GridLineNumber;
         float fullLineLenght = (LineSpace * LineSpace);
@@ -62,9 +58,10 @@ public class MapGrid : MonoBehaviour
                     angle += (360f / circleSegmentCount);
                 }
 
-                GameObject line = LineFunctions.CreateLineObject(this.transform, new Vector3(0, 0, 0), "Circle Line", circleLineSegments, LineMaterial, true, lineColor,  LineThickness);
-                line.GetComponent<LineRenderer>().useWorldSpace = true;
 
+                GameObject line = LineManager.Instance.CreateLineObject(this.transform, "Circle", circleLineSegments, LineType);
+                line.GetComponent<LineRenderer>().useWorldSpace = true;
+                line.GetComponent<LineRenderer>().loop = true;
             }
         }
 
@@ -72,7 +69,7 @@ public class MapGrid : MonoBehaviour
         if (drawGrid)
         {
 
-            Vector3[] heightLineSegments;
+            Vector3[] horizontalLineSegments, verticalLineSegments;
 
             if (lineNum % 2 != 0) { lineNum++; };
             lineNum = lineNum / 2;
@@ -85,46 +82,28 @@ public class MapGrid : MonoBehaviour
                 fullLineLenght = (lineNum * LineSpace);
                 lineDistanceNormalized = Mathf.Abs((float)lineIndex / (float)(lineNum));
                 lineLenght = fullLineLenght * Mathf.Pow((1 - Mathf.Pow(lineDistanceNormalized, 2)), 0.5f);
-                lineAlpha = LineMaterial.color.a;
-                lineColor = LineMaterial.color;
-                    //LineColor.a * (1f - Mathf.Clamp(lineDistanceNormalized - 0.90f, 0f, 1f) * 10f);
-
-                startPos = transform.position + new Vector3(lineIndex * LineSpace, 0.0f, -lineLenght);
-                endPos = transform.position + new Vector3(lineIndex * LineSpace, 0.0f, lineLenght);
-
-                fadeTime = 10f / lineLenght;
-
-                lineGradient.SetKeys(
-                   new GradientColorKey[] { new GradientColorKey(lineColor, 0.0f), new GradientColorKey(lineColor, 1.0f) },
-                   new GradientAlphaKey[] { new GradientAlphaKey(0, 0.0f), new GradientAlphaKey(lineAlpha, fadeTime), new GradientAlphaKey(lineAlpha, 0.5f), new GradientAlphaKey(lineAlpha, 1f - fadeTime), new GradientAlphaKey(0, 1.0f) }
-                );
-
-                heightLineSegments = new[] { startPos, (startPos * 0.9f + endPos * 0.1f), (startPos * 0.5f + endPos * 0.5f), (startPos * 0.1f + endPos * 0.9f), endPos };
-                LineFunctions.CreateLineObject(this.transform, new Vector3(0, 0, 0), "Grid Line", heightLineSegments, LineMaterial, lineGradient, LineThickness);
-
-            }
-
-            //Vertical lines
-            for (int lineIndex = -lineNum; lineIndex <= lineNum; lineIndex++)
-            {
-                fullLineLenght = (lineNum * LineSpace);
-                lineDistanceNormalized = Mathf.Abs((float)lineIndex / (float)(lineNum));
-                lineLenght = fullLineLenght * Mathf.Pow((1 - Mathf.Pow(lineDistanceNormalized, 2)), 0.5f);
-                lineAlpha = lineColor.a * (1f - Mathf.Clamp(lineDistanceNormalized - 0.90f, 0f, 1f) * 10f);
-
-                startPos = transform.position + new Vector3(-lineLenght, 0.0f, lineIndex * LineSpace);
-                endPos = transform.position + new Vector3(lineLenght, 0.0f, lineIndex * LineSpace);
+                lineAlpha =  (1f - Mathf.Clamp(lineDistanceNormalized - 0.90f, 0f, 1f) * 10f);
+                horizontalLineStartPos = transform.position + new Vector3(lineIndex * LineSpace, 0.0f, -lineLenght);
+                horizontalLineEndPos = transform.position + new Vector3(lineIndex * LineSpace, 0.0f, lineLenght);
+                verticalLineStartPos = transform.position + new Vector3(-lineLenght, 0.0f, lineIndex * LineSpace);
+                verticalLineEndPos = transform.position + new Vector3(lineLenght, 0.0f, lineIndex * LineSpace);
 
                 fadeTime = 10f / lineLenght;
 
                 lineGradient.SetKeys(
-                   new GradientColorKey[] { new GradientColorKey(lineColor, 0.0f), new GradientColorKey(lineColor, 1.0f) },
+                   new GradientColorKey[] { new GradientColorKey(new Color(1,1,1,1), 0.0f), new GradientColorKey(new Color(1, 1, 1, 1), 1.0f) },
                    new GradientAlphaKey[] { new GradientAlphaKey(0, 0.0f), new GradientAlphaKey(lineAlpha, fadeTime), new GradientAlphaKey(lineAlpha, 0.5f), new GradientAlphaKey(lineAlpha, 1f - fadeTime), new GradientAlphaKey(0, 1.0f) }
                 );
 
-                heightLineSegments = new[] { startPos, (startPos * 0.9f + endPos * 0.1f), (startPos * 0.5f + endPos * 0.5f), (startPos * 0.1f + endPos * 0.9f), endPos };
-                LineFunctions.CreateLineObject(this.transform, new Vector3(0, 0, 0), "Grid Line", heightLineSegments, LineMaterial, lineGradient, LineThickness);
+                horizontalLineSegments = new[] { horizontalLineStartPos, (horizontalLineStartPos * 0.9f + horizontalLineEndPos * 0.1f), (horizontalLineStartPos * 0.5f + horizontalLineEndPos * 0.5f), (horizontalLineStartPos * 0.1f + horizontalLineEndPos * 0.9f), horizontalLineEndPos };
+                verticalLineSegments = new[] { verticalLineStartPos, (verticalLineStartPos * 0.9f + verticalLineEndPos * 0.1f), (verticalLineStartPos * 0.5f + verticalLineEndPos * 0.5f), (verticalLineStartPos * 0.1f + verticalLineEndPos * 0.9f), verticalLineEndPos };
 
+                GameObject horizontalLine = LineManager.Instance.CreateLineObject(this.transform, "Grid Line", horizontalLineSegments, LineType);
+                GameObject verticalLine = LineManager.Instance.CreateLineObject(this.transform, "Grid Line", verticalLineSegments, LineType);
+
+                horizontalLine.GetComponent<LineRenderer>().useWorldSpace = true;
+                horizontalLine.GetComponent<LineRenderer>().colorGradient = lineGradient;
+            
             }
 
         }

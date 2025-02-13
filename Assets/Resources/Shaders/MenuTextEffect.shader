@@ -79,7 +79,7 @@ Shader "Custom/MenuTextEffect"
 
 
 					float Rand1 = rand(round(i.vertex * _Res),_Time[0] * _NoiseSpeed);
-
+					Rand1 = Matf.
 					Rand1 *= _NoiseOpacity;
 
 

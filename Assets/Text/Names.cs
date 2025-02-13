@@ -18,6 +18,7 @@ public class Names
         "Lazulum Australis",
         "Shamash 124",
         "Cat 73",
+        "Apricot",
         "Carmichael",
         "Inkberry",
         "Sellafield",
@@ -41,6 +42,11 @@ public class Names
         "Pancake Star",
         "Bergljot",
         "Spindlewax",
+        "Kubek",
+        "Tabby",
+        "Kazilik",
+        "Qaraqorum",
+        "Shubankari 6",
         "Triptychon 156",
         "Gamma Vermis",
         "Alpha Scarabaeorum",
@@ -114,6 +120,7 @@ public class Names
 
     public string getPlanetName(string starName, int order)
     {
+
         int asciiLetterNumber = order + 65;
         string planetOrderLetter = ((char)asciiLetterNumber).ToString();
         string name = starName + " " + planetOrderLetter;

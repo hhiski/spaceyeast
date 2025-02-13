@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using LineSpace;
-using MathSpace;
+using Game.Lines;
+using Game.Math;
 
 using static CelestialBody;
 public class SystemMoon : MonoBehaviour
@@ -43,7 +43,8 @@ public class SystemMoon : MonoBehaviour
 
         PlanetSurfaceObject = CreatePlanetSurface();
 
-        LineFunctions.CreateOrbitCircle(this.transform, transform.parent.position, LineMaterial);
+
+        LineManager.Instance.CreateCircleObject(this.transform, "Orbital Circle", transform.parent.position, 360, LineType.Orbital);
 
         float inclinationFactor = Mathf.Abs((MathFunctions.StandardDeviation(0, 40, Seed + 50)));
         float inclinationX = (float)(MathFunctions.StandardDeviation(0, inclinationFactor, Seed + 10));
@@ -94,7 +95,7 @@ public class SystemMoon : MonoBehaviour
         MoonSurfaceObject.GetComponent<PlanetSurface>().Planet = Moon;
         MoonSurfaceObject.GetComponent<PlanetSurface>().SetValues();
         MoonSurfaceObject.GetComponent<PlanetSurface>().CopyVertices();
-        MoonSurfaceObject.GetComponent<PlanetSurface>().ShapePlanetSurface();
+     //   MoonSurfaceObject.GetComponent<PlanetSurface>().ShapePlanetSurface();
 
         return MoonSurfaceObject;
     }

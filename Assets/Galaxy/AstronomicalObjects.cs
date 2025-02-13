@@ -1,40 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using MathSpace;
+using Game.Math;
 
+using Game.Lines;
+using Game.ID;
+using Unity.VisualScripting;
 
 static public class CelestialBody {
 
-
-    //Determines the the number of stars, planets, and so on.
- //   const int ClusterNumberPerUniverse = 50; todo
-    const int MaxStarNumberPerCluster = 20;
-    const int MinStarNumberPerCluster = 8;
-    const int MaxPlanetNumberPerSystem = 15;
-    const int MinPlanetNumberPerSystem = 1;
-  // const int MaxBeltsNumberPerSystem = 3; todo
-  //  const float BeltProbability = 0.5f;
-
-
-
     public class Universe
     {
-        int Id;
-        int NumberOfClusters;
+        public int Id { get; private set; }
+        public string Name { get;  set; } = "Galaxy";
 
-        MathFunctions MathFunctions = new MathFunctions();
-
-
-
-        public List<Cluster> Clusters = new List<Cluster>();
-
-
+        public List<Cluster> Clusters { get; set; } = new();
 
         public Universe(int id)
         {
             Id = id;
-           
 
         }
 
@@ -54,7 +38,7 @@ static public class CelestialBody {
             OrbitDistance = 5;
             Pos = MathFunctions.RandomPositionOnCircle(5, new Vector3(0, 0, 0));
             RotationSpeed = Random.Range(0.5f, 8);
-            OrbitSpeed = Random.Range(3, 6);
+            OrbitSpeed = Random.Range(3, 6) / 360f;
             OrbitPhase = Random.Range(0, 100) / 100f;
             OrbitOmega = Random.Range(0, 180) / 180f;
             Type = new PlanetType(parentsOrbitalDistance, solarTemperature);
@@ -76,10 +60,10 @@ static public class CelestialBody {
             Mass = Random.Range(0.10f, 0.25f); ;
             OrbitDistance = 5;
             Pos = MathFunctions.RandomPositionOnCircle(5, new Vector3(0, 0, 0));
-            RotationSpeed = Random.Range(0.5f, 8);
-            OrbitSpeed = Random.Range(3, 6);
+            RotationSpeed = Random.Range(0.5f, 8) ;
+            OrbitSpeed = Random.Range(3, 6)/360f;
             OrbitPhase = Random.Range(0, 100) / 100f;
-            OrbitOmega = Random.Range(0, 180) / 180f;
+            OrbitOmega = Random.Range(0, 180f) / 360f;
             Type = new PlanetType("Minor");
             Name = "Moon";
             RingType = 0;
@@ -105,7 +89,7 @@ static public class CelestialBody {
 
     public class Planet
     {
-        public int Id; //Within the solar system
+        public int Id; 
         public string Name;
         public float OrbitSpeed;
         public float OrbitPhase; 
@@ -132,6 +116,7 @@ static public class CelestialBody {
         public Planet(float orbitalDistance, float solarTemperature) // Autoselects the suitable type for the planet based its suns distance and temperature.
         {
             Type = new PlanetType(orbitalDistance, solarTemperature);
+            Id = IDManager.Instance.GetUniquePlanetId();
             Name = "Unnamed";
             RingType = RingTypeProbability();
             Seed = Random.Range(1, 9999);
@@ -155,9 +140,14 @@ static public class CelestialBody {
         public Planet(string type) //Forced planet type. eg. ice planets near the sun
         {
             Type = new PlanetType(type);
+            Id = IDManager.Instance.GetUniquePlanetId();
             Name = "Unnamed";
             RingType = RingTypeProbability();
+            OrbitDistance = Random.Range(60, 400);
             OrbitPhase = Random.Range(0, 100) / 100f;
+            OrbitSpeed = MathFunctions.GetOrbitSpeed(OrbitDistance);
+            OrbitOmega = Random.Range(0, 180f) / 360f;
+            OrbitInclination = MathFunctions.GetRandomOrbitInclination(Seed);
             Seed = Random.Range(1, 9999);
             Mass = MassProbability(Type.Name);
             RotationSpeed = Random.Range(0.5f, 8);
@@ -182,10 +172,15 @@ static public class CelestialBody {
         public Planet()
         {
             Type = new PlanetType();
+            Id = IDManager.Instance.GetUniquePlanetId();
             Name = "Unnamed";
             RingType = RingTypeProbability();
             Seed = Random.Range(1, 9999);
+            OrbitDistance = Random.Range(60, 400);
             OrbitPhase = Random.Range(0, 100) / 100f;
+            OrbitSpeed = MathFunctions.GetOrbitSpeed(OrbitDistance);
+            OrbitOmega = Random.Range(0, 180f) / 360f;
+            OrbitInclination = MathFunctions.GetRandomOrbitInclination(Seed);
             Mass = MassProbability(Type.Name);
             PolarCoverage = 0;
             Atm = Type.RandomAtmosphere;
@@ -247,7 +242,7 @@ static public class CelestialBody {
         public float SolarWindStrenght;
         public float SolarTemperature;
 
-
+        public int HomeClusterId;
         public int Id;
 
         public List<bool> OrbitSlots = new List<bool>();
@@ -255,9 +250,10 @@ static public class CelestialBody {
         public List<AsteroidBelt> AsteroidBelts = new List<AsteroidBelt>();
 
 
-        public Star()
+        public Star(int clusterId)
         {
             Name = "Unnamed Star";
+            Id = IDManager.Instance.GetUniqueStarId();
             Seed = Random.Range(1, 9999);
             Vector3 middlePos = new Vector3(0, 0, 0);
             float randomHeight = Random.Range(5f, 50f); ;
@@ -266,9 +262,8 @@ static public class CelestialBody {
             StarType starType = starFormation.GetRandomTypeStar();
             Type = starType;
             SolarWindStrenght = Mathf.Clamp((Random.Range(0,3f)-2),0f, 0.8f);
-            SolarTemperature = Random.Range(starType.TemperatureRange[0], starType.TemperatureRange[1]); 
-
-
+            SolarTemperature = Random.Range(starType.TemperatureRange[0], starType.TemperatureRange[1]);
+            HomeClusterId = clusterId;
         }
     }
 
@@ -299,9 +294,9 @@ static public class CelestialBody {
     public class Cluster 
     {
 
-        public Cluster(int id, string name, int color)
+        public Cluster(string name, int color)
         {
-            Id = id;
+            Id = IDManager.Instance.GetUniqueClusterId();
             Name = name;
             Color = color;
         }
@@ -313,6 +308,14 @@ static public class CelestialBody {
             Color = Random.Range(1, 4);
         }
 
+        public Cluster()
+        {
+            Id = IDManager.Instance.GetUniqueClusterId();
+            Name = "Unnamed Cluster";
+            Color = Random.Range(1, 4);
+        }
+
+      
 
         public int Id { get; set; }
         public string Name { get; set; }

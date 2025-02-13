@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static CelestialBody;
 
-public class SystemController : GalaxyCatalog
+public class SystemController : MonoBehaviour
 {
     public GameObject MoonSystemPrefab;
     public GameObject PlanetSystemPrefab;
@@ -44,7 +44,6 @@ public class SystemController : GalaxyCatalog
 
     void OnDisable()
     {
- 
 
         foreach (Transform child in gameObject.transform)
         {
@@ -57,12 +56,26 @@ public class SystemController : GalaxyCatalog
 
     public List<GameObject> GetPlanetObjects()
     {
-        return PlanetObjects;
+        List<GameObject> planetObjects = ListPlanetObject();
+        return planetObjects;
     }
 
+    List<GameObject> ListPlanetObject()
+    {
+        List<GameObject> planetObjects = new();
+        foreach (Transform child in gameObject.transform)
+        {
+            if (child.GetComponent<SystemPlanet>() != null)
+            {
+                planetObjects.Add(child.gameObject);
+            }
+        }
+
+        return planetObjects;
+    }
 
     //only for currently excisting gameObjects 
-    public GameObject FindPlanetGameObject(int planetId)
+   public GameObject FindPlanetGameObject(int planetId)
     {
         GameObject planet = null;
         foreach (Transform child in gameObject.transform)
@@ -98,17 +111,17 @@ public class SystemController : GalaxyCatalog
         StarSystem.transform.parent = this.transform;
 
 
+
+
         //Creates asteroid belts for the system
         foreach (AsteroidBelt asteroidBelt in visibleSystem.AsteroidBelts)
         {
-
             if (BeltPrefab != null)
             {
-                GameObject BeltInstance = Instantiate(BeltPrefab, new Vector3(0f, 0f, 0f), transform.rotation) as GameObject;
+                GameObject AsteroidField = Instantiate(BeltPrefab, new Vector3(0f, 0f, 0f), transform.rotation) as GameObject;
 
-                BeltInstance.GetComponent<SystemAsteroidBelt>().Type = asteroidBelt.Type;
-                BeltInstance.GetComponent<SystemAsteroidBelt>().Distance = asteroidBelt.Distance;
-                BeltInstance.transform.parent = this.transform;
+                AsteroidField.GetComponent<SystemAsteroidField>().VisualizeAsteroidField(asteroidBelt);
+                AsteroidField.transform.parent = this.transform;
             }
             else
             {
@@ -116,7 +129,23 @@ public class SystemController : GalaxyCatalog
             }
         }
 
+/* foreach (AsteroidBelt asteroidBelt in visibleSystem.AsteroidBelts)
+   {
+       if (BeltPrefab != null)
+       {
+           GameObject BeltInstance = Instantiate(BeltPrefab, new Vector3(0f, 0f, 0f), transform.rotation) as GameObject;
 
+           BeltInstance.GetComponent<SystemAsteroidBelt>().Type = asteroidBelt.Type;
+           BeltInstance.GetComponent<SystemAsteroidBelt>().Distance = asteroidBelt.Distance;
+           BeltInstance.transform.parent = this.transform;
+       }
+       else
+       {
+           Debug.Log("null BeltPrefab!");
+       }
+   }
+
+ */
 
         //Creates planets for the system
         foreach (Planet planet in visibleSystem.Planets)
@@ -140,7 +169,8 @@ public class SystemController : GalaxyCatalog
         }
 
 
-        UI.StarDataView(StarSystem.transform, visibleSystem);
+       UiCanvas.GetInstance().SystemDataView(visibleSystem.Name);
+
 
     }
 

@@ -26,23 +26,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3429589134036544729, guid: 020344a1a4efa2e478d494818a229ef2, type: 3}
       propertyPath: m_Range
-      value: 300
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 3429589134036544729, guid: 020344a1a4efa2e478d494818a229ef2, type: 3}
       propertyPath: m_Color.b
-      value: 0
+      value: 0.9019608
       objectReference: {fileID: 0}
     - target: {fileID: 3429589134036544729, guid: 020344a1a4efa2e478d494818a229ef2, type: 3}
       propertyPath: m_Color.g
-      value: 0.5309656
+      value: 0.9806975
       objectReference: {fileID: 0}
     - target: {fileID: 3429589134036544729, guid: 020344a1a4efa2e478d494818a229ef2, type: 3}
       propertyPath: m_Color.r
-      value: 0.8679245
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3429589134036544729, guid: 020344a1a4efa2e478d494818a229ef2, type: 3}
       propertyPath: m_Intensity
-      value: 0.5
+      value: 14000
       objectReference: {fileID: 0}
     - target: {fileID: 3765113194753212822, guid: 020344a1a4efa2e478d494818a229ef2, type: 3}
       propertyPath: InitialModule.rotation3D

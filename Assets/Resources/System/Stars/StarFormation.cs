@@ -33,7 +33,7 @@ using UnityEngine;
         public StarType GetRandomTypeStar()
         {
 
-            List<StarType> EveryStarTypeList = new List<StarType>(12);
+            List<StarType> EveryStarTypeList = new List<StarType>();
             EveryStarTypeList = PopulateStarList();
 
             int random = Random.Range(0, EveryStarTypeList.Count);
@@ -80,7 +80,7 @@ using UnityEngine;
             List<StarType> EveryStarTypeList = new List<StarType>(12);
 
             StarType O = new StarType();
-            O.Id = 1;
+            O.Id = 0;
             O.Name = "O-type";
             O.StarColor = new Color(0.0f, 0, 1f, 1f);
             O.StarColorCold = new Color(0.82f, 0.85f, 1f, 1f);
@@ -98,7 +98,7 @@ using UnityEngine;
             EveryStarTypeList.Add(B);
 
             StarType A = new StarType();
-            A.Id = 1;
+            A.Id = 2;
             A.Name = "A-type";
             A.StarColor = new Color(0.792f, 0.792f, 0.792f, 1f);
             A.StarColorCold = new Color(0.786f, 1f, 0.984f, 1f);
@@ -107,7 +107,7 @@ using UnityEngine;
             EveryStarTypeList.Add(A);
 
             StarType F = new StarType();
-            F.Id = 1;
+            F.Id = 3;
             F.Name = "F-type";
             F.StarColor = new Color(0.99f, 1f, 0.74f, 1f);
             F.StarColorCold = new Color(0.942f, 0.94f, 0.554f, 1f);
@@ -116,7 +116,7 @@ using UnityEngine;
             EveryStarTypeList.Add(F);
 
             StarType G = new StarType();
-            G.Id = 1;
+            G.Id = 4;
             G.Name = "G-type";
             G.StarColor = new Color(0.857f, 0.871f, 0.41f, 1f);
             G.StarColorCold = new Color(1f, 0.63f, 0.202f, 1f);
@@ -125,7 +125,7 @@ using UnityEngine;
             EveryStarTypeList.Add(G);
 
             StarType K = new StarType();
-            K.Id = 1;
+            K.Id = 5;
             K.Name = "K-type";
             K.StarColor = new Color(0.86f, 0.46f, 0.0f, 1f);
             K.StarColorCold = new Color(1f, 0.06f, 0.0f, 1f);
@@ -134,7 +134,7 @@ using UnityEngine;
             EveryStarTypeList.Add(K);
 
             StarType M = new StarType();
-            M.Id = 1;
+            M.Id = 6;
             M.Name = "M-type";
             M.StarColor = new Color(1f, 0.37f, 0.43f, 1f);
             M.StarColorCold = new Color(0.67f, 0.00f, 0.00f, 1f);

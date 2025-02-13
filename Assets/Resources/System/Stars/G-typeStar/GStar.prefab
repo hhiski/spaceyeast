@@ -22,23 +22,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3429589134036544729, guid: 020344a1a4efa2e478d494818a229ef2, type: 3}
       propertyPath: m_Range
-      value: 500
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 3429589134036544729, guid: 020344a1a4efa2e478d494818a229ef2, type: 3}
       propertyPath: m_Color.b
-      value: 0.4129583
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3429589134036544729, guid: 020344a1a4efa2e478d494818a229ef2, type: 3}
       propertyPath: m_Color.g
-      value: 0.9433962
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3429589134036544729, guid: 020344a1a4efa2e478d494818a229ef2, type: 3}
       propertyPath: m_Color.r
-      value: 0.90861595
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3429589134036544729, guid: 020344a1a4efa2e478d494818a229ef2, type: 3}
       propertyPath: m_Intensity
-      value: 0.5
+      value: 17000
       objectReference: {fileID: 0}
     - target: {fileID: 3879680756480389839, guid: 020344a1a4efa2e478d494818a229ef2, type: 3}
       propertyPath: m_Materials.Array.data[0]

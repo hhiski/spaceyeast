@@ -1,28 +1,67 @@
+using Game.ID;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
+using TreeEditor;
+using Unity.Collections;
+using Unity.Jobs;
 using UnityEngine;
 
-namespace NoiseSpace
+namespace Game.Noise
 {
-    class NoiseFunctions
+    public class NoiseManager : MonoBehaviour
     {
-        public float PerlinFilter(Vector3 point, Noise noiseFilter, float frequency, int level, float amplitude, float offset)
+        public static NoiseManager Instance { get; private set; }
+        private void Awake()
+        {
+            if (Instance == null)
+            {
+                Instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
+
+        // This is the current function in use
+
+        public float SimplePerlinFilter(Vector3 point, float frequency)
+        {
+            point = new Vector3(point.x * frequency , point.y * frequency , point.z * frequency );
+
+            float noiseA = Mathf.PerlinNoise(point.x + 1.12f , point.y - 3.3f );
+
+            float noiseB = Mathf.PerlinNoise(point.x + 4.02f , point.z + 6.9f );
+
+            float noiseC = Mathf.PerlinNoise(point.y + 8.92f , point.x + 58.4f);
+
+            float noiseD = Mathf.PerlinNoise(point.y + 4.61f , point.z - 5.1f );
+
+            float noiseE = Mathf.PerlinNoise(point.z + 12.78f , point.x - 0.4f );
+
+            float noiseF = Mathf.PerlinNoise(point.z + 52.1f , point.y - 8.2f );
+
+            float noise = (3f - (noiseA + noiseB + noiseC + noiseD + noiseE + noiseF))/3f;
+
+            //   float noise = Mathf.PerlinNoise(point.x + 1.12f * 0.7f, point.y - 4.3f * 0.7f) * Mathf.PerlinNoise(point.y - 3.47f * 0.7f, point.z + 1.77f * 0.7f);
+
+
+            //  noise -= 0.25f;
+            //   noise = (0.25f - noise) * 4f;
+            return noise ;
+        }
+
+        // Version 2: This is the alternative method, not in used right now
+        /*public float PerlinFilter(Vector3 point, Noise noiseFilter, float frequency, int level, float amplitude, float offset)
         {
             point = new Vector3(point.x * frequency + offset, point.y * frequency + offset, point.z * frequency + offset);
-            float noise = noiseFilter.Evaluate(point);
+            float noise = (noiseFilter.Evaluate(point)+1)/2f;
             return noise * amplitude;
-        }
+        }*/
 
-        public float SimplePerlinFilter(Vector3 point,float frequency, float offset)
-        {
-            float noiseA = Mathf.PerlinNoise(frequency * point.x + offset, frequency * point.y + offset);
-            float noiseB = Mathf.PerlinNoise(frequency * point.z + offset, frequency * point.y + offset);
-            float noiseC = Mathf.PerlinNoise(frequency * point.x + offset, frequency * point.z + offset);
 
-            float noise = (noiseA + noiseB + noiseC) / 3;
-            noise = noise * 2 - 1;
-            return noise;
-        }
         /*
     
         public float NoisePatternFluidic(float noise, Vector3 point, Noise noiseFilter)

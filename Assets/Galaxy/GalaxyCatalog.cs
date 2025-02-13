@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.IO;
 using System.Linq;
-using MathSpace;
+using Game.Math;
 
 using static CelestialBody;
 
@@ -21,38 +21,30 @@ public class GalaxyCatalog : MonoBehaviour
     public Premaid Premaid = new Premaid();
     public Universe Universe = new Universe(0);
     public UiCanvas UI;
-    public SkyboxController SkyboxController;
+
 
 
     void Awake()
     {
-        UI = GameObject.Find("/Canvas").GetComponent<UiCanvas>();
-        SkyboxController = GetComponent<SkyboxController>();
+        UI = GameObject.Find("Canvas").GetComponent<UiCanvas>();
+
 
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;
     }
 
+    void Reset()
+    {
+        Awake();
+        Start();    
+    }
     void Start()
     {
 
+        Universe = Premaid.GenericGalaxy();
 
-
-        for (int id = 0; id < 50; id++)
-        {
-            if (id == 3) //Sol System
-            {
-                Cluster LocalBubbleCluster = Premaid.LocalBubbleCluster(id);
-                Universe.Clusters.Add(LocalBubbleCluster);
-            }
-            else
-            {
-                Cluster GenericCluster = Premaid.GenericCluster(id);
-                Universe.Clusters.Add(GenericCluster);
-            }
-        }
-        
         CreateCluster(1);
+
         SaveIntoJson();
     }
 
@@ -76,7 +68,7 @@ public class GalaxyCatalog : MonoBehaviour
         }
     }
 
-    // Later okeyy
+
     public void SaveIntoJson()
     {
         var clusterList = Universe.Clusters;
@@ -88,7 +80,7 @@ public class GalaxyCatalog : MonoBehaviour
     {
         foreach (Transform child in gameObject.transform)
         {
-            if (child.gameObject.tag == "Zone")
+            if (child.gameObject.CompareTag("Zone"))
             { child.gameObject.SetActive(false); }
             if (child.gameObject.name == "SystemScope")
             { child.gameObject.SetActive(false); }
@@ -96,9 +88,9 @@ public class GalaxyCatalog : MonoBehaviour
             { child.gameObject.SetActive(false); }
             if (child.gameObject.name == "ClusterScope")
             { child.gameObject.SetActive(false); }
-
+            if (child.gameObject.name == "SocietyScope")
+            { child.gameObject.SetActive(false); }
         }
-
     }
 
     public void ShowPlanetNumbers()
@@ -141,14 +133,15 @@ public class GalaxyCatalog : MonoBehaviour
         Globals.spaceScaleLevel = "cluster";
         Globals.spaceAddress[0] = clusterId;
 
-
         InactiveScopes();
+
 
         foreach (Transform child in gameObject.transform)
         {
             if (child.gameObject.name == "ClusterScope")
-            { child.gameObject.SetActive(true); }
-
+            {
+                child.gameObject.SetActive(true);
+            }
         }
 
 
@@ -162,7 +155,7 @@ public class GalaxyCatalog : MonoBehaviour
            
         }
 
-
+        SkyboxController.GetInstance().SetSkybox(SkyboxController.SkyboxType.Cluster);
     }
 
     public void CreateSystem(int clusterId, int systemId)
@@ -181,7 +174,7 @@ public class GalaxyCatalog : MonoBehaviour
 
         }
 
-        SkyboxController.SetSystemSkybox();
+        SkyboxController.GetInstance().SetSkybox(SkyboxController.SkyboxType.System);
 
         foreach (Cluster cluster in Universe.Clusters)
         {
@@ -205,6 +198,8 @@ public class GalaxyCatalog : MonoBehaviour
         Globals.spaceAddress[1] = systemId;
         Globals.spaceAddress[2] = planetId;
 
+
+        SkyboxController.GetInstance().SetSkybox(SkyboxController.SkyboxType.Society);
 
         InactiveScopes();
 
@@ -263,7 +258,7 @@ public class GalaxyCatalog : MonoBehaviour
         foreach (Transform child in gameObject.transform)
         {
 
-            if (child.gameObject.tag == "Zone")
+            if (child.gameObject.CompareTag("Zone"))
             {
                 child.gameObject.SetActive(true);
             }
@@ -272,7 +267,7 @@ public class GalaxyCatalog : MonoBehaviour
 
         UI.GalaxyDataView("Milky Way");
 
-        StartCoroutine(SkyboxController.SetSkybox("galaxy"));
+        SkyboxController.GetInstance().SetSkybox(SkyboxController.SkyboxType.Galaxy);
     }
 
 

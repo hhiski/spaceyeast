@@ -10,6 +10,8 @@ TagManager:
   - SystemCamera
   - Zone
   - UIElement
+  - SocietyBlock
+  - Society
   layers:
   - Default
   - TransparentFX

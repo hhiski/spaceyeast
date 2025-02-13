@@ -8,23 +8,40 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: AsteroidRock
-  m_Shader: {fileID: 210, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 10723, guid: 0000000000000000f000000000000000, type: 0}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
-  m_InvalidKeywords: []
+  m_InvalidKeywords:
+  - _ALPHABLEND_ON
+  - _LIQUIDTYPE_WATER
+  - _SPECULAR_SETUP
+  - _SURFACE_TYPE_TRANSPARENT
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses:
-  - GRABPASS
+  - DepthOnly
+  - SHADOWCASTER
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
     - _AlphaTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BASE_COLOR_MAP:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BUMP_MAP:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BaseMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -44,7 +61,15 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _EMISSION_COLOR_MAP:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _METALNESS_MAP:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -68,35 +93,104 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _REFLECTIONS_COLOR_MAP:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _REFLECTIONS_IOR_MAP:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _REFLECTIONS_ROUGHNESS_MAP:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TRANSPARENCY_MAP:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2D:
+        m_Texture: {fileID: 2800000, guid: c618df09074cc5043bbc4ed59a63bf39, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - PixelSnap: 0
     - _Absorption: 0.001
+    - _AlphaClip: 0
+    - _AlphaOffset: 0
+    - _AlphaPlus: 0
+    - _AlphaToMask: 0
+    - _BASE_COLOR_WEIGHT: 1
+    - _BUMP_MAP_STRENGTH: 0.3
     - _BaseMetallicity: 1
     - _BaseOreCloseness: 0
     - _BaseSmoothness: 0
+    - _Blend: 0
+    - _BlendModePreserveSpecular: 1
     - _BlendOp: 0
     - _BumpScale: 1
     - _CameraFadingEnabled: 0
     - _CameraFarFadeDistance: 2
     - _CameraNearFadeDistance: 1
+    - _CastShadows: 0
     - _ColorMode: 0
     - _Cull: 2
     - _Cutoff: 0
     - _DetailNormalMapScale: 1
+    - _Distance: 0
     - _DistortionBlend: 0.5
     - _DistortionEnabled: 0
     - _DistortionStrength: 1
     - _DistortionStrengthScaled: 0
-    - _DstBlend: 0
+    - _DotOffset: 0.1
+    - _DstBlend: 1
+    - _DstBlendAlpha: 0
+    - _EMISSION_WEIGHT: 1
+    - _EdgeFade: 0.3
     - _EmissionEnabled: 0
     - _EnableExternalAlpha: 0
     - _FadeDistance: 100
     - _FillWithRed: 0
+    - _FlipbookBlending: 0
     - _FlipbookMode: 0
+    - _Float: 0
+    - _Float_1: 14.03
+    - _Float_2: 0.02
+    - _Fullscreen_AlphaBlendOperation: 0
+    - _Fullscreen_BlendMode: 1
+    - _Fullscreen_ColorBlendOperation: 0
+    - _Fullscreen_DepthWrite: 0
+    - _Fullscreen_DstAlphaBlend: 10
+    - _Fullscreen_DstColorBlend: 10
+    - _Fullscreen_SrcAlphaBlend: 1
+    - _Fullscreen_SrcColorBlend: 5
+    - _Fullscreen_Stencil: 1
+    - _Fullscreen_StencilComparison: 6
+    - _Fullscreen_StencilDepthFail: 0
+    - _Fullscreen_StencilFail: 1
+    - _Fullscreen_StencilPass: 0
+    - _Fullscreen_StencilReadMask: 255
+    - _Fullscreen_StencilReference: 1
+    - _Fullscreen_StencilWriteMask: 255
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 1
+    - _GlowIntensity: 0.7
+    - _Intensity: 1
+    - _LIQUIDTYPE: 0
     - _LavaLevel: 1
     - _LavaTemperature: 0.01
     - _LightingEnabled: 1
@@ -105,33 +199,76 @@ Material:
     - _LiquidMetallicity: 0.5
     - _LiquidShoreValue: 0.5
     - _LiquidSmoothness: 0.5
+    - _METALNESS: 0
+    - _MaxShadowDistance: 122.62
     - _Metallic: 0
-    - _Mode: 0
+    - _Metallicity: 0
+    - _Mode: 4
     - _OcclusionStrength: 1
+    - _Offset: 0.69
     - _OreMetallicity: 1
     - _OreSmoothness: 0.5
     - _Parallax: 0.02
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    - _REFLECTIONS_IOR: 1.52
+    - _REFLECTIONS_ROUGHNESS: 1
+    - _REFLECTIONS_WEIGHT: 1
+    - _ReceiveShadows: 1
+    - _RimOuterEdge: 0
     - _RimPower: 3
+    - _SceneDepth: 0
+    - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
     - _SoftParticlesEnabled: 0
     - _SoftParticlesFarFadeDistance: 1
     - _SoftParticlesNearFadeDistance: 0
     - _SpecularHighlights: 1
-    - _SrcBlend: 1
+    - _SrcBlend: 5
+    - _SrcBlendAlpha: 1
+    - _SunRadius: 0
+    - _Surface: 1
+    - _TRANSPARENCY: 0
+    - _Tolerance: 0
     - _USE_EMISSIONS: 0
     - _UVSec: 0
-    - _ZWrite: 1
+    - _WorkflowMode: 0
+    - _ZTest: 4
+    - _ZWrite: 0
+    - _ZWriteControl: 0
     m_Colors:
+    - _BASE_COLOR: {r: 1, g: 1, b: 1, a: 1}
+    - _BaseColor: {r: 1, g: 0, b: 0, a: 1}
+    - _BaseColorAddSubDiff: {r: 0, g: 0, b: 0, a: 0}
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0, g: 0, b: 0, a: 1}
     - _ColorAddSubDiff: {r: 0, g: 0, b: 0, a: 0}
+    - _EMISSION_COLOR: {r: 0, g: 0, b: 0, a: 0}
+    - _Emission: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
     - _LavaEmission: {r: 0, g: 0, b: 0, a: 0}
+    - _LiquidColor: {r: 0, g: 0.44030014, b: 0.7861634, a: 0}
     - _LiquidEmission: {r: 0, g: 0, b: 0, a: 0}
     - _MetalColor: {r: 1, g: 0, b: 0, a: 1}
     - _OreColor: {r: 1, g: 1, b: 1, a: 1}
+    - _REFLECTIONS_COLOR: {r: 1, g: 1, b: 1, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 0}
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
+    - _Vector2: {r: 0, g: 0, b: 0, a: 0}
+    - _Vector3: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
+--- !u!114 &12626142600768135
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: -1

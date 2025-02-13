@@ -1,14 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using LineSpace;
-using MathSpace;
+
+using Game.Math;
 
 using static CelestialBody;
 using System.Security.Claims;
 using Unity.VisualScripting;
 using System.Net;
 using System;
+using System.Security.Cryptography.X509Certificates;
+using UnityEngine.UIElements;
+using Game.Lines;
 public class SystemPlanet : MonoBehaviour
 {
 
@@ -35,8 +38,8 @@ public class SystemPlanet : MonoBehaviour
     Vector3 OrbitVector = new Vector3(0, 0, 0);
     public Vector3 InitialPosition = new Vector3(0, 0, 0);
 
-
-
+    float rotations = 0;
+    public float rotationspeed = 1;
     System.Random Random = new System.Random();
     MathFunctions MathFunctions = new MathFunctions();
 
@@ -47,6 +50,7 @@ public class SystemPlanet : MonoBehaviour
         Random = new System.Random(Planet.Seed);
         oldPosition = transform.position;
         InitialPosition = oldPosition;
+
     }
 
 
@@ -76,7 +80,10 @@ public class SystemPlanet : MonoBehaviour
 
     void CreatePlanetOrbitCircle()
     {
-        LineFunctions.CreateOrbitCircle(this.transform, transform.parent.position, LineMaterial);
+
+        GameObject circle = LineManager.Instance.CreateCircleObject(this.transform, "Orbital Circle", transform.parent.position, 360, LineType.Orbital);
+        circle.GetComponent<LineRenderer>().loop = true;
+
 
     }
 
@@ -121,12 +128,10 @@ public class SystemPlanet : MonoBehaviour
         foreach (GameObject child in otherPlanets)
         {
 
-                GameObject interplanetaryLine = LineFunctions.CreateLineObject(this.transform, new Vector3(0, 0, 0), "Interplanetary Line", linePoints, LineMaterial, 0.5f, true);
+            GameObject interplanetaryLine =  LineManager.Instance.CreateLineObject(this.transform, "Interplanetary Line", linePoints, LineType.Trajectory);
+
                 InterplanetaryLines.Add(interplanetaryLine);
 
-            /*  GameObject brachistochroneTrejectoryLine = LineFunctions.CreateLineObject(this.transform, new Vector3(0, 0, 0), "Brachistochrone Trejectory", linePoints, LineMaterial, 1f, true);
-              brachistochroneTrejectoryLine.GetComponent<LineRenderer>().positionCount = 100;
-              BrachistochroneTrejectoryLines.Add(brachistochroneTrejectoryLine);*/
             index++;
         }
         Debug.Log("num: " + index);
@@ -135,10 +140,12 @@ public class SystemPlanet : MonoBehaviour
     void InclinatePlanet()
     {
         transform.RotateAround(transform.parent.position, new Vector3(1, 0, 0), Planet.OrbitInclination * 360f);
-       transform.RotateAround(transform.parent.position, new Vector3(0, 1, 0), Planet.OrbitOmega * 360f);
+        transform.RotateAround(transform.parent.position, new Vector3(0, 1, 0), Planet.OrbitOmega * 360f);
 
         OrbitAxis = new Vector3(Planet.OrbitInclination, Planet.OrbitOmega, 0);
-        Debug.Log("OrbitAxis: " + OrbitAxis);
+
+
+
     }
 
 
@@ -179,18 +186,32 @@ public class SystemPlanet : MonoBehaviour
         PlanetSurfaceObject.GetComponent<PlanetSurface>().Planet = Planet;
         PlanetSurfaceObject.GetComponent<PlanetSurface>().SetValues();
         PlanetSurfaceObject.GetComponent<PlanetSurface>().CopyVertices();
-        PlanetSurfaceObject.GetComponent<PlanetSurface>().ShapePlanetSurface();
-
+        StartCoroutine(PlanetSurfaceObject.GetComponent<PlanetSurface>().ShapePlanetSurface());
         return PlanetSurfaceObject;
     }
 
 
     void CreatePlanetRing(GameObject surface)
     {
+        if (surface == null) return;  // Early exit if surface is null
         GameObject PlanetRing = Instantiate(RingPrefab, surface.transform, false) as GameObject;
-        PlanetRing.GetComponent<PlanetRing>().CreateRing(Planet.RingType);
+
+        int planetRingType = Planet.RingType;
+        Gradient planetColorGradient = new Gradient();
+
+        if (surface.TryGetComponent<PlanetSurface>(out PlanetSurface PlanetSurface))
+        {
+             planetColorGradient = PlanetSurface.GetColorGradient();
+        }
+
+        if (PlanetRing.TryGetComponent<PlanetRing>(out PlanetRing planetRing))
+        {
+            planetRing.CreateRingWithColor(planetRingType, planetColorGradient);
+        }
+
     }
 
+    
 
 
     void OnMouseDown()
@@ -198,32 +219,38 @@ public class SystemPlanet : MonoBehaviour
 
 
         TrajectoryManager.GetInstance().CreateTrajectories(this.gameObject);
-     //   SystemController.GetInstance().GetPlanetObjects();
+
 
         UiCanvas.GetInstance().PlanetDataView(transform, Planet);
 
         Globals.spaceAddress[2] = Planet.Id;
 
 
-      //  CreatePlanetDistanceLines();
+
 
     }
 
 
-  
 
-    void Update()
+
+    void FixedUpdate()
     {
+     
+ 
+        if (rotations > 1) { rotations = 0; };
+        if (rotations < 0) { rotations = 0; };
+        rotations += rotationspeed;
         Vector3 currentPosition = transform.position;
 
-        transform.RotateAround(transform.parent.position, transform.up, Planet.OrbitSpeed * 360f * Time.deltaTime);
+        transform.RotateAround(transform.parent.position, transform.up, Planet.OrbitSpeed *  rotations);
         Planet.SetOrbitPhase(Planet.OrbitSpeed * 360f * Time.deltaTime);
 
         OrbitVector = (transform.position - currentPosition).normalized;
-        oldPosition = transform.position;
+
 
 
     }
+ 
 
 
 

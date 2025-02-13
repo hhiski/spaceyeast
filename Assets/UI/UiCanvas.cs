@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-using LineSpace;
-
 using static CelestialBody;
 
 public  class UiCanvas : MonoBehaviour
@@ -51,8 +49,8 @@ public  class UiCanvas : MonoBehaviour
     GameObject UIZoomOutButton;
     GameObject UILocateSolButton;
     GameObject UIOpenSocietyButton;
-    GameObject UIClusterNameTrackers;
-
+    GameObject UINameTrackers;
+    GameObject FullScreenLightEffect;
 
     void Awake()
     {
@@ -66,9 +64,12 @@ public  class UiCanvas : MonoBehaviour
         UIZoomOutButton = this.transform.Find("ZoomOutButton").gameObject;
         UILocateSolButton = this.transform.Find("LocateSolButton").gameObject;
         UIOpenSocietyButton = this.transform.Find("SocietyButton").gameObject;
+        UINameTrackers = this.transform.Find("UINameTrackers").gameObject;
+        FullScreenLightEffect = this.transform.Find("FullScreenLightEffect").gameObject;
 
-        //Cluster-level
-        UIClusterNameTrackers = this.transform.Find("UIClusterNameTrackers").gameObject;
+        
+
+
 
     }
     void Start()
@@ -84,63 +85,68 @@ public  class UiCanvas : MonoBehaviour
     {
   
         foreach (Transform child in gameObject.transform)
-        {
+        {   if (child.CompareTag("UIElement"))
             child.gameObject.SetActive(false);
         }
     }
-
-    void ShowUi(string uiScope)
+    enum UiScope
+    {
+        Galaxy,
+        Cluster,
+        System,
+        Star,
+        Planet,
+        Society
+    }
+    void ShowUi(UiScope uiScope)
     {
         HideAllElements();
 
-        if (uiScope == "galaxy")
-        {
-            UIDescriptor.SetActive(true);
-            UIDownPanel.SetActive(true);
-            UILocateSolButton.SetActive(true);
+        // Default elements to activate for most scopes
+        UIDescriptor.SetActive(true);
+        UIDownPanel.SetActive(true);
+        UILocateSolButton.SetActive(true);
 
-        }
-        else if (uiScope == "cluster")
+        switch (uiScope)
         {
-            UIDescriptor.SetActive(true);
-            UIDownPanel.SetActive(true);
-            UILocateSolButton.SetActive(true);
-            UIZoomOutButton.SetActive(true);
-            UIClusterNameTrackers.SetActive(true);
-        }
-        else if(uiScope == "star")
-        {
-            UIDescriptor.SetActive(true);
-            UIDownPanel.SetActive(true);
-            UILocateSolButton.SetActive(true);
-            UIZoomOutButton.SetActive(true);
-        }
-        else if(uiScope == "planet")
-        {
-            UIDescriptor.SetActive(true);
-            UIDownPanel.SetActive(true);
-            UILeftPanel.SetActive(true);
-            UIDownPanel.SetActive(true);
-            UILocateSolButton.SetActive(true);
-            UIZoomOutButton.SetActive(true);
-            UIOpenSocietyButton.SetActive(true);
-        }
-        else if (uiScope == "society")
-        {
-            UIDescriptor.SetActive(true);
-            UIDownPanel.SetActive(false);
-            UILeftPanel.SetActive(false);
-            UIDownPanel.SetActive(false);
-            UISelector.SetActive(false);
-            UILocateSolButton.SetActive(true);
-            UIZoomOutButton.SetActive(true);
-        }
+            case UiScope.Galaxy:
+                break;
 
+            case UiScope.Cluster:
+            case UiScope.System:
+                UIZoomOutButton.SetActive(true);
+                UINameTrackers.SetActive(true);
+                FullScreenLightEffect.SetActive(true);
+                break;
+            case UiScope.Star:
+                UIZoomOutButton.SetActive(true);
+                UINameTrackers.SetActive(true);
+                break;
+
+            case UiScope.Planet:
+                UIZoomOutButton.SetActive(true);
+                UINameTrackers.SetActive(true);
+                UILeftPanel.SetActive(true);
+                UIOpenSocietyButton.SetActive(true);
+                FullScreenLightEffect.SetActive(true);
+                break;
+
+            case UiScope.Society:
+                UIDownPanel.SetActive(false);
+                UILeftPanel.SetActive(false);
+                UISelector.SetActive(false);
+                UIZoomOutButton.SetActive(true);
+                break;
+
+            default:
+                Debug.LogWarning($"Unknown UI scope: {uiScope}");
+                break;
+        }
     }
 
     public void SocietytDataView(string name)
     {
-        ShowUi("society");
+        ShowUi(UiScope.Society);
         UpdateDescriptor(name, "tests");
 
         CameraOrbit.CameraTo2D();
@@ -149,16 +155,31 @@ public  class UiCanvas : MonoBehaviour
 
     public void ClusterDataView(string name)
     {
-        ShowUi("cluster");
+        ShowUi(UiScope.Cluster);
         UpdateDescriptor(name, "");
         Vector3 targetPos = new Vector3(0, 0, 0);
         CameraOrbit.CameraTo3D();
         CameraOrbit.CameraToPos(targetPos);
+        UIClusterNames.GetInstance().CreateClusterNameTags();
 
     }
+
+
+    public void SystemDataView(string name)
+    {
+        ShowUi(UiScope.System);
+
+        UpdateDescriptor(name, "");
+        Vector3 targetPos = new Vector3(0, 0, 0);
+        CameraOrbit.CameraTo3D();
+        CameraOrbit.CameraToPos(targetPos);
+        UIClusterNames.GetInstance().CreateSystemNameTags();
+
+    }
+
     public void GalaxyDataView(string name)
     {
-        ShowUi("galaxy");
+        ShowUi(UiScope.Galaxy);
         UpdateDescriptor(name, "");
         Vector3 targetPos = new Vector3(0, 0, 0);
         CameraOrbit.CameraTo3D();
@@ -167,19 +188,20 @@ public  class UiCanvas : MonoBehaviour
     }
     public void StarDataView(Transform targetTransform, Star star)
     {
-        ShowUi("star");
+        ShowUi(UiScope.Star);
         UpdateDescriptor(star.Name, star.Type.Name);
         float targetSize = 2;
         Vector3 targetPos = new Vector3(0, 0, 0);
         CameraOrbit.CameraToPos(targetPos);
         CameraOrbit.CameraTo3D();
         Tracker(true, targetTransform, targetSize);
+        UIClusterNames.GetInstance().CreateSystemNameTags();
     }
 
     public void PlanetDataView(Transform targetTransform, Planet planet)
     {
 
-        ShowUi("planet");
+        ShowUi(UiScope.Planet);
 
         UpdateDescriptor(planet.Name, planet.Type.Name + " World");
 
@@ -189,13 +211,17 @@ public  class UiCanvas : MonoBehaviour
         
         CameraOrbit.CameraFollowTransform(targetTransform);
         CameraOrbit.CameraTo3D();
-
+        UIClusterNames.GetInstance().CreateSystemNameTags();
         //Target tracking starts after the camera and the screen is at the right place. 
         StartCoroutine(ResumeTargetTracking(targetTransform, targetSize));
+
     }
 
     IEnumerator ResumeTargetTracking(Transform targetTransform, float targetSize)
     {
+        yield return null;
+        yield return null;
+        yield return null;
         yield return null;
         Tracker(true, targetTransform, targetSize); 
     }

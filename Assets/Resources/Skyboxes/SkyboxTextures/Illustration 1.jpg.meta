@@ -27,7 +27,7 @@ TextureImporter:
   vTOnly: 0
   ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
-  generateCubemap: 2
+  generateCubemap: 6
   cubemapConvolution: 0
   seamlessCubemap: 1
   textureFormat: 1

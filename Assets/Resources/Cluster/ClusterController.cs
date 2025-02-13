@@ -6,13 +6,15 @@ using UnityEngine;
 using ColorSpace;
 using static CelestialBody;
 
-public class ClusterController : GalaxyCatalog
+public class ClusterController : MonoBehaviour
 {
     public GameObject StarPrefab;
 
     GameObject Deepfield;
 
     ColorFunctions ColorFunctions = new ColorFunctions();
+
+    List<GameObject> StarObjects = new List<GameObject>() { };
 
     void Awake()
     {
@@ -47,6 +49,42 @@ public class ClusterController : GalaxyCatalog
         return Instance;
     }
 
+    public List<GameObject> ListStarObjects()
+    {
+        List<GameObject> starObjects = new();
+        foreach (Transform child in gameObject.transform)
+        {
+            if (child.GetComponent<ClusterStar>() != null)
+            {
+                starObjects.Add(child.gameObject);
+            }
+        }
+
+        return starObjects;
+    }
+
+    //only for currently existing gameObjects 
+    public GameObject FindStarGameObject(int starId)
+    {
+        GameObject star = null;
+        foreach (Transform child in gameObject.transform)
+        {
+            if (child.GetComponent<ClusterStar>())
+            {
+                int id = child.GetComponent<ClusterStar>().Star.Id;
+
+                if (id == starId)
+                {
+                    star = child.gameObject;
+                    break;
+                }
+
+            }
+        }
+
+        return star;
+    }
+
     void OnDisable()
     {
         foreach (Transform child in gameObject.transform)
@@ -65,30 +103,27 @@ public class ClusterController : GalaxyCatalog
     public void VisualizeCluster(Cluster activeCluster)
     {
 
-        
-        int starIndex;
-        Vector3 starPosition;
+        StarObjects.Clear();
+
 
         foreach (Star star in activeCluster.Stars)
         {
-            starIndex = star.Id;
-            starPosition = star.Pos;
 
-            GameObject clusterStar = Instantiate(StarPrefab, starPosition, transform.rotation) as GameObject;
-            clusterStar.GetComponent<ClusterStar>().Color = star.Type.StarColor;
-            clusterStar.GetComponent<ClusterStar>().HomeClusterId = activeCluster.Id;
-            clusterStar.GetComponent<ClusterStar>().StarId = starIndex;
-            clusterStar.GetComponent<ClusterStar>().SetStarName(star.Name);
-            
+            GameObject clusterStar = Instantiate(StarPrefab, star.Pos, transform.rotation) as GameObject;
+            clusterStar.GetComponent<ClusterStar>().SetStar(star);
+            clusterStar.GetComponent<ClusterStar>().SetClusterStarColor();
+            clusterStar.GetComponent<ClusterStar>().AddZLine();
             clusterStar.transform.parent = this.transform;
+            StarObjects.Add(clusterStar);
 
         }
 
         ColorizeCluster(activeCluster.Id);
 
-        UI.ClusterDataView(activeCluster.Name);
-  
-        StartCoroutine(SkyboxController.SetSkybox("cluster"));
+        UiCanvas.GetInstance().ClusterDataView(activeCluster.Name + " " + activeCluster.Id);
+
+        //  UI.ClusterDataView(activeCluster.Name);
+        // StartCoroutine(SkyboxController.SetSkybox("cluster"));
     }
 
     void ColorizeCluster(int seed)

@@ -1,22 +1,40 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-279615840073024153
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 7
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: GalaxySkybox
-  m_Shader: {fileID: 108, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: _ALPHABLEND_ON _MAPPING_LATITUDE_LONGITUDE_LAYOUT _MIRRORONBACK_ON
-    _SUNDISK_HIGH_QUALITY
-  m_LightmapFlags: 0
+  m_Shader: {fileID: -6465566751694194690, guid: e317f9602a7486e4e992bbc36a652f17, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _ALPHATEST_ON
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3000
-  stringTagMap: {}
+  m_CustomRenderQueue: 2450
+  stringTagMap:
+    RenderType: TransparentCutout
   disabledShaderPasses: []
+  m_LockedProperties: _Float_1
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -61,7 +79,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: aaffe5194ad666c4f8a1adf516728ab2, type: 3}
+        m_Texture: {fileID: 2800000, guid: 7038b47c9c23c9242a7b75892ef5cf16, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -80,6 +98,22 @@ Material:
         m_Texture: {fileID: 2800000, guid: 7bf007f7bf0d2924483affc223633fca, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleCubemap_6d96d567d1464ecabaa7aa36e65f3046_Cube_1_Cubemap:
+        m_Texture: {fileID: 8900000, guid: 64e37d3840aea7c40b335346e391cedb, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_cc0f3a4fc44d4f9994b8c3f25ae00738_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 92fd26cfcbe591c4d89cb729c78ee06c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_e0554b542e2a4ef483a46deb4c36da27_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 92fd26cfcbe591c4d89cb729c78ee06c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture3D_e80e9efe03f241c1af0e4664744ba086_Texture_1_Texture3D:
+        m_Texture: {fileID: 11700000, guid: 0e8de3230d7147f44afc6e3c9c53a38e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Tex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -88,34 +122,68 @@ Material:
         m_Texture: {fileID: 2800000, guid: 00cf6e40a82f21e458ec98796b9feb67, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _TextureNebulae:
+        m_Texture: {fileID: 8900000, guid: 98d12f1ecf3193f4f95fbdbbe99c0527, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureStars:
+        m_Texture: {fileID: 8900000, guid: 1c30b526ffc094745a9f1a5237acbcc6, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Triplanar_3eaf7e05750648f98fe6dd1270b2bef2_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 0e8de3230d7147f44afc6e3c9c53a38e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _UpTex:
         m_Texture: {fileID: 2800000, guid: 7bf007f7bf0d2924483affc223633fca, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - PixelSnap: 0
+    - _AlphaClip: 1
+    - _AlphaToMask: 1
     - _AtmosphereThickness: 1.97
-    - _Blend: 0.679
+    - _Blend: 0
     - _BlendOp: 0
     - _BumpScale: 1
     - _CameraFadingEnabled: 0
     - _CameraFarFadeDistance: 2
     - _CameraNearFadeDistance: 1
+    - _CastShadows: 1
     - _ColorMask: 15
     - _ColorMode: 0
-    - _Cull: 0
+    - _Cull: 2
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DistortionBlend: 0.5
     - _DistortionEnabled: 0
     - _DistortionStrength: 1
     - _DistortionStrengthScaled: 0
-    - _DstBlend: 10
+    - _DstBlend: 0
     - _EmissionEnabled: 0
     - _EnableExternalAlpha: 0
-    - _Exposure: 0
+    - _Exposure: 3.06
     - _ExtraEmission: 0.75
     - _FlipbookMode: 0
+    - _Float: -8.13
+    - _Float_1: 4.1
+    - _Float_2: 0.0004
+    - _Float_3: 0.29
+    - _Float_4: -0.9
+    - _Float_5: 0.82
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -129,14 +197,18 @@ Material:
     - _Mode: 2
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+    - _QueueControl: 0
+    - _QueueOffset: 0
     - _RimPower: 3
-    - _Rotation: 2
+    - _Rotation: 0
     - _SmoothnessTextureChannel: 0
     - _SoftParticlesEnabled: 0
     - _SoftParticlesFarFadeDistance: 1
     - _SoftParticlesNearFadeDistance: 0
+    - _SpaceExposure: 1.01
     - _SpecularHighlights: 1
-    - _SrcBlend: 5
+    - _SrcBlend: 1
+    - _StarExposure: 0
     - _Stencil: 0
     - _StencilComp: 8
     - _StencilOp: 0
@@ -145,12 +217,15 @@ Material:
     - _SunDisk: 2
     - _SunSize: 0.564
     - _SunSizeConvergence: 6.12
+    - _Surface: 0
     - _UVSec: 0
     - _UseUIAlphaClip: 0
-    - _ZWrite: 0
+    - _ZTest: 4
+    - _ZWrite: 1
+    - _ZWriteControl: 0
     m_Colors:
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
-    - _Color: {r: 0.5471698, g: 0.48415542, b: 0.44083303, a: 1}
+    - _Color: {r: 0, g: 0.38364768, b: 0.08656382, a: 1}
     - _ColorAddSubDiff: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
@@ -159,5 +234,6 @@ Material:
     - _RimColor: {r: 1, g: 1, b: 1, a: 0}
     - _SkyTint: {r: 1, g: 0.07924521, b: 0.07924521, a: 1}
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
+    - _SpaceColor: {r: 0.2980392, g: 1, b: 0, a: 0.5}
     - _Tint: {r: 0.2969028, g: 0.3773585, b: 0.33022285, a: 1}
   m_BuildTextureStacks: []

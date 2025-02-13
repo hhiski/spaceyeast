@@ -1,5 +1,18 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7152303492628318348
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 7
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
@@ -8,16 +21,12 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: ClusterSkybox
-  m_Shader: {fileID: 4800000, guid: cbc03cb67b7ec0546850e01ffd933930, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: c2fe92eb3dad8a84c82e1ce5c4224dc9, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
-  m_InvalidKeywords:
-  - _EMISSION
-  - _MAPPING_LATITUDE_LONGITUDE_LAYOUT
-  - _MIRRORONBACK_ON
-  - _SUNDISK_HIGH_QUALITY
-  m_LightmapFlags: 0
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -33,6 +42,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _BackTex:
         m_Texture: {fileID: 2800000, guid: 7038b47c9c23c9242a7b75892ef5cf16, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BaseMap:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -76,9 +89,9 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: c72134012925c5746a6b3c9a1fedc72a, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -112,34 +125,54 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TextureNebulae:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 8900000, guid: 1c30b526ffc094745a9f1a5237acbcc6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TextureStars:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 8900000, guid: 9a8904c783af7154ba547a2cf575b8b9, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _UpTex:
         m_Texture: {fileID: 2800000, guid: 8acbabf9dbf201d4389d7d915a9751c4, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - PixelSnap: 0
+    - _AlphaClip: 0
     - _AlphaOffset: 0
+    - _AlphaToMask: 0
     - _AtmosphereThickness: 0
     - _Blend: 0.679
+    - _BlendModePreserveSpecular: 1
     - _BlendOp: 0
+    - _Brightness: 128.4
     - _BumpScale: 1
     - _CameraFadingEnabled: 0
     - _CameraFarFadeDistance: 2
     - _CameraNearFadeDistance: 1
     - _CenterFade: 0.045
+    - _ClearCoatMask: 0
+    - _ClearCoatSmoothness: 0
     - _ColorMask: 15
     - _ColorMode: 0
     - _Cull: 0
     - _Cutoff: 0.5
+    - _Density: 0.08
     - _Depth: 0
+    - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DistortionBlend: 0.5
     - _DistortionEnabled: 0
@@ -147,15 +180,19 @@ Material:
     - _DistortionStrengthScaled: 0
     - _DotOffset: 0.1
     - _DstBlend: 0
+    - _DstBlendAlpha: 0
     - _EmissionEnabled: 1
     - _EnableExternalAlpha: 0
+    - _EnvironmentReflections: 1
     - _Exposure: 0.63
     - _ExtraEmission: 0.75
     - _FlipbookMode: 0
+    - _Float: 2.57
     - _FlowStrength: 4.04
     - _FresnelExponent: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.016
+    - _GlossinessSource: 0
     - _GlossyReflections: 1
     - _Glow: 0.833
     - _ImageType: 1
@@ -171,22 +208,31 @@ Material:
     - _NoiseSpeed: 12.8
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+    - _QuadDistortion: 0.06
+    - _QuadEdge: 0.5
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    - _ReceiveShadows: 1
     - _Res: 84.15
     - _RimPower: 1
-    - _Rotation: 300
+    - _Rotation: 306
+    - _Scale: 73.44
     - _Shininess: 0.01
     - _SkyExponent1: 476
     - _SkyIntensity: 1.75
     - _Smoothness: 0
+    - _SmoothnessSource: 0
     - _SmoothnessTextureChannel: 0
     - _SoftParticlesEnabled: 0
     - _SoftParticlesFarFadeDistance: 1
     - _SoftParticlesNearFadeDistance: 0
-    - _SpaceExposure: 0.78
+    - _SpaceExposure: 1.2
+    - _SpecSource: 0
     - _SpecularHighlights: 1
     - _Speed: 1
     - _SrcBlend: 1
-    - _StarExposure: 0.31
+    - _SrcBlendAlpha: 1
+    - _StarExposure: 2.5
     - _StarMulti: 6.35
     - _Stencil: 0
     - _StencilComp: 8
@@ -198,15 +244,19 @@ Material:
     - _SunIntensity: 20
     - _SunSize: 0.45
     - _SunSizeConvergence: 1.54
+    - _Surface: 0
     - _Tiling: 1
     - _USE_EMISSIONS: 0
     - _UVSec: 0
     - _UseUIAlphaClip: 0
+    - _WorkflowMode: 1
     - _ZTest: 0
     - _ZWrite: 1
     m_Colors:
+    - _BackgroundColor: {r: 0.2627451, g: 0, b: 0.023663763, a: 1}
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
-    - _Color: {r: 0, g: 0.3162619, b: 0.5377358, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _ColorAddSubDiff: {r: -1, g: 1, b: 0, a: 0}
     - _Emission: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
@@ -221,7 +271,7 @@ Material:
     - _SkyColor2: {r: 0.10829474, g: 0.11145295, b: 0.11320752, a: 0}
     - _SkyTint: {r: 1, g: 0.8806951, b: 0, a: 1}
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
-    - _SpaceColor: {r: 0, g: 0.36477977, b: 0.0377164, a: 0.5}
+    - _SpaceColor: {r: 0.12513347, g: 0.2998066, b: 0.3584906, a: 0.5}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
     - _Specular: {r: 0, g: 0, b: 0, a: 0}
     - _SunColor: {r: 0, g: 0, b: 0, a: 1}

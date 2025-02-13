@@ -1,7 +1,8 @@
+using Game.Lines;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using LineSpace;
+
 
 public class ZoneController : MonoBehaviour
 {
@@ -15,28 +16,38 @@ public class ZoneController : MonoBehaviour
 
     void Start()
     {
+        int galacticZoneNumber = ConfigManager.GetInstance().gameConfig.GalacticMapZoneNumber;
+
         int zoneIndex = 0;
         foreach (Transform zoneTransform in transform)
-        {
+        {   
             GameObject zone = zoneTransform.gameObject;
 
-            zone.AddComponent<MeshCollider>();
-
-            if (drawZones)
+            if (zoneIndex > galacticZoneNumber) // All the child objects in galaxy map .fbx already used.
             {
-                zone.AddComponent<ZoneClick>();
-                zone.GetComponent<ZoneClick>().ZoneId = zoneIndex;
+                zone.SetActive(false);
+            } 
+            else
+            {
+
+                zone.AddComponent<MeshCollider>();
+
+                if (drawZones)
+                {
+                    zone.AddComponent<ZoneClick>();
+                    zone.GetComponent<ZoneClick>().ZoneId = zoneIndex;
+                }
+
+                if (drawBorders)
+                    CreateBorders(zone);
+                if (drawStars)
+                    CreateZoneMeshParticles(zone, ZoneStarParticleHolder);
+                if (drawDust)
+                    CreateZoneMeshParticles(zone, ZoneDustParticleHolder);
+
             }
 
-            if (drawBorders)
-                CreateBorders(zone);
-            if (drawStars)
-                CreateZoneMeshParticles(zone, ZoneStarParticleHolder);
-            if (drawDust)
-                CreateZoneMeshParticles(zone, ZoneDustParticleHolder);
-
             zoneIndex++;
-
 
         }
 
@@ -96,7 +107,9 @@ public class ZoneController : MonoBehaviour
 
 
 
-        LineFunctions.CreateLineObject(zone.transform, new Vector3(0, 0, 0), "Border Line", border, ZoneBorderMaterial, 1f, true); 
+        LineManager.Instance.CreateLineObject(zone.transform, "Border Line", border, LineType.Galactic);
+
+
 
     }
 
@@ -121,12 +134,12 @@ public class ZoneController : MonoBehaviour
         List<Edge> edgeList = new List<Edge>();
         for (int i = 0; i < indices.Length; i += 3)
         {
-            int v1 = indices[i];
-            int v2 = indices[i + 1];
-            int v3 = indices[i + 2];
-            edgeList.Add(new Edge(v1, v2, i));
-            edgeList.Add(new Edge(v2, v3, i));
-            edgeList.Add(new Edge(v3, v1, i));
+            int firstVertex = indices[i];
+            int secondVertex = indices[i + 1];
+            int thindVertex = indices[i + 2];
+            edgeList.Add(new Edge(firstVertex, secondVertex, i));
+            edgeList.Add(new Edge(secondVertex, thindVertex, i));
+            edgeList.Add(new Edge(thindVertex, firstVertex, i));
         }
         return edgeList;
     }

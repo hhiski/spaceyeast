@@ -1,5 +1,18 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7852334160565358557
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 7
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
@@ -8,19 +21,17 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: AtmosphereMaterial
-  m_Shader: {fileID: 4800000, guid: 0d8c1258b5b10ba43ab586a0f6fc7325, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 0706c6df484b3e44f9a1dd923bd57d97, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
-  m_InvalidKeywords:
-  - _ALPHABLEND_ON
-  - _EMISSION
-  - _MAPPING_LATITUDE_LONGITUDE_LAYOUT
+  m_InvalidKeywords: []
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3000
-  stringTagMap: {}
+  m_CustomRenderQueue: -1
+  stringTagMap:
+    RenderType: Opaque
   disabledShaderPasses: []
   m_LockedProperties: 
   m_SavedProperties:
@@ -62,18 +73,36 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AlphaOffset: 0
+    - _AlphaClip: 0
+    - _AlphaOffset: 0.253
+    - _AlphaToMask: 0
     - _AtmosphereDensity: 0
     - _AtmosphereRadius: 0.98
+    - _Blend: 0
+    - _BlendModePreserveSpecular: 1
     - _BumpScale: 1
+    - _CastShadows: 1
     - _CenterFade: 0.216
+    - _Cull: 2
     - _CutOff: -1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
-    - _DotOffset: 0.76
-    - _DstBlend: 10
+    - _DotOffset: 1
+    - _DstBlend: 0
     - _Exposure: 1
     - _FresnelExponent: 0.3
     - _GlossMapScale: 1
@@ -81,39 +110,49 @@ Material:
     - _GlossyReflections: 1
     - _GlowIntensity: 0.67
     - _ImageType: 0
-    - _Intensity: 4.8
+    - _Intensity: 4.6
     - _Layout: 0
+    - _LiquidLevel: 1.41
     - _Mapping: 1
     - _Metallic: -1.7
+    - _Metallicity: 0
     - _MirrorOnBack: 0
     - _Mode: 2
     - _OcclusionStrength: 1
     - _OuterEdgePower: 0
     - _Parallax: 0.02
-    - _RimInPower: 3.31
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    - _ReceiveShadows: 1
+    - _RimInPower: 2.11
     - _RimOuterEdge: 0.59
-    - _RimPower: 2.64
+    - _RimPower: 5.24
     - _Rotation: 0
     - _Shift: 1
     - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _SrcBlend: 5
+    - _SrcBlend: 1
     - _SunExponent: 0.9
     - _Surf: 0.8
+    - _Surface: 0
     - _USE_EMISSIONS: 0
     - _UVSec: 0
-    - _ZWrite: 0
+    - _WorkflowMode: 1
+    - _ZTest: 4
+    - _ZWrite: 1
+    - _ZWriteControl: 0
     - _distance: 4.26
     m_Colors:
     - _Albedo: {r: 0, g: 0, b: 0, a: 1}
     - _AtmosphereColor: {r: 0.9811321, g: 0.2721253, b: 0.2721253, a: 0.9882353}
     - _CentrePoint: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 0, g: 0, b: 0, a: 0.6745098}
-    - _Emission: {r: 0.6431373, g: 0.6431373, b: 0.6431373, a: 1}
+    - _Emission: {r: 0, g: 0.706862, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FresnelColor: {r: 1, g: 0, b: 0, a: 0.050980393}
     - _GlowColor: {r: 1, g: 0, b: 0, a: 0}
+    - _LiquidColor: {r: 0.05862902, g: 0, b: 1, a: 0}
     - _MetalColor: {r: 1, g: 1, b: 1, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 0}
     - _Tint: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}

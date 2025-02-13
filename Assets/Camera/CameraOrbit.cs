@@ -38,6 +38,7 @@ public class CameraOrbit : MonoBehaviour
 
         GL.ClearWithSkybox(false, SystemCamera);
 
+
     }
 
     private static CameraOrbit _instance;
@@ -93,6 +94,10 @@ public class CameraOrbit : MonoBehaviour
 
     }
 
+    public Camera GetCamera()
+    {
+        return SystemCamera;
+    }
     public void CameraTo2D() 
     {
 
@@ -158,8 +163,9 @@ public class CameraOrbit : MonoBehaviour
     }
 
 
-    void LateUpdate()
+    void Update()
     {
+
 
         if (!CameraDisabled && CameraFollowing && cameraTarget != null)
         {
@@ -215,5 +221,12 @@ public class CameraOrbit : MonoBehaviour
         {
             this._XForm_Camera.localPosition = new Vector3(0f, 0f, Mathf.Lerp(this._XForm_Camera.localPosition.z, this._CameraDistance * -1f, Time.deltaTime * ScrollDampening) );
         }
+
+        /*
+        if (ddd == null)
+        {
+            ddd = UIClusterNames.GetInstance();
+        };
+        ddd.UpdatePositions();*/
     }
 }

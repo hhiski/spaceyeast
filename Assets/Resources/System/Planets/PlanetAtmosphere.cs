@@ -1,51 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlanetAtmosphere : MonoBehaviour
 {
 
     Color atmosphereColor = new Color(1f, 0.0f, 1, 0);
-    float atmospherePressure = 0;
-    float atmosphereThickness = 0;
-    float atmosphereSize = 18;
 
-    void Start()
+    public void SetAtmosphereColor(Color atmosphereColor)
     {
-        Color seaColor = new Color(1f, 0.0f, 1, 1);
-        seaColor = this.gameObject.transform.parent.GetComponent<PlanetSurface>().colorSeaShifted; 
-        atmosphereSize = this.gameObject.transform.parent.GetComponent<PlanetSurface>().Planet.Mass;
+        Color color = atmosphereColor;
 
-        atmospherePressure = this.gameObject.transform.parent.GetComponent<PlanetSurface>().Planet.Atm.Pressure;
-
-
-        if (atmospherePressure <= 1) {
-            atmosphereThickness = atmospherePressure * 0.5f;
-        }
-        else if (atmospherePressure > 1)
+        if (this.transform.gameObject.TryGetComponent<Renderer>(out Renderer renderer))
         {
-            atmosphereThickness = atmospherePressure * 0.1f + 0.4f;
-            atmosphereThickness = Mathf.Clamp(atmosphereThickness, 0, 1);
+            Material atmosphereMaterial = new Material(renderer.sharedMaterial);
+            renderer.material = atmosphereMaterial;
+            atmosphereMaterial.SetColor("_Emission", atmosphereColor);
         }
-
-
-
-
-        Renderer atmosphereRenderer = this.transform.gameObject.GetComponent<Renderer>();
-        if (atmosphereRenderer != null)
+        else
         {
-            Material atmosphereMaterial = new Material(atmosphereRenderer.sharedMaterial);
-            atmosphereRenderer.material = atmosphereMaterial;
-            atmosphereMaterial.SetColor("_Emission", seaColor);
-            atmosphereMaterial.SetColor("_Emission", seaColor);
-            Debug.Log("Material Instanced: sea color: " + seaColor);
-
-            // main.startSize = 18 * atmosphereSize;
-
+            Debug.LogWarning("PlanetAtmosphere renderer not found");
         }
 
     }
-
 
 
 }

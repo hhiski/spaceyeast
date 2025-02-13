@@ -26,7 +26,7 @@ public class UISelector : MonoBehaviour
         TopRight.transform.rotation = TopLeft.transform.rotation * Quaternion.Euler(0, 0, 270);
         ButtomLeft.transform.rotation = TopLeft.transform.rotation * Quaternion.Euler(0, 0, 180);
         ButtomRight.transform.rotation = TopLeft.transform.rotation * Quaternion.Euler(0, 0, 90);
-
+        Camera = CameraOrbit.GetInstance().GetCamera(); ;
     }
 
 
@@ -70,14 +70,7 @@ public class UISelector : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T) == true)
-        {
-            TopRight.transform.rotation = TopLeft.transform.rotation *  Quaternion.Euler(0, 0, 270);
 
-            //TopRight.transform.rotation = Quaternion.Euler(0, 180, -90);
-             ButtomLeft.transform.rotation = TopLeft.transform.rotation * Quaternion.Euler(0, 0, 90);
-            ButtomRight.transform.rotation = TopLeft.transform.rotation * Quaternion.Euler(0, 0, 180);
-        }
         if (TargetTransform != null)
         {
             UpdateSelectorCorners(TargetTransform.position, TargetSize);

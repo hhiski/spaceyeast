@@ -6,11 +6,11 @@ using static CelestialBody;
 public class Society
 {
 
-    public List<SocietyBlock> SocietyBlocks = new List<SocietyBlock>();
+    public List<SocietyPrecept> SocietyPrecepts = new List<SocietyPrecept>();
 
-    public bool AddSocietyBlock(SocietyBlock societyBlock)
+    public bool AddSocietyBlock(SocietyPrecept societyBlock)
     {
-        SocietyBlocks.Add(societyBlock);
+        SocietyPrecepts.Add(societyBlock);
         return true;
     }
 
@@ -29,95 +29,133 @@ public class Society
 
     void Populate()
     {
-        SocietyBlock adsad = new SocietyBlock("aa", new Vector3(Random.Range(-10, 10), Random.Range(-10, 10), 0));
-        SocietyBlocks.Add(adsad);
-    }
-
-    public List<SocietyBlock> GetSocietyBlocks()
-    {
-        // Using copy constructor
-        List<SocietyBlock> societyBlocks = new List<SocietyBlock>(SocietyBlocks);
-
-        foreach (SocietyBlock block in SocietyBlocks)
+        for (int i = 0; i < 5; i++)
         {
-
+            SocietyPrecept adsad = new SocietyPrecept("aa", new Vector3(Random.Range(-0.5f, 1.1f), Random.Range(-0.44f, 0.55f), 0), Quaternion.identity);
+            SocietyPrecepts.Add(adsad);
 
         }
+    }
+    public List<SocietyPrecept> GetSocietyPrecepts()
+    {
+        // Using copy constructor
+        List<SocietyPrecept> societyPrecepts = new List<SocietyPrecept>();
 
 
-        return SocietyBlocks;
+
+        return societyPrecepts;
     }
 }
 
-public class SocietyBlock
+
+public class SocietyPrecept
 {
 
 
-    private const int X = 0;
-
     string Name { get; set; }
     Vector2 Position { get; set; }
+    Quaternion Rotation { get; set; }
 
-
-    public SocietyBlock(string name, Vector2 position)
+public SocietyPrecept(string name, Vector2 position, Quaternion rotation)
     {
         Name = name;
         Position = position;
+        Rotation = rotation;
     }
 
     public string GetName()
     {
         return Name;
     }
-
+    public Quaternion GetRotation()
+    {
+        return Rotation;
+    }
     public Vector2 GetPosition()
     {
         return Position;
     }
-
+    public void SetRotation(Quaternion rotation)
+    {
+         Rotation = rotation;
+    }
+    public void SetPosition(Vector3 position)
+    {
+         Position = position;
+    }
 }
 
 public class SocietyController : MonoBehaviour
 {
     
-    public GameObject testBlock;
+    public GameObject SocietyPreceptBlockPrefab;
 
+    private static SocietyController _instance;
+    private static SocietyController Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                // If the instance is null, try to find it in the scene
+                _instance = FindObjectOfType<SocietyController>();
+
+                if (_instance == null)
+                {
+                    Debug.LogError("SocietyController NULL, CANT BE FOUND");
+                }
+            }
+
+            return _instance;
+        }
+    }
+
+    public static SocietyController GetInstance()
+    {
+        return Instance;
+    }
+    void OnDisable()
+    {
+        Debug.Log("Saving Society");
+        foreach (Transform child in gameObject.transform)
+        {
+            if (child.gameObject.CompareTag("SocietyBlock"))
+            {
+                child.GetComponent<SocietyPreceptBlock>().SavePositionAndRotation();
+            }
+        }
+
+        foreach (Transform child in gameObject.transform)
+        {
+            if (child.gameObject.CompareTag("SocietyBlock"))
+            {
+                Destroy(child.gameObject);
+            }
+        }
+    
+}
 
     public void VisualizeSociety(Planet planet)
     {
+        
+
         UiCanvas UI = UiCanvas.GetInstance();
         UI.SocietytDataView(planet.Name);
 
         Society society =  planet.Society;
         int number = 0;
-        foreach (SocietyBlock block in society.SocietyBlocks)
+        foreach (SocietyPrecept precept in society.SocietyPrecepts)
         {
             number++;
             Debug.Log(number);
-            GameObject societyBlock = Instantiate(testBlock) as GameObject;
-            Vector2 dPos = block.GetPosition();
-            societyBlock.transform.position = new Vector3(dPos.x , dPos.y);
+            GameObject societyBlock = Instantiate(SocietyPreceptBlockPrefab, this.transform) as GameObject;
 
+            societyBlock.transform.position = precept.GetPosition();
+            societyBlock.transform.rotation = precept.GetRotation();
+            societyBlock.GetComponent<SocietyPreceptBlock>().SocietyPrecept = precept;
 
         }
 
-        /*
-    List<SocietyBlock> societyBlocks = new List<SocietyBlock>() planet.Society.SocietyBlocks;
-
-    foreach (SocietyBlock block in SocietyBlocks)
-    {
-
-
-        GameObject societyBlock = Instantiate(testBlock, block.GetPosition()) as GameObject;
-        clusterStar.GetComponent<ClusterStar>().StarColor = star.Type.StarColor;
-        clusterStar.GetComponent<ClusterStar>().HomeClusterId = activeCluster.Id;
-        clusterStar.GetComponent<ClusterStar>().StarId = starIndex;
-        clusterStar.GetComponent<ClusterStar>().SetStarName(star.Name);
-
-        clusterStar.transform.parent = this.transform;
-
-    }
-    */
 
 
 

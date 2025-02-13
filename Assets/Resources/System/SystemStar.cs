@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using MathSpace;
+using Game.Math;
 
 using static CelestialBody;
 

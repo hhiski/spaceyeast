@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 
 public class SkyboxController : MonoBehaviour
@@ -9,63 +10,86 @@ public class SkyboxController : MonoBehaviour
     public Material SystemSkybox;
     public Material SocietySkybox;
 
-    
-    public void SetSystemSkybox()
+    Camera Camera;
+
+    private static SkyboxController _instance;
+    private static SkyboxController Instance
     {
-        RenderSettings.skybox = SystemSkybox;
+        get
+        {
+            if (_instance == null)
+            {
+                // If the instance is null, try to find it in the scene
+                _instance = FindObjectOfType<SkyboxController>();
+
+                if (_instance == null)
+                {
+                    Debug.LogError("SkyboxController NULL, CANT BE FOUND");
+                }
+            }
+
+            return _instance;
+        }
+    }
+    public static SkyboxController GetInstance()
+    {
+        return Instance;
     }
 
-    public IEnumerator SetSkybox(string skybox)
+    public enum SkyboxType
     {
-        Debug.Log("skybox: " + skybox);
-        if (skybox == "galaxy")
+        Galaxy,
+        Cluster,
+        System,
+        Society,
+    };
+
+
+
+    public void SetSkybox(SkyboxType skybox)
+    {
+
+        Material skyboxMaterial = GalaxySkybox;
+
+        if (skybox == SkyboxType.Galaxy)
         {
-            RenderSettings.skybox = GalaxySkybox;
+            skyboxMaterial = GalaxySkybox;
         }
 
-        if (skybox == "cluster")
+        if (skybox == SkyboxType.Cluster)
         {
 
-            RenderSettings.skybox = ClusterSkybox;
+            skyboxMaterial = ClusterSkybox;
         }
 
-        if (skybox == "system")
+        if (skybox == SkyboxType.System)
         {
-            RenderSettings.skybox = SystemSkybox;
-            Debug.Log(RenderSettings.skybox);
+            skyboxMaterial = SystemSkybox;
+
         }
-        if (skybox == "society")
+        if (skybox == SkyboxType.Society)
         {
-            RenderSettings.skybox = SocietySkybox;
+            skyboxMaterial = SocietySkybox;
         }
 
-        yield return null;
-        yield return new WaitForEndOfFrame();
+        if (Camera == null)
+        {
+            Camera = CameraOrbit.GetInstance().SystemCamera;
+        }
+
+
+        if (Camera.TryGetComponent<Skybox>(out Skybox cameraSkybox))
+        {
+            cameraSkybox.material = skyboxMaterial;
+        }
+        else
+        {
+            Debug.LogWarning("Camera Skybox-component not found");
+        }
+
+
+
     }
 
-   /* public void SetSkybox(string skybox)
-    {
-        Debug.Log("skybox: " + skybox);
-        if (skybox == "galaxy")
-        {
-            RenderSettings.skybox = GalaxySkybox;
-        }
 
-        if (skybox == "cluster")
-        {
-
-            RenderSettings.skybox = ClusterSkybox;
-        }
-
-        if (skybox == "system")
-        {
-            RenderSettings.skybox = SystemSkybox;
-            Debug.Log(RenderSettings.skybox);
-        }
-        if (skybox == "society")
-        {
-            RenderSettings.skybox = SocietySkybox;
-        }
-
-    }*/
 }

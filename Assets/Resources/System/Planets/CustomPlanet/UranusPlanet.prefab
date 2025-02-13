@@ -102,7 +102,6 @@ MonoBehaviour:
   Frequency: 0.87
   Roughness: 0.367
   Persistence: 1.18
-  Randomness: 1
   heightCurve:
     serializedVersion: 2
     m_Curve:
@@ -162,7 +161,6 @@ MonoBehaviour:
     m_RotationOrder: 4
   negativePeakClip: 0
   positivePeakClip: 2
-  seaLevel: 0.998
   craterAmplitude: 0
   craterSize: 0
   craterAmount: 0
@@ -172,29 +170,72 @@ MonoBehaviour:
   selectedCellPattern: 0
   Flatness: 1
   fluidicity: 0
-  wierd: 0
+  weird: 0
   modulo: 0
-  equatorial: 0
-  desertification: 0
-  pebbles: 0
   warpForce: 0
   warpVector: {x: 0, y: 0, z: 0}
-  colorHigh: {r: 0.3919366, g: 0.9150943, b: 0.7808274, a: 1}
-  colorMid: {r: 0.12549019, g: 0.8, b: 0.6462368, a: 1}
-  colorLow: {r: 0.20733355, g: 0.6037736, b: 0.555088, a: 1}
-  colorDesert: {r: 0.3, g: 0, b: 0.5, a: 1}
-  colorHighShifted: {r: 0.3919366, g: 0.9150943, b: 0.7808274, a: 1}
-  colorMidShifted: {r: 0.12549019, g: 0.8, b: 0.6462368, a: 1}
-  colorLowShifted: {r: 0.20733355, g: 0.6037736, b: 0.555088, a: 1}
-  colorDesertShifted: {r: 0.29999995, g: 0, b: 0.5, a: 1}
-  colorSea: {r: 0.1254902, g: 0.8, b: 0.64705884, a: 1}
-  colorSeaShifted: {r: 0.100000046, g: 0.30000004, b: 0.9, a: 1}
+  colorGradient:
+    serializedVersion: 2
+    key0: {r: 0.39215687, g: 0.9137255, b: 0.78039217, a: 1}
+    key1: {r: 0.20784314, g: 0.6039216, b: 0.5568628, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  colorSeaGradient:
+    serializedVersion: 2
+    key0: {r: 1, g: 1, b: 1, a: 1}
+    key1: {r: 1, g: 1, b: 1, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  seaLevel: 0
   colorClouds: {r: 1, g: 1, b: 1, a: 1}
-  colorCloudsShifted: {r: 1, g: 1, b: 1, a: 1}
-  colorHeightHigh: 1.05
-  colorHeightMid: 1.001
-  colorHeightLow: 1
-  colorHeightDeep: 0.95
   colorStripify: 0.83
   colorVariation: 0
   atmosphereThickness: 1000
@@ -202,7 +243,7 @@ MonoBehaviour:
   iceCapsSize: 0
   mass: 1.5
   rotationSpeed: 2
-  seed: 7518
+  seed: 3215
 --- !u!1001 &5890465754567779183
 PrefabInstance:
   m_ObjectHideFlags: 0

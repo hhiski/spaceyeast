@@ -119,10 +119,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de15a4fbeda2898419bfd943e25d64c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StarId: 0
-  HomeClusterId: 0
-  Color: {r: 0, g: 0, b: 0, a: 0}
-  StarHeightLines: {fileID: 2100000, guid: 7d5f84ac69c154b44978a8fbb7baea96, type: 2}
 --- !u!1001 &5513261905545152199
 PrefabInstance:
   m_ObjectHideFlags: 0

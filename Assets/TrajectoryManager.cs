@@ -1,4 +1,5 @@
-using LineSpace;
+
+using Game.Lines;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,8 +9,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Pool;
 using UnityEngine.UIElements;
-using static CelestialBody;
-using static UnityEngine.GraphicsBuffer;
+
+
 
  class Trajectory
 {
@@ -18,6 +19,8 @@ using static UnityEngine.GraphicsBuffer;
     GameObject Start { get; set; }
     GameObject Target { get; set; }
     GameObject Line { get; set; }
+
+
 
     public Trajectory(GameObject start, GameObject target, GameObject line)
     {
@@ -29,7 +32,10 @@ using static UnityEngine.GraphicsBuffer;
     {
         return Target;
     }
-
+    public GameObject GetLineObject()
+    {
+        return Line;
+    }
     public void DrawStraightLine()
     {
 
@@ -72,74 +78,61 @@ using static UnityEngine.GraphicsBuffer;
 
         return point;
     }
-    Vector3 CalculateHohmannPoint(Vector3 start, Vector3 end, float r1, float r2, float t)
-    {
-        // Semi-major axis of the transfer ellipse
-        float a = (r1 + r2) / 2.0f;
 
-        // Eccentricity of the transfer ellipse
-        float e = (r2 - r1) / (r1 + r2);
-
-        // Angle of the current point along the transfer ellipse
-        float theta = Mathf.PI * t;
-
-        // Radius at angle theta
-        float r = (a * (1 - e * e)) / (1 + e * Mathf.Cos(theta));
-
-        // Position in polar coordinates
-        Vector3 point = new Vector3(r * Mathf.Cos(theta), 0, r * Mathf.Sin(theta));
-
-        // Rotate to align with the starting and ending points
-        Quaternion rotation = Quaternion.FromToRotation(Vector3.right, (end - start).normalized);
-        point = rotation * point;
-
-
-        return point;
-    }
     Vector3 RotatePointAroundInclinedPivot(Vector3 point, Vector3 pivot, Vector3 axis, float angle)
     {
         axis.Normalize(); // Ensure the axis is normalized
         Quaternion rotation = Quaternion.AngleAxis(angle, axis); // Create rotation quaternion
-        return RotatePointAroundPivot(point, pivot, rotation); // Use the original method
+
+        Vector3 direction = point - pivot; // Get point direction relative to pivot
+
+
+        direction = rotation * direction; // Rotate it
+        point = direction + pivot; // Calculate rotated point
+        return point;
+      
     }
     Vector3 RotatePointAroundPivot(Vector3 point, Vector3 pivot, Quaternion rotation)
     {
         Vector3 direction = point - pivot; // Get point direction relative to pivot
+
+
+
         direction = rotation * direction; // Rotate it
         point = direction + pivot; // Calculate rotated point
-        return point; // Return it
+        return point;
     }
-    public void DrawBrachistochroneLine(float EngineForce, float StartingVelocity, float RotationSpeed)
+    public void DrawBrachistochroneLine(float EngineForce, float StartingVelocity, float RotationSpeed, float AngleDifferenceOffset, Vector3 vectorAbjuster, AnimationCurve flightCurve)
     {
-   
 
+        float angleDifferenceOffset = AngleDifferenceOffset;
         Vector3 startPos = Start.transform.position;
         Vector3 endPos = Target.transform.position;
         Vector3 startOrbitVector = Start.GetComponent<SystemPlanet>().GetOrbitVector();
         Vector3 startOrbitAxis = Start.GetComponent<SystemPlanet>().GetOrbitAxis();
-        Vector3 startInitialPos = Start.GetComponent<SystemPlanet>().InitialPosition;
-        Vector3 endOrbitVector = Target.GetComponent<SystemPlanet>().GetOrbitVector();
         Vector3 endOrbitAxis = Target.GetComponent<SystemPlanet>().GetOrbitAxis();
-        Vector3 endInitialPos = Target.GetComponent<SystemPlanet>().InitialPosition;
 
-        float startOrbitalDistance = startPos.magnitude;
-        float endOrbitalDistance =endPos.magnitude;
+        startOrbitVector.z /= 5f;
+        endOrbitAxis.z /= 5f;
 
-        Vector3 midPos = (startPos + endPos) / 2;
-        Vector3[] linePoints = new Vector3[] { startPos, endPos };
-
-
+        Debug.DrawRay(startPos, startOrbitVector * 360, UnityEngine.Color.red);
+        Debug.DrawRay(startPos, startOrbitAxis * 360, UnityEngine.Color.green);
+        Debug.DrawRay(startPos, vectorAbjuster * 55, UnityEngine.Color.blue);
+        Debug.DrawRay(endPos, vectorAbjuster * 55, UnityEngine.Color.blue);
+        Debug.DrawRay(endPos, endOrbitAxis * 360, UnityEngine.Color.green);
         LineRenderer lineRenderer = Line.GetComponent<LineRenderer>();
+        lineRenderer.useWorldSpace = true;
+      //  Line.transform.rotation = Line.transform.parent.rotation;
+
+
         const int linePointCount = 500;
         lineRenderer.positionCount = linePointCount;
-        
-        float totalDistance = Vector3.Distance(startPos, endPos);
-        float halfDistance = totalDistance / 2;
 
+        float totalDistance = Vector3.Distance(startPos, endPos);
         if (totalDistance == 0)
         {
-            Debug.Log("TOTAL DISTANCE ZERO");
-            return;
+            Debug.LogWarning("TOTAL BrachistochroneLine DISTANCE ZERO");
+
         }
 
         float angle = Vector3.SignedAngle(Vector3.right, startPos, Vector3.up);
@@ -149,24 +142,19 @@ using static UnityEngine.GraphicsBuffer;
         if (angleB < 0) angleB += 360f;
 
 
-        float orbitPhaseA = angle;
-        float orbitPhaseWithOmega = angle  * (1 / (1 + startOrbitAxis.y)); //The longitude of the ascending node rotates phase with the planet. 
+        float orbitPhaseWithOmega = angle * (1 / (1 + startOrbitAxis.y)); //The longitude of the ascending node rotates phase with the planet. 
 
-        float normalizedorbitPhaseWithOmega = Mathf.InverseLerp(0, (1 / (1 + startOrbitAxis.y)), orbitPhaseWithOmega);
 
-        float orbitPhaseB = Target.GetComponent<SystemPlanet>().GetOrbitPhase() * (1 / (1+startOrbitAxis.y));
-        float difference = angleB - angle;
+        float orbitPhaseB = Target.GetComponent<SystemPlanet>().GetOrbitPhase() * (1 / (1 + startOrbitAxis.y));
+
+        //If the target planet's phase angle difference is small enough, trajactory lines rather goes around the solar midpoint. 
+        float difference = angleB - angle - angleDifferenceOffset;
+
+        difference = difference % 360;
         if (difference < 0f) difference += 360f;
         float angleFactor = 360f - difference;
 
         if (angleFactor < 0f) angleFactor += 360f;
-
-
-        //Debug.Log("A " + angle + "  -- B " + angleB + "   sep:" + difference + " omega: " + angleFactor);
-
-
-
-        // Debug.Log("A " + angle + "  -- B "+ angleB + "   sep:"+ angle + angleB);
 
 
         Vector3[] points = new Vector3[100];
@@ -178,46 +166,37 @@ using static UnityEngine.GraphicsBuffer;
         Vector3[] decelerations = new Vector3[500];
 
 
-     //   accelerationVector += thrust;
-        int accelerationIndex, decelerationIndex, fullIndex;
+        int accelerationIndex, decelerationIndex;
         float phase;
 
 
         difference /= 360f;
-        Debug.Log("diffuse: " + difference + " ");
         float radiusFactor = difference * 2f;
+
+
 
         for (accelerationIndex = 0; accelerationIndex < accelerations.Length; accelerationIndex++)
         {
-            phase = (float)(accelerationIndex) / (float)linePointCount;
-          //  accelerationVector =  RotatePointAroundPivot(  accelerationVector, Vector3.zero, Quaternion.Euler(startOrbitAxis * radiusFactor * RotationSpeed ));
-
+            Vector3 oldA = accelerationVector;
             accelerationVector = RotatePointAroundInclinedPivot(accelerationVector, Vector3.zero, startOrbitAxis, radiusFactor * RotationSpeed);
             accelerations[accelerationIndex] = accelerationVector;
         }
         for (decelerationIndex = 0; decelerationIndex < decelerations.Length; decelerationIndex++)
         {
-            phase = (float)(decelerationIndex) / (float)linePointCount;
-            //   decelerationVector = RotatePointAroundPivot(decelerationVector , Vector3.zero, Quaternion.Euler(endOrbitAxis *radiusFactor * EngineForce));
             decelerationVector = RotatePointAroundInclinedPivot(decelerationVector, Vector3.zero, endOrbitAxis, radiusFactor * EngineForce);
             decelerations[decelerationIndex] = decelerationVector;
         }
 
         System.Array.Reverse(decelerations);
-
+        Vector3 point;
         for (accelerationIndex = 0; accelerationIndex < linePointCount; accelerationIndex++)
         {
             phase = (float)(accelerationIndex) / (float)linePointCount;
-            //  Vector3 point = Vector3.LerpUnclamped(accelerations[accelerationIndex], decelerations[accelerationIndex], phase);
-            float smoothPhase = (1f - Mathf.Cos(Mathf.PI * phase)) / 2f;
-            Vector3 point = Vector3.LerpUnclamped(accelerations[accelerationIndex], accelerations[accelerationIndex], smoothPhase );
 
-            if (StartingVelocity >= 1)
-                 point = Vector3.LerpUnclamped(decelerations[accelerationIndex], decelerations[accelerationIndex], smoothPhase );
+            // float smoothPhase = (1f - Mathf.Cos(Mathf.PI * phase)) / 2f;
 
-            if (StartingVelocity >= 2)
-                point = Vector3.LerpUnclamped(accelerations[accelerationIndex], decelerations[accelerationIndex], smoothPhase);
-
+            phase = flightCurve.Evaluate(phase);
+            point = Vector3.LerpUnclamped(accelerations[accelerationIndex], decelerations[accelerationIndex], phase);
             lineRenderer.SetPosition(accelerationIndex, point);
         }
 
@@ -227,17 +206,26 @@ using static UnityEngine.GraphicsBuffer;
 
     }
 
+
 }
 public class TrajectoryManager : MonoBehaviour
 {
     List<Trajectory> Trajectories = new List<Trajectory>();
 
-    public Material LineMaterial;
+    [SerializeField] Material LineMaterial;
     public bool DrawingTrajectories = false;
     public float EngineForce = 1;
     public float StartingVelocity = 0.27f;
     public float RotationSpeed = 1;
     private static TrajectoryManager _instance;
+
+    [SerializeField] AnimationCurve flightCurve = AnimationCurve.Linear(0f, 0f, 1f, 1f);
+
+    [SerializeField] float AngleDifferenceOffset = 30f;
+    [SerializeField] Vector3 vectorAbjuster = new Vector3(0,0,0);
+    [SerializeField] Vector3 vectormid = new Vector3(0, 0, 0);
+
+
     private static TrajectoryManager Instance
     {
         get
@@ -261,42 +249,28 @@ public class TrajectoryManager : MonoBehaviour
         return Instance;
     }
 
-    void Start()
+    void OnDisable()
     {
-        
-
-
+        ClearTrajectories();
     }
-    public void ClearTrajectoriesSystemWide()
-    {
-      /*List<GameObject> otherPlanets = SystemController.GetInstance().GetPlanetObjects();
 
-        foreach (GameObject planet in otherPlanets)
-        {
-            Trajectories.Clear();
-            ClearTrajectories();
-            Debug.Log("Deleting : " + planet.name + "trejecotries");
-        }*/
-
-    }
 
     public void ClearTrajectories()
     {
-        Trajectories.Clear();
+
         DrawingTrajectories = false;
         
-        foreach (Transform child in transform)
+        foreach (Trajectory trajectory in Trajectories)
         {
-            if (child.gameObject.name == "Trajectory Line" || child.gameObject.name == "Trajectory Line(Clone)")
+            GameObject lineObject = trajectory.GetLineObject();
+            if (lineObject != null)
             {
-                Destroy(child.gameObject);
-            }
-            else if (child.gameObject.name == "Brachistochrone Trejectory" || child.gameObject.name == "Brachistochrone Trejectory(Clone)")
-            {
-                Destroy(child.gameObject);
+                Destroy(lineObject);
             }
         }
+        Trajectories.Clear();
     }
+
     public void CreateTrajectories(GameObject sourcePlanet)
     {
         ClearTrajectories();
@@ -310,32 +284,36 @@ public class TrajectoryManager : MonoBehaviour
         foreach (GameObject otherPlanet in otherPlanets)
         {
             if (otherPlanet != sourcePlanet) {
-    
-            GameObject line = LineFunctions.CreateLineObject(this.transform, new Vector3(0, 0, 0), "Trajectory Line", linePoints, LineMaterial, 0.5f, false);
+
+
+            GameObject line = LineManager.Instance.CreateLineObject(sourcePlanet.transform, "Trajectory Line", linePoints, LineType.Trajectory);
+
+            line.tag = "System";
+
             Trajectory trajectory = new  Trajectory(sourcePlanet, otherPlanet, line);
             Trajectories.Add(trajectory);
+                Debug.Log("planet " + sourcePlanet.GetComponent<SystemPlanet>().name + " --- orbitAxis " + sourcePlanet.GetComponent<SystemPlanet>().GetOrbitAxis() + " orbitVector" + sourcePlanet.GetComponent<SystemPlanet>().GetOrbitVector());
+                
 
-           
-            index++;
+
+                index++;
+
             }
+
+
         }
         DrawingTrajectories = true;
     }
 
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (DrawingTrajectories)
         {
-
-
             foreach (Trajectory trajectory in Trajectories)
             {
-               // trajectory.DrawStraightLine();
-                trajectory.DrawBrachistochroneLine(EngineForce, StartingVelocity, RotationSpeed);
+                trajectory.DrawBrachistochroneLine(EngineForce, StartingVelocity, RotationSpeed, AngleDifferenceOffset, vectorAbjuster, flightCurve);
             }
-
         }
         
     }

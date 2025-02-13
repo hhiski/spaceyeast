@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using NoiseSpace;
 using ColorSpace;
 
 public class StarSurface : MonoBehaviour
@@ -15,31 +14,8 @@ public class StarSurface : MonoBehaviour
 
     Material surfaceMaterial;
 
-    void UpdateColors()
-    {
-      
-        if (surfaceMaterial != null)
-        {
-           // surfaceMaterial.SetColor("_CoreColor", starColor);
-            //surfaceMaterial.SetColor("_RimColor", starColorCold);
 
-        };
-    }
 
-    void LateUpdate()
-    {
-        if (Input.GetKeyDown(KeyCode.B) == true)
-        {
-            ShapeStarSurface();
-
-        }
-    }     
-
-public void ShapeStarSurface()
-    {
-
-        UpdateColors();
-    }
 
     internal void CopyVertices()
     {

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlanetRing : MonoBehaviour
@@ -12,18 +13,61 @@ public class PlanetRing : MonoBehaviour
     public GameObject DoubleRingOuter;
     public GameObject MicroMoonRing;
 
+    GameObject PlanetRingA;
+    GameObject PlanetRingB;
 
-    public Color colorPrimary = new Color(1f, 0.0f, 1, 1);
-    public Color colorSecondary = new Color(1f, 1.0f, 1, 1);
+    Color ColorPrimary = new Color(1f, 0.0f, 1, 1);
+    Color ColorSecondary = new Color(1f, 1.0f, 1, 1);
+
+    Color EvaluatePrimaryColor(Gradient colorGradient)
+    {
+        return colorGradient.Evaluate(0.33f);
+    }
+    Color EvaluateSecondaryColor(Gradient colorGradient)
+    {
+        return colorGradient.Evaluate(0.66f);
+    }
+
+    public void ColorRings(Gradient gradient)
+    {
+      
+        if (gradient != null) { 
+
+            ColorPrimary = EvaluatePrimaryColor(gradient); ;
+            ColorSecondary = EvaluateSecondaryColor(gradient); ;
+
+            ColorPrimary = LightenDarkColors(ColorPrimary);
+            ColorSecondary = LightenDarkColors(ColorSecondary);
+
+            if (PlanetRingA != null && PlanetRingA.TryGetComponent<Renderer>(out Renderer rendererA))
+            {
+                rendererA.material.SetColor("_Color", ColorPrimary);
+            }
+
+
+            if (PlanetRingB != null &&  PlanetRingB.TryGetComponent<Renderer>(out Renderer rendererB))
+            {
+                rendererB.material.SetColor("_Color", ColorSecondary);
+            }
+        }
+        else
+        {
+            Debug.Log("Planet colorGradient null on PlanetRing");
+        }
+
+    }
+
+    public void CreateRingWithColor(int ringType, Gradient colorGradient)
+    {
+
+
+        CreateRing(ringType);
+        ColorRings(colorGradient);
+
+    }
 
     public void CreateRing(int ringType)
     {
-
-        colorPrimary = this.gameObject.transform.parent.GetComponent<PlanetSurface>().colorMidShifted;
-        colorSecondary = this.gameObject.transform.parent.GetComponent<PlanetSurface>().colorLowShifted;
-
-        colorPrimary = LightenDarkColors(colorPrimary);
-        colorSecondary = LightenDarkColors(colorSecondary);
 
         if (ringType == 0)
         {
@@ -31,40 +75,34 @@ public class PlanetRing : MonoBehaviour
         }
 
         else if (ringType == 1) {
-            GameObject PlanetRingA = Instantiate(SimpleRing, transform, false) as GameObject;
-            PlanetRingA.GetComponent<Renderer>().material.SetColor("_Color", colorPrimary);
+            PlanetRingA = Instantiate(SimpleRing, transform, false) as GameObject;
             PlanetRingA.transform.Rotate(92.0f, 0.0f, 0.0f, Space.Self);
         }
         else if (ringType == 2) {
-            GameObject PlanetRingA = Instantiate(WideRing, transform, false) as GameObject;
-            PlanetRingA.GetComponent<Renderer>().material.SetColor("_Color", colorPrimary);
+            PlanetRingA = Instantiate(WideRing, transform, false) as GameObject;
             PlanetRingA.transform.Rotate(92.0f, 0.0f, 0.0f, Space.Self);
         }
         else if (ringType == 3) {
-            GameObject PlanetRingA = Instantiate(DoubleRingInner, transform, false) as GameObject;
-            PlanetRingA.GetComponent<Renderer>().material.SetColor("_Color", colorPrimary);
+            PlanetRingA = Instantiate(DoubleRingInner, transform, false) as GameObject;
             PlanetRingA.transform.Rotate(92.0f, 0.0f, 0.0f, Space.Self);
 
-            GameObject PlanetRingB = Instantiate(DoubleRingOuter, transform, false) as GameObject;
-            PlanetRingB.GetComponent<Renderer>().material.SetColor("_Color", colorSecondary);
+            PlanetRingB = Instantiate(DoubleRingOuter, transform, false) as GameObject;
             PlanetRingB.transform.Rotate(92.0f, 0.0f, 0.0f, Space.Self);
         }
 
         else if (ringType == 4)
         {
-            GameObject PlanetRingA = Instantiate(SimpleRing, transform, false) as GameObject;
-            PlanetRingA.GetComponent<Renderer>().material.SetColor("_Color", colorPrimary);
+            PlanetRingA = Instantiate(SimpleRing, transform, false) as GameObject;
             PlanetRingA.transform.Rotate(98.0f, 0.0f, 0.0f, Space.Self);
 
-            GameObject PlanetRingB = Instantiate(SimpleRingOuter, transform, false) as GameObject;
-            PlanetRingB.GetComponent<Renderer>().material.SetColor("_Color", colorSecondary);
+            PlanetRingB = Instantiate(SimpleRingOuter, transform, false) as GameObject;
             PlanetRingB.transform.Rotate(115.0f, 0.0f, 0.0f, Space.Self);
 
         }
 
         else if (ringType == 5)
         {
-            GameObject PlanetRingA = Instantiate(MicroMoonRing, transform, false) as GameObject;
+            PlanetRingA = Instantiate(MicroMoonRing, transform, false) as GameObject;
         }
 
     }
@@ -78,9 +116,9 @@ public class PlanetRing : MonoBehaviour
 
         Color.RGBToHSV(color, out hue, out saturation, out colorValue);
 
-        if (colorValue < 0.3f)
+        if (colorValue < 0.5f)
         {
-            colorValue = colorValue + 0.3f;
+            colorValue = colorValue + 0.5f;
         }
 
         color = Color.HSVToRGB(hue, saturation, colorValue);

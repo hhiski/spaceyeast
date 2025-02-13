@@ -1,14 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using NoiseSpace;
+using Game.Noise;
 
 public class PlanetSea : MonoBehaviour
 {
     [SerializeField] GameObject sea;
     [SerializeField] GameObject ice;
 
-    NoiseFunctions NoiseFunctions = new NoiseFunctions();
 
     Mesh seaMesh;
     Mesh seaSharedMesh;
@@ -148,11 +147,13 @@ public class PlanetSea : MonoBehaviour
                
                 float vLatitude = vertices[i].y;
                 float snowAmplitude = (iceLevel - 1) * 0.55f;
-                float snowNoise = NoiseFunctions.PerlinFilter(point, NoiseLayer, 2.6f, 1, snowAmplitude,0);
+              /* float snowNoise = NoiseFunctions.PerlinFilter(point, NoiseLayer, 2.6f, 1, snowAmplitude, 0);
+
                 snowNoise = 1 + (snowNoise * snowAmplitude);
                 if (snowNoise > 1) { snowNoise = 1; } else { snowNoise = 0; };
 
-                vertices[i] =  (vertices[i]  * snowNoise * iceLevel);
+                vertices[i] = (vertices[i] * snowNoise * iceLevel);
+                */
             }
 
             else

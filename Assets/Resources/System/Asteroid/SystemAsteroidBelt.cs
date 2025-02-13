@@ -41,7 +41,7 @@ public class SystemAsteroidBelt : MonoBehaviour
         mainAstroidSystem.simulationSpeed = 1f;
         AstroidSystem.Simulate(6.3f);
 
-        mainAstroidSystem.simulationSpeed = 0.05f;
+        mainAstroidSystem.simulationSpeed = 0.05f / 360f; ;
 
 
         AstroidSystem.Play();

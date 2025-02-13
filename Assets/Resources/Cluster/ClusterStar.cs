@@ -1,86 +1,79 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using LineSpace;
 using ColorSpace;
+using Game.Lines;
 using static CelestialBody;
+using Unity.VisualScripting;
 
 public class ClusterStar : MonoBehaviour
 {
 
-    public int StarId;
-    public int HomeClusterId;
-    public Color Color;
-    public Material StarHeightLines;
-
-    string  StarName;
-
-    ColorFunctions ColorFunctions = new ColorFunctions();
+    public Star Star { get;  set; }
+  //  public int StarId { get; private set; }
+ //   public int HomeClusterId { get; private set; }
 
 
-   public void SetStarName(string name)
+    public void SetStar(Star star)
     {
-        StarName = name;
+        Star = star;
+    }
+    public Star GetStar()
+    {
+        return Star;
     }
 
 
-    void Start()
+
+    public void AddZLine() 
     {
         Vector3 position = this.transform.position;
 
-        Material lineMaterial = new Material(Shader.Find("Sprites/Default"));
         Vector3[] heightLineSegments = new[] { new Vector3(position.x, 0, position.z), position };
 
-
-        GameObject line = LineFunctions.CreateLineObject(this.transform, new Vector3(0, 0, 0), "Height Line", heightLineSegments, lineMaterial, 0.6f);
-
-
-        if (this.GetComponent<Renderer>() != StarHeightLines)
-        {
-            Debug.LogWarning("Material StarHeightLines not set!");
-            line.GetComponent<LineRenderer>().material = StarHeightLines;
-        }
-
-        if (this.GetComponent<Renderer>() != null)
-        {
-            this.GetComponent<Renderer>().material.SetColor("_Color", Color);
-
-        }
-
-
-
-        foreach (Transform child in gameObject.transform)
-        {
-            if (child.gameObject.name == "StarCorona")
-            {
-                GameObject corona = child.gameObject;
-
-                if (corona.GetComponent<ParticleSystem>() != null)
-                {
-
-                    var main = corona.gameObject.GetComponent<ParticleSystem>().main;
-                    main.startColor = Color;
-
-
-                }
-               
-
-            }
-        }
-
-
-        UIClusterNames uIClusterNames = GameObject.Find("/Canvas/UIClusterNameTrackers").GetComponent<UIClusterNames>();
-
-        uIClusterNames.AddClusterNameTag(StarName, position);
-
-
+        LineManager.Instance.CreateLineObject(this.transform, "Z-axis Line", heightLineSegments, LineType.Cluster);
     }
 
+    public void SetClusterStarColor()
+    {
+        if (Star.Type.StarColor == null)
+        {
+            Debug.LogWarning("star.Type.StarColor");
+            return;
+        }
 
+        Color starColor = Star.Type.StarColor;
+
+
+        if (TryGetComponent<Renderer>(out Renderer renderer))
+        {
+            GetComponent<Renderer>().material.SetColor("_Color", starColor);
+        }
+        else
+        {
+            Debug.LogWarning("ClusterStar object does not have a Renderer component!");
+        }
+
+
+        foreach (Transform child in transform)
+        {
+            if (child.name != "StarCorona") continue;
+
+            if (child.TryGetComponent<ParticleSystem>(out ParticleSystem particleSystem))
+            {
+                var mainModule = particleSystem.main;
+                mainModule.startColor = starColor;
+            }
+            else
+            {
+                Debug.LogWarning("StarCorona object does not have a ParticleSystem component!");
+            }
+        }
+    }
 
     void OnMouseDown()
     {
-        transform.parent.parent.GetComponent<GalaxyCatalog>().CreateSystem(HomeClusterId, StarId);
+        transform.parent.parent.GetComponent<GalaxyCatalog>().CreateSystem(Star.HomeClusterId, Star.Id);
     }
 
 
