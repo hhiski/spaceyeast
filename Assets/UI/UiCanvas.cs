@@ -61,9 +61,9 @@ public  class UiCanvas : MonoBehaviour
         UIDownPanel = this.transform.Find("DownPanel").gameObject;
         UILeftPanel = this.transform.Find("LeftPanel").gameObject;
         UISelector = this.transform.Find("Selector").gameObject;
-        UIZoomOutButton = this.transform.Find("ZoomOutButton").gameObject;
-        UILocateSolButton = this.transform.Find("LocateSolButton").gameObject;
-        UIOpenSocietyButton = this.transform.Find("SocietyButton").gameObject;
+        UIZoomOutButton = this.transform.Find("ClickableButtoms/ZoomOutButton").gameObject;
+        UILocateSolButton = this.transform.Find("ClickableButtoms/LocateSolButton").gameObject;
+        UIOpenSocietyButton = this.transform.Find("ClickableButtoms/SocietyButton").gameObject;
         UINameTrackers = this.transform.Find("UINameTrackers").gameObject;
         FullScreenLightEffect = this.transform.Find("FullScreenLightEffect").gameObject;
 
@@ -133,7 +133,7 @@ public  class UiCanvas : MonoBehaviour
 
             case UiScope.Society:
                 UIDownPanel.SetActive(false);
-                UILeftPanel.SetActive(false);
+                UILeftPanel.SetActive(true);
                 UISelector.SetActive(false);
                 UIZoomOutButton.SetActive(true);
                 break;

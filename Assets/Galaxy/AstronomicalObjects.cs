@@ -268,7 +268,7 @@ static public class CelestialBody {
     }
 
     public class AsteroidBelt
-        {
+    {
         //Belt types:
         //0 - non-existing
         //1 - ice rocks
@@ -289,7 +289,7 @@ static public class CelestialBody {
             Type = Random.Range(0, 4);
             Distance = Random.Range(40, 400);
         }
-        }
+    }
     
     public class Cluster 
     {

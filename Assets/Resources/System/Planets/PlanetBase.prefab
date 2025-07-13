@@ -44,7 +44,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5020679358242017764}
-  m_Mesh: {fileID: 4960391283429108971, guid: f80843c7ad78efe4d88e684b330f4bb1, type: 3}
+  m_Mesh: {fileID: 4960391283429108971, guid: 737a54920bc76f5419b549e24905fe35, type: 3}
 --- !u!23 &3939766814597097452
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -66,6 +66,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 9044272874fa5544cbea9ab55747143e, type: 2}
+  - {fileID: 2100000, guid: baf1c9f2ed6ba134fa5a1f348c3fd5bb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -199,8 +200,6 @@ MonoBehaviour:
     m_RotationOrder: 4
   negativePeakClip: 0
   positivePeakClip: 2
-  craterAmplitude: 0.17
-  craterSize: 0.15
   craterAmount: 20
   cellAmount: 0
   cellPattern: 1

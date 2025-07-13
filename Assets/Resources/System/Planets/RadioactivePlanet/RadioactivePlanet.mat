@@ -111,6 +111,7 @@ Material:
     - _Metallic: 0
     - _Metallicity: 0
     - _Mode: 0
+    - _Modulo: 0.0412
     - _NormalSmooth: 0
     - _NormalStrength: 0
     - _OcclusionStrength: 1

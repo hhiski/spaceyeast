@@ -179,7 +179,7 @@ Material:
     - _Metallic: 0.604
     - _MirrorOnBack: 0
     - _Mode: 0
-    - _NoisePower: 0.6
+    - _NoisePower: 2
     - _NoiseScale: 28.2
     - _OcclusionStrength: 1
     - _Parallax: 0.08
@@ -210,7 +210,7 @@ Material:
     - _WindQuality: 0
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 2.3578093, g: 1.8481684, b: 1.0454434, a: 0}
+    - _BaseColor: {r: 8.47419, g: 6.642492, b: 3.7574224, a: 0}
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
     - _Color: {r: 0, g: 3.5725777, b: 4.2870936, a: 1}
     - _ColorAddSubDiff: {r: -1, g: 0, b: 0, a: 0}

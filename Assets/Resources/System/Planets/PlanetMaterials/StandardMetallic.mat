@@ -125,9 +125,9 @@ Material:
     - _LiquidShoreValue: 0.5
     - _LiquidSmoothness: 0.5
     - _Metallic: 0
-    - _Metallicity: 0.7
+    - _Metallicity: 1.11
     - _Mode: 0
-    - _Modulo: -0.03
+    - _Modulo: 0.1
     - _NormalSmooth: 0
     - _NormalStrength: 0
     - _OcclusionStrength: 1
@@ -138,7 +138,7 @@ Material:
     - _QueueOffset: 0
     - _ReceiveShadows: 0
     - _ShoreLine: 0
-    - _Smoothness: 0.3
+    - _Smoothness: 0.54
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1

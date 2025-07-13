@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1924138342116978698, guid: 6b9f220f9f8e4914bb8f4fe5b6b97ee1, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -2934451061702982857, guid: 3c6e36f16b9c8bf41a5b6813fe115595, type: 3}
     - target: {fileID: 5020679358242017764, guid: 6b9f220f9f8e4914bb8f4fe5b6b97ee1, type: 3}
       propertyPath: m_Name
       value: PlanetBase Variant 1

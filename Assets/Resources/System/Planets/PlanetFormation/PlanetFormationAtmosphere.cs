@@ -44,6 +44,10 @@ public class Gas
 public static class AtmosphereGasFormation
 {
 
+
+
+
+
     public static Gas None                      = new Gas(name: "None", reaction: "", breathable: false, toxic: false, rarity: 1 );
     public static Gas Trace                     = new Gas(name: "Trace gases", reaction: "Vacuumlike", breathable: false, toxic: false, rarity: 1);
     public static Gas NitrogenCarbonDioxide     = new Gas(name: "Nitrogen-Carbon Dioxide", reaction: "Asphyxiant", breathable: false, toxic: false, rarity: 1);

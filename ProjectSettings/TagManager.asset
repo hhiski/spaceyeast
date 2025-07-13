@@ -12,6 +12,7 @@ TagManager:
   - UIElement
   - SocietyBlock
   - Society
+  - SocietyBuildingArea
   layers:
   - Default
   - TransparentFX

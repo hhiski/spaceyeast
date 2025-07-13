@@ -175,6 +175,8 @@ public class Premaid
 
 
         int planetOrderIndex = 1;
+
+
         /*
         for (int orbitSlotIndex = 0; orbitSlotIndex < orbitSlots.Length; orbitSlotIndex++)
         {
@@ -218,7 +220,9 @@ public class Premaid
             }
             if (slot == SystemSlot.AsteroidBelt)
             {
-                AsteroidBelt belt = new(1, orbitDistance);
+                int beltType = UnityEngine.Random.Range(1, 3);
+                AsteroidBelt belt = new(beltType, orbitDistance);
+                planetHostingStar.AsteroidBelts.Add(belt);
                 orbitDistance += 33;
             }
             if (slot == SystemSlot.EmptySpace)
@@ -379,7 +383,6 @@ public class Premaid
         Earth.RotationSpeed = 4;
         Earth.Type = new PlanetType("Water");
         Earth.Type.SurfaceType = SurfaceType.Silicate;
-       // Earth.Type.CustomSubType = "EarthPlanet";
         Earth.Mass = 1f;
         Earth.RingType = 0;
         Earth.PolarCoverage = 0f;

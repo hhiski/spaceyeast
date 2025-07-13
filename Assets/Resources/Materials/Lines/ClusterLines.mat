@@ -124,6 +124,7 @@ Material:
     - _AlphaClip: 0
     - _AlphaOffset: 0
     - _AlphaToMask: 0
+    - _AmbientOcculusion: 0
     - _Amplitude: 100
     - _BaseMetallicity: 0
     - _BaseOreCloseness: 0
@@ -155,11 +156,13 @@ Material:
     - _Factor: 0.021
     - _FlipbookBlending: 0
     - _FlipbookMode: 0
+    - _Float: 0
     - _GlossMapScale: 1
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Glow: 0.72
     - _Intensity: 1
+    - _Invert: 0
     - _LightingEnabled: 0
     - _LiquidLevel: 1
     - _LiquidMaxDepth: 0.01
@@ -214,7 +217,7 @@ Material:
     - _BaseColor: {r: 19.135181, g: 25.68894, b: 0, a: 0.5529412}
     - _BaseColorAddSubDiff: {r: 1, g: 0, b: 0, a: 0}
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
-    - _Color: {r: 0.22244333, g: 2.143547, b: 0.22813934, a: 0.5529412}
+    - _Color: {r: 0.010413399, g: 0.1003474, b: 0.010680051, a: 0.5529412}
     - _ColorAddSubDiff: {r: 1, g: 0, b: 0, a: 0}
     - _EmisColor: {r: 0.99056596, g: 0.6808811, b: 0.022427881, a: 0.7019608}
     - _Emission: {r: 0, g: 0, b: 0, a: 1}

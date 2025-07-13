@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38bcce84c65f5c14c96b783f97a656c5, type: 3}
   m_Name: GameConfig
   m_EditorClassIdentifier: 
-  AvgStarNumPeCluster: 5
+  AvgStarNumPeCluster: 20
   AvgPlanetNumPerStar: 5
   MaxSolarRadius: 400
   GalacticMapZoneNumber: 25

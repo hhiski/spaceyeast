@@ -181,7 +181,7 @@ Material:
     - _EMISSION_WEIGHT: 1
     - _EmissionEnabled: 0
     - _EnableExternalAlpha: 0
-    - _Exposure: 8
+    - _Exposure: 1.7
     - _ExtraEmission: 0.75
     - _Factor: 0.05
     - _FlipbookMode: 0
@@ -209,7 +209,7 @@ Material:
     - _Randomness: 5
     - _Res: 128
     - _RimPower: 3
-    - _Rotation: 180
+    - _Rotation: 322
     - _Size: 1
     - _SkyExponent1: 7.67
     - _SkyIntensity: 1.75
@@ -261,5 +261,5 @@ Material:
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
     - _SpaceColor: {r: 0, g: 0.78172874, b: 1, a: 0.5}
     - _SunColor: {r: 1, g: 0.99, b: 0.87, a: 1}
-    - _Tint: {r: 0, g: 0.012578547, b: 0.0076083955, a: 1}
+    - _Tint: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []

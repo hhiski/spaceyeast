@@ -37,15 +37,15 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Brightness: 128.3
+    - _Brightness: 1800.07
     - _Density: 0.022
-    - _QuadDistortion: 0.16
-    - _QuadEdge: 0.2
+    - _QuadDistortion: 0.9
+    - _QuadEdge: 0.16
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Scale: 97.5
+    - _Scale: 149.72
     m_Colors:
-    - _BackgroundColor: {r: 0, g: 0.10424521, b: 0.24528301, a: 0}
+    - _BackgroundColor: {r: 0, g: 0.25165808, b: 0.27672952, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &5557327089086776632
 MonoBehaviour:

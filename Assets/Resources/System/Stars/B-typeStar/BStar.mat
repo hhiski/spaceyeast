@@ -196,7 +196,7 @@ Material:
     - _WindQuality: 0
     - _ZWrite: 0
     m_Colors:
-    - _BaseColor: {r: 0, g: 13.670369, b: 83.46363, a: 0}
+    - _BaseColor: {r: 0, g: 125.62499, b: 766.996, a: 0}
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _ColorAddSubDiff: {r: -1, g: 0, b: 0, a: 0}

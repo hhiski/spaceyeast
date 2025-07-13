@@ -96,28 +96,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1babc8c09ba1b934b83c5e0b77dd9e38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Amplitude: 0.078
+  Amplitude: 0.2
   levels: 4
-  Frequency: 0.67
+  Frequency: 0.4
   Roughness: 0.44
   Persistence: 1.644
   heightCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: -1
-      value: -1
-      inSlope: 1.3754301
-      outSlope: 1.3754301
-      tangentMode: 34
+      time: -1.0277786
+      value: -0.7918091
+      inSlope: -0.17056344
+      outSlope: -0.17056344
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.33333334
+      outWeight: 1
     - serializedVersion: 3
       time: -0.27444032
       value: -0.0020433962
-      inSlope: 1.0808458
-      outSlope: 1.0808458
+      inSlope: 0.9173081
+      outSlope: 0.9173081
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -160,34 +160,32 @@ MonoBehaviour:
     m_RotationOrder: 4
   negativePeakClip: 0
   positivePeakClip: 2
-  craterAmplitude: 0.36
-  craterSize: 0.13
-  craterAmount: 16
+  craterAmount: 3
   cellAmount: 0
   cellPattern: 1
   cellPower: 1
   selectedCellPattern: 0
   Flatness: 0.5
-  fluidicity: 0
+  fluidicity: 0.44
   weird: 0
   modulo: 0.16
   warpForce: 0
-  warpVector: {x: 0, y: 0, z: 0}
+  warpVector: {x: 0, y: -0.04, z: 0}
   colorGradient:
     serializedVersion: 2
-    key0: {r: 0.050314426, g: 0.039872043, b: 0.032435395, a: 1}
-    key1: {r: 0.10062885, g: 0.09552621, b: 0.087021805, a: 1}
-    key2: {r: 0.08176088, g: 0.06331326, b: 0.007970387, a: 0}
-    key3: {r: 0.48427665, g: 0.44758505, b: 0.3213282, a: 0}
-    key4: {r: 0, g: 0, b: 0, a: 0}
+    key0: {r: 0.16981131, g: 0.10546456, b: 0.041117817, a: 1}
+    key1: {r: 0.18238991, g: 0.16260232, b: 0.14281473, a: 1}
+    key2: {r: 0.42767292, g: 0.3678256, b: 0.30797827, a: 0}
+    key3: {r: 0.08176088, g: 0.06331326, b: 0.007970387, a: 0}
+    key4: {r: 0.48427665, g: 0.44758505, b: 0.3213282, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
     ctime0: 0
-    ctime1: 3727
-    ctime2: 43176
-    ctime3: 65535
-    ctime4: 0
+    ctime1: 8689
+    ctime2: 10678
+    ctime3: 43176
+    ctime4: 65535
     ctime5: 0
     ctime6: 0
     ctime7: 0
@@ -201,7 +199,7 @@ MonoBehaviour:
     atime7: 0
     m_Mode: 0
     m_ColorSpace: -1
-    m_NumColorKeys: 4
+    m_NumColorKeys: 5
     m_NumAlphaKeys: 2
   colorSeaGradient:
     serializedVersion: 2
@@ -233,13 +231,13 @@ MonoBehaviour:
     m_ColorSpace: -1
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  seaLevel: 0
+  seaLevel: 0.94
   colorClouds: {r: 1, g: 1, b: 1, a: 1}
   colorStripify: 1
   colorVariation: 0.05
-  atmosphereThickness: 1.085262
+  atmosphereThickness: 1.057367
   testpolarCoverage: 0
   iceCapsSize: 0
-  mass: 0.6134363
-  rotationSpeed: 5.678526
-  seed: 249
+  mass: 0.7951229
+  rotationSpeed: 3.300457
+  seed: 2

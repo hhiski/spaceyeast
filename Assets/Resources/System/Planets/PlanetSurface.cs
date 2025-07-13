@@ -62,8 +62,8 @@ public class PlanetSurface : MonoBehaviour
 
     public float negativePeakClip = 0f;
     public float positivePeakClip = 2f;
-    public float craterAmplitude = 0;
-    public float craterSize = 0;
+    //public float craterAmplitude = 0;
+    //public float craterSize = 0;
     public int craterAmount = 0;
 
     public int cellAmount = 0;
@@ -86,7 +86,8 @@ public class PlanetSurface : MonoBehaviour
     public float Flatness = 0;
     public float fluidicity = 0;
     public float weird = 0;
-    [SerializeField] [Range(0f, 1f)]
+    [SerializeField]
+    [Range(0f, 1f)]
     float modulo = 0;
 
 
@@ -129,7 +130,7 @@ public class PlanetSurface : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.B) == true)
         {
-           StartCoroutine(ShapePlanetSurface());
+            StartCoroutine(ShapePlanetSurface());
             planetMesh.RecalculateNormals();
             planetMesh.RecalculateTangents();
 
@@ -139,7 +140,7 @@ public class PlanetSurface : MonoBehaviour
             Debug.Log("Pressing J");
             UpdateClouds();
 
- 
+
         }
 
         if (Input.GetKeyDown(KeyCode.K) == true)
@@ -147,14 +148,14 @@ public class PlanetSurface : MonoBehaviour
             StartCoroutine(ShapePlanetSurface());
             planetMesh.RecalculateNormals();
         }
-        
+
 
 
 
     }
 
 
-   
+
 
     public void UpdateRing()
     {
@@ -188,15 +189,17 @@ public class PlanetSurface : MonoBehaviour
             float gasCloudPressure = Planet.Atm.Pressure;
             bool useClouds = Planet.Type.UseAtmosphericClouds;
 
-            if (useClouds) {
+            if (useClouds)
+            {
                 clouds.SetCloudColor(gasCloudColor);
                 clouds.SetCloudCoverage(gasCloudPressure);
-            } else
+            }
+            else
             {
                 clouds.SetCloudCoverage(0);
             }
 
-     
+
         }
     }
 
@@ -228,7 +231,7 @@ public class PlanetSurface : MonoBehaviour
 
             if (point.magnitude <= seaLevel)
             {
-                point = point.normalized * seaLevel*0.998f;
+                point = point.normalized * seaLevel * 0.998f;
                 vertices[i] = point;
             }
 
@@ -303,7 +306,7 @@ public class PlanetSurface : MonoBehaviour
 
                 Debug.Log("shaders:" + material.shader.name);
 
-                if (material.shader.name == "Shader Graphs/PlanetSurfaceShader") 
+                if (material.shader.name == "Shader Graphs/PlanetSurfaceShader")
                     surfaceMaterial = new Material(material);
 
                 if (material.shader.name == "Shader Graphs/PlanetaryShadowSG")
@@ -336,8 +339,8 @@ public class PlanetSurface : MonoBehaviour
         UpdateSurfaceColors();  //modifies planetColors
         UpdateCraters();        //modifies planetVertices and planetColors, adds craters
         UpdateSea();
-       // UpdateLatitudeColoring(); //modifies planetColors
-       // UpdatePolarIceCaps();     //modifies planetVertices and planetColors,
+        // UpdateLatitudeColoring(); //modifies planetColors
+        // UpdatePolarIceCaps();     //modifies planetVertices and planetColors,
         UpdateFlatness();         //modifies planetVertice,
         UpdatePlanetVertices();   //planetVertices to the mesh shape
         UpdateClouds();
@@ -351,7 +354,8 @@ public class PlanetSurface : MonoBehaviour
         string patternType = "";
         int cellNum = cellAmount;
         float cellAmplitude = cellPower;
-        if (selectedCellPattern != CellularPattern.None) { 
+        if (selectedCellPattern != CellularPattern.None)
+        {
             switch (selectedCellPattern)
             {
                 case CellularPattern.Crack:
@@ -375,7 +379,7 @@ public class PlanetSurface : MonoBehaviour
 
                     break;
             }
-     
+
 
             for (int vertexIndex = 0; vertexIndex < planetVertices.Length; vertexIndex++)
             {
@@ -506,19 +510,19 @@ public class PlanetSurface : MonoBehaviour
         if (fluidicity != 0)
         {
 
-            float fluidX = fluidicity + (level-1);
-            float fluidY = fluidicity + 2* (level-1);
+            float fluidX = fluidicity + (level - 1);
+            float fluidY = fluidicity + 2 * (level - 1);
             point = new Vector3(point.x * patternNoise + seed, point.y * patternNoise + (seed + 10.5f), point.z * patternNoise + (seed));
             patternNoise = patternNoise + fluidicity * noiseFilter.Evaluate(point);
         };
 
 
-       
+
         if (warpForce > 0)
         {
-            float xDistortion = noiseFilter.Evaluate( (new Vector3(point.x, point.y , point.z )));
-            float yDistortion = noiseFilter.Evaluate( (new Vector3(point.x + warpVector.x, point.y + warpVector.y, point.z +  warpVector.z)));
-            float zDistortion = noiseFilter.Evaluate( (new Vector3(point.x + 0.75f*warpVector.x, point.y + 1.1f * warpVector.y, point.z +0.79f * warpVector.z)));
+            float xDistortion = noiseFilter.Evaluate((new Vector3(point.x, point.y, point.z)));
+            float yDistortion = noiseFilter.Evaluate((new Vector3(point.x + warpVector.x, point.y + warpVector.y, point.z + warpVector.z)));
+            float zDistortion = noiseFilter.Evaluate((new Vector3(point.x + 0.75f * warpVector.x, point.y + 1.1f * warpVector.y, point.z + 0.79f * warpVector.z)));
             patternNoise = patternNoise * noiseFilter.Evaluate((new Vector3(point.x * xDistortion, point.y * yDistortion, point.z * zDistortion)));
         };
 
@@ -550,7 +554,8 @@ public class PlanetSurface : MonoBehaviour
 
         Color polarIceColor = new Color(1, 1, 1);
 
-        foreach (Vector3 pole in poles) {
+        foreach (Vector3 pole in poles)
+        {
             for (int vertexIndex = 0; vertexIndex < vertices.Length; vertexIndex++)
             {
 
@@ -565,9 +570,9 @@ public class PlanetSurface : MonoBehaviour
                       noise += NoiseFunctions.PerlinFilter(point, NoiseLayer, 2f, 1, 0.8f, 899.1f);
                       noise += NoiseFunctions.PerlinFilter(point, NoiseLayer, 3f, 1, 0.5f, 2.1f);*/
 
-           
 
-                    noise = NoiseManager.Instance.SimplePerlinFilter(point,  1.5f);
+
+                    noise = NoiseManager.Instance.SimplePerlinFilter(point, 1.5f);
                     noise += NoiseManager.Instance.SimplePerlinFilter(point, 2f);
                     noise += NoiseManager.Instance.SimplePerlinFilter(point, 3f);
 
@@ -684,7 +689,7 @@ public class PlanetSurface : MonoBehaviour
         for (int i = 0; i < vertices.Length; i++) // 1st 
         {
             if (resultNoise[i] > max) { max = resultNoise[i]; };
-           if (resultNoise[i] < min) { min = resultNoise[i]; }
+            if (resultNoise[i] < min) { min = resultNoise[i]; }
             avg += resultNoise[i];
 
 
@@ -719,7 +724,7 @@ public class PlanetSurface : MonoBehaviour
                 point = surfacePoint[i];
                 noise = SurfaceNoisePatterns(noise, point, NoiseLayer, 1);
                 noise = 1 + (noise * subAmplitude);
-                vertices[i] = point *  noise;
+                vertices[i] = point * noise;
 
             }
         }
@@ -758,7 +763,7 @@ public class PlanetSurface : MonoBehaviour
     {
         float randomX = ((float)Random.NextDouble() - 0.5f) * 2f;
         float randomY = ((float)Random.NextDouble() - 0.5f) * 2f;
-        float randomZ = ((float)Random.NextDouble() - 0.5f)*2f;
+        float randomZ = ((float)Random.NextDouble() - 0.5f) * 2f;
         return new Vector3(randomX, randomY, randomZ);
     }
     void UpdateSurfaceNonParallel()
@@ -791,11 +796,11 @@ public class PlanetSurface : MonoBehaviour
         Vector3 randomVector = RandomVector();
         for (int i = 0; i < vertices.Length; i++) // 1st 
         {
-        
+
             point = vertices[i];
-           // modPoint = SurfacePointPatterns(point);
-   
-            noise = NoiseManager.Instance.SimplePerlinFilter(point + randomVector, frequency);
+           modPoint = SurfacePointPatterns(point);
+
+            noise = NoiseManager.Instance.SimplePerlinFilter(modPoint + randomVector, frequency);
 
             if (noise > max) { max = noise; };
             if (noise < min) { min = noise; }
@@ -837,7 +842,7 @@ public class PlanetSurface : MonoBehaviour
 
 
 
-        
+
 
         float surfaceHeight = 0;
 
@@ -882,7 +887,7 @@ public class PlanetSurface : MonoBehaviour
 
             for (int i = 0; i < planetVertices.Length; i++)
             {
-                planetVertices[i] = planetVertices[i] * (1- flatness) +  flatness * planetVerticesBackup[i];
+                planetVertices[i] = planetVertices[i] * (1 - flatness) + flatness * planetVerticesBackup[i];
             }
         }
 
@@ -913,12 +918,13 @@ public class PlanetSurface : MonoBehaviour
 
             planetColors[i] = colorGradient.Evaluate(relativeDryLandHeight);
 
-            if (point.magnitude <= seaLevel) {
+            if (point.magnitude <= seaLevel)
+            {
                 planetColors[i].a = relativeSeaDepth;
             }
-            
 
-         
+
+
 
         }
 
@@ -1093,7 +1099,7 @@ public class PlanetSurface : MonoBehaviour
 
                     rDistance = distance / taigaRadius;
                     point = vertices[vertexIndex];
- 
+
                     noise = 0.5f;
 
                     /* noise += Mathf.Abs(NoiseFunctions.SimplePerlinFilter(point,  1.5f));
@@ -1101,9 +1107,9 @@ public class PlanetSurface : MonoBehaviour
                      noise += NoiseFunctions.PerlinFilter(point, 2.5f);*/
 
 
-                     noise += Mathf.Abs(NoiseManager.Instance.SimplePerlinFilter(point,  1.5f));
-                     noise -= Mathf.Abs(NoiseManager.Instance.SimplePerlinFilter(point, 1.5f));
-                     noise += NoiseManager.Instance.SimplePerlinFilter(point, 2.5f);
+                    noise += Mathf.Abs(NoiseManager.Instance.SimplePerlinFilter(point, 1.5f));
+                    noise -= Mathf.Abs(NoiseManager.Instance.SimplePerlinFilter(point, 1.5f));
+                    noise += NoiseManager.Instance.SimplePerlinFilter(point, 2.5f);
 
 
                     noise -= 1 * (rDistance * rDistance * rDistance);
@@ -1139,7 +1145,8 @@ public class PlanetSurface : MonoBehaviour
         Vector3[] backupVertices = planetVerticesBackup;
 
         int craterNumber = 0;
-
+        float craterAmplitude = 1;
+        float craterSize = 0.15f;
         craterNumber = (int)(MathFunctions.StandardDeviation(craterAmount, 0.8f * craterAmount, seed));
         craterNumber = Mathf.Clamp(craterAmount, 0, craterAmount * 5);
 
